@@ -3,10 +3,78 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
         xmlns:local="clr-namespace:CanteenManagementApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" 
+        Height="600" Width="816"   
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        Background="Transparent"    
+        AllowsTransparency="True">
+    <Window.DataContext>
+        <viewModel:MainViewModel/>   
+    </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="Image">
+            <Setter Property="Height" Value="64" />
+            <Setter Property="Width" Value="64" />
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+        </Style>
+    </Window.Resources>
+    
+    <Border Background="White"
+            CornerRadius="19">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="665"/>
+            </Grid.ColumnDefinitions>
 
-    </Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Image Source="Images/logo.png"
+                   Width="70"/>
+
+            <StackPanel Grid.Row="1">
+                <RadioButton Content="Tạo đơn hàng"
+                             Height="43"
+                             FontSize="15"
+                             Style="{StaticResource MenuButtonTheme}"
+                             IsChecked="True"
+                             Command="{Binding CreateOrderViewCommand}"/>
+                <RadioButton Content="Khách hàng"
+                             Height="43"
+                             FontSize="15"
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding CustomerViewCommand}"/>
+                <RadioButton Content="Thực đơn"
+                             Height="43"
+                             FontSize="15"
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding MenuViewCommand}"/>
+                <RadioButton Content="Kho hàng"
+                             Height="43"
+                             FontSize="15"
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding StorageViewCommand}"/>
+                <RadioButton Content="Báo cáo"
+                             Height="43"
+                             FontSize="15"
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding ReportViewCommand}"/>
+            </StackPanel>
+            <Border Grid.Column="1" 
+                    Grid.RowSpan="2"
+                    CornerRadius="19"
+                    Background="#F8F8F8">
+                <ContentControl Margin="10"
+                                Content="{Binding CurrentView}"/>
+            </Border>
+        </Grid>
+    </Border>
 </Window>
+    
