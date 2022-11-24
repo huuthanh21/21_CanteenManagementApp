@@ -4,9 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CanteenManagementApp.MVVM.View"
+             xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
              mc:Ignorable="d" 
              d:Background="#F8F8F8"
              d:DesignHeight="600" d:DesignWidth="665">
+    <UserControl.DataContext>
+        <viewModel:StorageViewModel/>
+    </UserControl.DataContext>
     <Grid Margin="30 10 10 10">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -26,10 +30,8 @@
                    Style="{StaticResource TextblockTitle}"/>
         <StackPanel Grid.Row="3">
             <ItemsControl ItemsSource="{Binding StorageSourceCollection}"
-                      Height="350"
-                      Width="650"
-                      Margin="0,40,0,0">
-
+                          Height="350" Width="650"
+                          Margin="0,40,0,0">
                 <ItemsControl.ItemTemplate>
                     <!--<DataTemplate>
                         --><!--<RadioButton Content="{Binding Name}"
@@ -38,22 +40,25 @@
                                  GroupName="DesktopGroup"/>--><!--
                     </DataTemplate>-->
                     <DataTemplate>
-                        <Border BorderBrush="#2E4057" BorderThickness="1"  CornerRadius="5">
-
+                        <Border BorderBrush="#2E4057" 
+                                BorderThickness="1"  
+                                CornerRadius="5">
                             <Border.Background>
-                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                    <GradientStop Color="#EEEEEE" Offset="1.0" />
+                                <LinearGradientBrush StartPoint="0.5,0" 
+                                                     EndPoint="0.5,1">
+                                    <GradientStop Color="#EEEEEE" 
+                                                  Offset="1.0" />
                                 </LinearGradientBrush>
                             </Border.Background>
-                            <StackPanel Orientation="Horizontal" Width="250">
-                                <Image Margin ="0 5 0 5 " Width="70" Height="70"
-                                       Source="{Binding Path=ImagePath, RelativeSource={RelativeSource Mode=TemplatedParent}}"></Image>
-                                
-                                <StackPanel Orientation="Vertical" VerticalAlignment="Center" >
-                                    <TextBlock  
-                                           TextAlignment="Left"
-                                           
-                                           TextWrapping="WrapWithOverflow"> 
+                            <StackPanel Orientation="Horizontal" 
+                                        Width="250">
+                                <Image Margin ="0 5 0 5 "
+                                       Width="70" Height="70"
+                                       Source="{Binding ImagePath}"/>
+                                <StackPanel Orientation="Vertical" 
+                                            VerticalAlignment="Center" >
+                                    <TextBlock TextAlignment="Left"
+                                               TextWrapping="WrapWithOverflow"> 
                                     <Run Foreground="Black" 
                                          FontSize="15"
                                          FontWeight="Medium"
@@ -62,17 +67,15 @@
                                     Author:
                                     <Run Foreground="Blue" 
                                          FontStyle="Italic"
-                                            Text="{Binding Author}" />
+                                         Text="{Binding Author}" />
                                     <LineBreak/>
                                     Published: 
                                     <Run Foreground="#363636" 
-                                            Text="{Binding PublishedYear}" />
+                                         Text="{Binding PublishedYear}" />
                                     </TextBlock>
                                 </StackPanel>
-
                             </StackPanel>
                         </Border>
-
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
 
