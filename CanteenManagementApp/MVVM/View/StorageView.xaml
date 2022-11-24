@@ -59,13 +59,11 @@
                                             VerticalAlignment="Center" >
                                     <TextBlock TextAlignment="Left"
                                                TextWrapping="WrapWithOverflow"
-                                                Width="70"> 
-                                    <Run Foreground="Black" 
-                                         FontSize="15"
-                                         FontWeight="Medium"
-                                         Text="{Binding Name}" />
-                                    </TextBlock>
-
+                                               Width="70" 
+                                               Foreground="Black" 
+                                               FontSize="15"
+                                               FontWeight="Medium"
+                                               Text="{Binding Name}"/>
                                     <TextBlock Foreground="Blue" 
                                          FontStyle="Italic"
                                          Margin="20 0 0 0"
