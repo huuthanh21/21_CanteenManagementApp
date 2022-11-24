@@ -10,6 +10,17 @@
 
   <ItemGroup>
     <None Remove="Fonts\Inter-VariableFont_slnt,wght.ttf" />
+    <None Remove="Images\b1.jpg" />
+    <None Remove="Images\b10.jpg" />
+    <None Remove="Images\b11.jpg" />
+    <None Remove="Images\b2.jpg" />
+    <None Remove="Images\b3.jpg" />
+    <None Remove="Images\b4.jpg" />
+    <None Remove="Images\b5.jpg" />
+    <None Remove="Images\b6.jpg" />
+    <None Remove="Images\b7.jpg" />
+    <None Remove="Images\b8.jpg" />
+    <None Remove="Images\b9.jpg" />
     <None Remove="Images\logo.png" />
   </ItemGroup>
 
@@ -21,14 +32,43 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MVVM\Model\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\b1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\b10.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\b11.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\b2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\b3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\b4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\b5.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\b6.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\b7.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\b8.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\b9.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

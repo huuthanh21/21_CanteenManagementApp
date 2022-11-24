@@ -16,13 +16,77 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="430"/>
             <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>-->
 
         <TextBlock Text="Kho hàng"
                    Grid.Row="1"
                    Style="{StaticResource TextblockTitle}"/>
+        <StackPanel Grid.Row="3">
+            <ItemsControl ItemsSource="{Binding StorageSourceCollection}"
+                      Height="350"
+                      Width="650"
+                      Margin="0,40,0,0">
+
+                <ItemsControl.ItemTemplate>
+                    <!--<DataTemplate>
+                        --><!--<RadioButton Content="{Binding Name}"
+                                 Tag="{Binding ImagePath}"
+                                 Style="{StaticResource GridButtonStyle}"
+                                 GroupName="DesktopGroup"/>--><!--
+                    </DataTemplate>-->
+                    <DataTemplate>
+                        <Border BorderBrush="#2E4057" BorderThickness="1"  CornerRadius="5">
+
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Color="#EEEEEE" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <StackPanel Orientation="Horizontal" Width="250">
+                                <Image Margin ="0 5 0 5 " Width="70" Height="70"
+                                       Source="{Binding Path=ImagePath, RelativeSource={RelativeSource Mode=TemplatedParent}}"></Image>
+                                
+                                <StackPanel Orientation="Vertical" VerticalAlignment="Center" >
+                                    <TextBlock  
+                                           TextAlignment="Left"
+                                           
+                                           TextWrapping="WrapWithOverflow"> 
+                                    <Run Foreground="Black" 
+                                         FontSize="15"
+                                         FontWeight="Medium"
+                                         Text="{Binding Name}" />
+                                    <LineBreak/>
+                                    Author:
+                                    <Run Foreground="Blue" 
+                                         FontStyle="Italic"
+                                            Text="{Binding Author}" />
+                                    <LineBreak/>
+                                    Published: 
+                                    <Run Foreground="#363636" 
+                                            Text="{Binding PublishedYear}" />
+                                    </TextBlock>
+                                </StackPanel>
+
+                            </StackPanel>
+                        </Border>
+
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+                <!--Uniform Grid-->
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+            </ItemsControl>
+
+        </StackPanel>
+
     </Grid>
 </UserControl>
