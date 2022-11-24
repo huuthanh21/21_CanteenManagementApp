@@ -50,28 +50,28 @@
                                                   Offset="1.0" />
                                 </LinearGradientBrush>
                             </Border.Background>
-                            <StackPanel Orientation="Horizontal" 
-                                        Width="250">
+                            <StackPanel Orientation="Vertical" 
+                                        Width="120">
                                 <Image Margin ="0 5 0 5 "
                                        Width="70" Height="70"
                                        Source="{Binding ImagePath}"/>
-                                <StackPanel Orientation="Vertical" 
+                                <StackPanel Orientation="Horizontal" 
                                             VerticalAlignment="Center" >
                                     <TextBlock TextAlignment="Left"
-                                               TextWrapping="WrapWithOverflow"> 
+                                               TextWrapping="WrapWithOverflow"
+                                                Width="70"> 
                                     <Run Foreground="Black" 
                                          FontSize="15"
                                          FontWeight="Medium"
                                          Text="{Binding Name}" />
-                                    <LineBreak/>
-                                    Author:
-                                    <Run Foreground="Blue" 
+                                    </TextBlock>
+
+                                    <TextBlock Foreground="Blue" 
                                          FontStyle="Italic"
-                                         Text="{Binding Author}" />
-                                    <LineBreak/>
-                                    Published: 
-                                    <Run Foreground="#363636" 
-                                         Text="{Binding PublishedYear}" />
+                                         Margin="20 0 0 0"
+                                         HorizontalAlignment="Right"
+                                         FontSize="25"
+                                         Text="{Binding Id}">
                                     </TextBlock>
                                 </StackPanel>
                             </StackPanel>

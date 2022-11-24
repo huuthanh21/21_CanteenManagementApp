@@ -11,16 +11,10 @@
   <ItemGroup>
     <None Remove="Fonts\Inter-VariableFont_slnt,wght.ttf" />
     <None Remove="Images\b1.jpg" />
-    <None Remove="Images\b10.jpg" />
-    <None Remove="Images\b11.jpg" />
     <None Remove="Images\b2.jpg" />
     <None Remove="Images\b3.jpg" />
     <None Remove="Images\b4.jpg" />
     <None Remove="Images\b5.jpg" />
-    <None Remove="Images\b6.jpg" />
-    <None Remove="Images\b7.jpg" />
-    <None Remove="Images\b8.jpg" />
-    <None Remove="Images\b9.jpg" />
     <None Remove="Images\icon_close.png" />
     <None Remove="Images\icon_create_order.png" />
     <None Remove="Images\icon_customer.png" />
@@ -49,39 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\b1.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\b10.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\b11.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\b2.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\b3.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\b4.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\b5.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\b6.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\b7.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\b8.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\b9.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Content Include="Images\icon_create_order.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -97,6 +58,11 @@
     <Content Include="Images\icon_minimize.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\b1.jpg" />
+    <Resource Include="Images\b2.jpg" />
+    <Resource Include="Images\b3.jpg" />
+    <Resource Include="Images\b4.jpg" />
+    <Resource Include="Images\b5.jpg" />
     <Resource Include="Images\logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
