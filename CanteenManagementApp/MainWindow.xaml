@@ -11,7 +11,7 @@
         MouseDown="Window_MouseDown"
         ResizeMode="NoResize"
         WindowStyle="None"
-        Background="Transparent"    
+        Background="Transparent"
         AllowsTransparency="True">
     <Window.DataContext>
         <viewModel:MainViewModel/>   
@@ -21,9 +21,9 @@
             <Setter Property="Height" Value="64" />
             <Setter Property="Width" Value="64" />
             <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
-        </Style>
+        </Style> 
     </Window.Resources>
-    
+
     <Border Background="White"
             CornerRadius="19">
         <Grid>
@@ -40,31 +40,42 @@
             <Image Source="Images/logo.png"
                    Width="70"/>
 
-            <StackPanel Grid.Row="1">
-                <RadioButton Content="Tạo đơn hàng"
+            <StackPanel Grid.Row="1"
+                        Margin="0 50 0 0">
+                <RadioButton x:Name="NavigateButtonCreateOrder" 
+                             Content="Tạo đơn hàng"
                              Height="43"
                              FontSize="15"
+                             Tag="/Images/icon_create_order.png"
                              Style="{StaticResource MenuButtonTheme}"
                              IsChecked="True"
                              Command="{Binding CreateOrderViewCommand}"/>
-                <RadioButton Content="Khách hàng"
+                <RadioButton x:Name="NavigateButtonCustomer" 
+                             Content="Khách hàng"
                              Height="43"
                              FontSize="15"
+                             Tag="/Images/icon_customer.png"
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding CustomerViewCommand}"/>
-                <RadioButton Content="Thực đơn"
+                <RadioButton x:Name="NavigateButtonMenu"
+                             Content="Thực đơn"
                              Height="43"
                              FontSize="15"
+                             Tag="/Images/icon_menu.png"
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding MenuViewCommand}"/>
-                <RadioButton Content="Kho hàng"
+                <RadioButton x:Name="NavigateButtonStorage"
+                             Content="Kho hàng"
                              Height="43"
                              FontSize="15"
+                             Tag="/Images/icon_storage.png"
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding StorageViewCommand}"/>
-                <RadioButton Content="Báo cáo"
+                <RadioButton x:Name="NavigateButtonReport"
+                             Content="Báo cáo"
                              Height="43"
                              FontSize="15"
+                             Tag="/Images/icon_report.png"
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding ReportViewCommand}"/>
             </StackPanel>
