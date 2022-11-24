@@ -10,9 +10,11 @@
 
   <ItemGroup>
     <None Remove="Fonts\Inter-VariableFont_slnt,wght.ttf" />
+    <None Remove="Images\icon_close.png" />
     <None Remove="Images\icon_create_order.png" />
     <None Remove="Images\icon_customer.png" />
     <None Remove="Images\icon_menu.png" />
+    <None Remove="Images\icon_minimize.png" />
     <None Remove="Images\icon_report.png" />
     <None Remove="Images\icon_storage.png" />
     <None Remove="Images\logo.png" />
@@ -47,6 +49,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\icon_menu.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\icon_close.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\icon_minimize.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Images\logo.png">

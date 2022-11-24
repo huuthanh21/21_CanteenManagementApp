@@ -7,19 +7,21 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
-                        <StackPanel VerticalAlignment="Center" Opacity="0.6"
-                                    Background="{TemplateBinding Background}"
-                                    Margin="10 0 6 5"
-                                    Orientation="Horizontal">
-                            <Image Source="{Binding Path=Tag, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                   Width="18" Height="18"/> 
-                            <TextBlock Text="{TemplateBinding Property=Content}"
-                                       FontFamily="{DynamicResource Inter}"
-                                       FontWeight="SemiBold"        
-                                       Margin="10 0 0 0"    
-                                       VerticalAlignment="Center"/>
-
-                        </StackPanel>
+                        <Border Background="{TemplateBinding Background}"
+                                Margin="10 0 6 5"
+                                CornerRadius="19">
+                            <StackPanel VerticalAlignment="Center" 
+                                        Opacity="0.6"
+                                        Orientation="Horizontal">
+                                <Image Source="{Binding Path=Tag, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                       Width="18" Height="18"/>
+                                <TextBlock Text="{TemplateBinding Property=Content}"
+                                           FontFamily="{DynamicResource Inter}"
+                                           FontWeight="SemiBold"        
+                                           Margin="10 0 0 0"    
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -35,10 +37,10 @@
                             <Border Background="#F8F8F8" 
                                     Margin="10 0 6 5"
                                     CornerRadius="19">
-                                <StackPanel VerticalAlignment="Center" Opacity="1"
-                                    Background="{TemplateBinding Background}"
-                                    Orientation="Horizontal">
-                                    
+                                <StackPanel VerticalAlignment="Center" 
+                                            Opacity="1"
+                                            Background="{TemplateBinding Background}"
+                                            Orientation="Horizontal">
                                     <Image Source="{Binding Path=Tag, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                            Width="18" Height="18"/>
                                     <TextBlock Text="{TemplateBinding Property=Content}"
