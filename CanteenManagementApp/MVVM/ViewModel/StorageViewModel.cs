@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CanteenManagementApp.Core;
+using System;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
-    internal class StorageViewModel
+    public class StorageViewModel : ObservableObject
     {
     }
 }
