@@ -3,7 +3,7 @@ using System;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
-    class MainViewModel : ObservableObject
+    public class MainViewModel : ObservableObject
     {
         public RelayCommand CreateOrderViewCommand { get; set; }
         public RelayCommand CustomerViewCommand { get; set; }

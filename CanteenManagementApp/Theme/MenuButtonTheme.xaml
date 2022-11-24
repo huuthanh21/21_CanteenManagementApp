@@ -7,18 +7,21 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
-                        <Grid VerticalAlignment="Stretch" Opacity="0.6"
-                              HorizontalAlignment="Stretch"
-                              Background="{TemplateBinding Background}"
-                              Margin="6 0 6 5">
-
-                            <TextBlock Text="{TemplateBinding Property=Content}"
-                                       FontFamily="{DynamicResource Inter}"
-                                       FontWeight="SemiBold"    
-                                       Margin="15 0 0 0"    
-                                       VerticalAlignment="Center"/>
-
-                        </Grid>
+                        <Border Background="{TemplateBinding Background}"
+                                Margin="10 0 6 5"
+                                CornerRadius="19">
+                            <StackPanel VerticalAlignment="Center" 
+                                        Opacity="0.6"
+                                        Orientation="Horizontal">
+                                <Image Source="{Binding Path=Tag, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                       Width="18" Height="18"/>
+                                <TextBlock Text="{TemplateBinding Property=Content}"
+                                           FontFamily="{DynamicResource Inter}"
+                                           FontWeight="SemiBold"        
+                                           Margin="10 0 0 0"    
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -32,18 +35,21 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="RadioButton">
                             <Border Background="#F8F8F8" 
-                                    Margin="6 0 6 5"
+                                    Margin="10 0 6 5"
                                     CornerRadius="19">
-                                <Grid VerticalAlignment="Stretch" Opacity="1"
-                                      HorizontalAlignment="Stretch"
-                                      Background="{TemplateBinding Background}">
-
+                                <StackPanel VerticalAlignment="Center" 
+                                            Opacity="1"
+                                            Background="{TemplateBinding Background}"
+                                            Orientation="Horizontal">
+                                    <Image Source="{Binding Path=Tag, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                           Width="18" Height="18"/>
                                     <TextBlock Text="{TemplateBinding Property=Content}"
-                                               FontFamily="{DynamicResource Inter}"
-                                               FontWeight="SemiBold"
-                                               Margin="15 0 0 0"
-                                               VerticalAlignment="Center"/>
-                                </Grid>
+                                       FontFamily="{DynamicResource Inter}"
+                                       FontWeight="SemiBold"        
+                                       Margin="10 0 0 0"    
+                                       VerticalAlignment="Center"/>
+
+                                </StackPanel>
                             </Border>
                         </ControlTemplate>
                     </Setter.Value>

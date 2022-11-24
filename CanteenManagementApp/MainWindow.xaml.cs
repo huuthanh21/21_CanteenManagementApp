@@ -21,5 +21,15 @@ namespace CanteenManagementApp
                 DragMove();
             }
         }
+
+        private void ControlButtonMinumize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void ControlButtonClose_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

@@ -12,7 +12,7 @@ using System.Windows.Media;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
-    public class StorageViewModel: ObservableObject
+    public class StorageViewModel : ObservableObject
     {
         private readonly CollectionViewSource StorageItemsCollection;
         public ICollectionView StorageSourceCollection => StorageItemsCollection.View;
