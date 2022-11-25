@@ -10,11 +10,14 @@
 
   <ItemGroup>
     <None Remove="Fonts\Inter-VariableFont_slnt,wght.ttf" />
+    <None Remove="Images\Add.png" />
     <None Remove="Images\b1.jpg" />
     <None Remove="Images\b2.jpg" />
     <None Remove="Images\b3.jpg" />
     <None Remove="Images\b4.jpg" />
     <None Remove="Images\b5.jpg" />
+    <None Remove="Images\delete.png" />
+    <None Remove="Images\editing.png" />
     <None Remove="Images\icon_close.png" />
     <None Remove="Images\icon_create_order.png" />
     <None Remove="Images\icon_customer.png" />
@@ -23,18 +26,19 @@
     <None Remove="Images\icon_report.png" />
     <None Remove="Images\icon_storage.png" />
     <None Remove="Images\logo.png" />
+    <None Remove="Images\up.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Fonts\Inter-VariableFont_slnt,wght.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Content Include="Images\icon_report.png">
+    <Resource Include="Images\icon_report.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\icon_storage.png">
+    </Resource>
+    <Resource Include="Images\icon_storage.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </Resource>
     <Content Include="logo.ico" />
   </ItemGroup>
 
@@ -43,27 +47,49 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Images\icon_create_order.png">
+    <Resource Include="Images\icon_create_order.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\icon_customer.png">
+    </Resource>
+    <Resource Include="Images\icon_customer.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\icon_menu.png">
+    </Resource>
+    <Resource Include="Images\icon_menu.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\icon_close.png">
+    </Resource>
+    <Resource Include="Images\icon_close.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\icon_minimize.png">
+    </Resource>
+    <Resource Include="Images\icon_minimize.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Resource Include="Images\b1.jpg" />
-    <Resource Include="Images\b2.jpg" />
-    <Resource Include="Images\b3.jpg" />
-    <Resource Include="Images\b4.jpg" />
-    <Resource Include="Images\b5.jpg" />
+    </Resource>
+    <Resource Include="Images\Add.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\b1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\b2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\b3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\b4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\b5.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\delete.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\editing.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\up.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

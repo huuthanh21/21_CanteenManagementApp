@@ -8,15 +8,19 @@
              mc:Ignorable="d" 
              d:Background="#F8F8F8"
              d:DesignHeight="600" d:DesignWidth="665">
+    <UserControl.Resources >
+        <ResourceDictionary Source="/ScrollBar.xaml"></ResourceDictionary>
+    </UserControl.Resources>
     <UserControl.DataContext>
         <viewModel:StorageViewModel/>
     </UserControl.DataContext>
-    <Grid Margin="30 10 10 10">
+
+    <Grid Margin="10 10 10 10">
         <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="60"/>
-            <RowDefinition Height="70"/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="235"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -28,64 +32,91 @@
         <TextBlock Text="Kho hàng"
                    Grid.Row="1"
                    Style="{StaticResource TextblockTitle}"/>
+
         <StackPanel Grid.Row="3">
-            <ItemsControl ItemsSource="{Binding StorageSourceCollection}"
-                          Height="350" Width="650"
-                          Margin="0,40,0,0">
-                <ItemsControl.ItemTemplate>
-                    <!--<DataTemplate>
-                        --><!--<RadioButton Content="{Binding Name}"
-                                 Tag="{Binding ImagePath}"
-                                 Style="{StaticResource GridButtonStyle}"
-                                 GroupName="DesktopGroup"/>--><!--
-                    </DataTemplate>-->
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Images/up.png" Margin="5 0 0 0" Width="15" Height="11"/>
+                <TextBlock Text="Món ăn hàng ngày"
+                    Margin="15 12 0 10"
+                   Style="{StaticResource TextblockTitleSmall}"
+                          VerticalAlignment="Center"/>
+                <Image Source="/Images/Add.png" Width="22" Height="23" Margin="10 5 0 0"/>
+            </StackPanel>
+
+
+            <ListView Width="624" Height="190" Margin="0" ItemsSource="{Binding StorageSourceCollection}" Name="foodListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" >
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListView.Resources>
+                    <ContextMenu x:Key="bookContextMenu">
+                        <MenuItem Header="Delete" Click="deleteMenuItem_Click">
+                            <MenuItem.Icon>
+                                <Image Source="/Images/delete.png"></Image>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Edit" Click="editMenuItem_Click">
+                            <MenuItem.Icon>
+                                <Image Source="/Images/editing.png"></Image>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </ListView.Resources>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}" >
+                        <Setter Property="ContextMenu" Value="{StaticResource bookContextMenu}" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="#2E4057" 
                                 BorderThickness="1"  
-                                CornerRadius="5">
+                                CornerRadius="5"
+                                Margin ="2">
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0.5,0" 
                                                      EndPoint="0.5,1">
-                                    <GradientStop Color="#EEEEEE" 
+                                    <GradientStop Color="White" 
                                                   Offset="1.0" />
                                 </LinearGradientBrush>
                             </Border.Background>
                             <StackPanel Orientation="Vertical" 
-                                        Width="120">
+                                        Width="104"
+                                        Height="120"
+                                        >
                                 <Image Margin ="0 5 0 5 "
-                                       Width="70" Height="70"
+                                       Width="60" Height="54"
                                        Source="{Binding ImagePath}"/>
                                 <StackPanel Orientation="Horizontal" 
                                             VerticalAlignment="Center" >
                                     <TextBlock TextAlignment="Left"
                                                TextWrapping="WrapWithOverflow"
-                                               Width="70" 
+                                               Width="65" 
                                                Foreground="Black" 
-                                               FontSize="15"
+                                               FontSize="14"
                                                FontWeight="Medium"
-                                               Text="{Binding Name}"/>
-                                    <TextBlock Foreground="Blue" 
+                                               Text="{Binding Name}"
+                                               Margin="5 0 0 5"/>
+                                    <TextBlock Foreground="#0033A1" 
                                          FontStyle="Italic"
-                                         Margin="20 0 0 0"
+                                         Margin="3 0 0 0"
                                          HorizontalAlignment="Right"
-                                         FontSize="25"
-                                         Text="{Binding Id}">
+                                         FontSize="14"
+                                         Text="{Binding Price}">
                                     </TextBlock>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
+
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
 
-                <!--Uniform Grid-->
-
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-
-            </ItemsControl>
+                </ListView.ItemTemplate>
+            </ListView>
 
         </StackPanel>
 

@@ -24,5 +24,15 @@ namespace CanteenManagementApp.MVVM.View
         {
             InitializeComponent();
         }
+
+        private void deleteMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void editMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

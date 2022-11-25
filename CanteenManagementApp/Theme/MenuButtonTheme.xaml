@@ -84,7 +84,7 @@
                         <Image x:Name="SidebarRadioButtonMenuIcon"
                                Grid.Row="0"
                                Stretch="None"
-                               Source="{Binding Path=Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                               Source="{Binding Path=Tag}"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                Margin="0,0,0,20" />
@@ -99,6 +99,24 @@
                                    FontFamily="Fonts/Roboto-Regular.ttf #Roboto Regular"
                                    Margin="0,0,0,10" />
 
+                        <StackPanel Orientation="Horizontal" 
+                                            VerticalAlignment="Center" >
+                            <TextBlock TextAlignment="Left"
+                                               TextWrapping="WrapWithOverflow"
+                                               Width="65" 
+                                               Foreground="Black" 
+                                               FontSize="14"
+                                               FontWeight="Medium"
+                                               Text="{Binding Name}"
+                                               Margin="5 0 0 5"/>
+                            <TextBlock Foreground="Blue" 
+                                         FontStyle="Italic"
+                                         Margin="3 0 0 0"
+                                         HorizontalAlignment="Right"
+                                         FontSize="14"
+                                         Text="{Binding Price}">
+                            </TextBlock>
+                        </StackPanel>
                     </Grid>
 
 
@@ -109,7 +127,7 @@
 
                             <Setter Property="Background"
                                     TargetName="border"
-                                    Value="#272727" />
+                                    Value="#fff" />
 
                             <Setter Property="BorderBrush"
                                     TargetName="border"
@@ -125,7 +143,7 @@
 
                             <Setter Property="Background"
                                     TargetName="border"
-                                    Value="#272727" />
+                                    Value="#2E4057" />
 
                             <Setter Property="BorderBrush"
                                     TargetName="border"

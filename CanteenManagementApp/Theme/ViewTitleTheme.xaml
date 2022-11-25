@@ -7,4 +7,12 @@
         <Setter Property="FontWeight" Value="ExtraBold"/>
         <Setter Property="TextElement.FontFamily" Value="{DynamicResource Inter}"/>
     </Style>
+
+    <Style TargetType="TextBlock"
+            x:Key="TextblockTitleSmall">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Foreground" Value="#000000"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="TextElement.FontFamily" Value="{DynamicResource Inter}"/>
+    </Style>
 </ResourceDictionary>
