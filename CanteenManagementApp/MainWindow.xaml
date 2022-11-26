@@ -21,7 +21,7 @@
             <Setter Property="Height" Value="64" />
             <Setter Property="Width" Value="64" />
             <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
-        </Style> 
+        </Style>
     </Window.Resources>
 
     <Border Background="White"

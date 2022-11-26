@@ -24,5 +24,16 @@
         <TextBlock Text="Tạo đơn hàng"
                    Grid.Row="1"
                    Style="{StaticResource TextblockTitle}"/>
+        <TextBox Grid.Row="2"
+                 Width="409" Height="31"
+                 HorizontalAlignment="Left"
+                 Text="Nhập món cần tìm"
+                 Style="{StaticResource TextboxSearchBar}"/>
+        <Button Grid.Column="2" Grid.Row="2"
+                HorizontalAlignment="Left"
+                Width="95" Height="31"
+                Content="Tìm kiếm"
+                Background="#E1251B"
+                Style="{StaticResource ButtonCustomColorPositive}"/>
     </Grid>
 </UserControl>
