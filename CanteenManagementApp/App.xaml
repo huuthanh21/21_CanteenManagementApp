@@ -32,6 +32,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/MenuButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/ViewTitleTheme.xaml"/>
+                <ResourceDictionary Source="Theme/TextboxSearchBar.xaml"/>
+                <ResourceDictionary Source="Theme/ButtonCustomColorPositive.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
 
