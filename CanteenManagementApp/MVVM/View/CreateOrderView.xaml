@@ -6,51 +6,9 @@
              xmlns:local="clr-namespace:CanteenManagementApp.MVVM.View"
              xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
              mc:Ignorable="d"
-             d:Background="#F8F8F8"
              d:DesignHeight="600" d:DesignWidth="665">
     <UserControl.DataContext>
         <viewModel:CreateOrderViewModel/>
     </UserControl.DataContext>
-    <Grid Margin="20 10 10 10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="70"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="200"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="420"/>
-            <ColumnDefinition/>         
-        </Grid.ColumnDefinitions>
-
-        <TextBlock Text="Tạo đơn hàng"
-                   Grid.Row="1"
-                   Style="{StaticResource TextblockTitle}"/>
-
-        <TextBox Grid.Row="2"
-                 Width="409" Height="31"
-                 HorizontalAlignment="Left"
-                 Text="Nhập món cần tìm"
-                 Style="{StaticResource TextboxSearchBar}"/>
-        <Button Grid.Column="1" Grid.Row="2"
-                HorizontalAlignment="Left"
-                Width="95" Height="31"
-                Content="Tìm kiếm"
-                Background="#E1251B"
-                Style="{StaticResource ButtonCustomColorPositive}"/>
-
-        <StackPanel Grid.Column="1" Grid.Row="4"
-                    Orientation="Vertical">
-            <Button Width="195" Height="31"
-                    Content="Tiếp tục"
-                    Background="#0033A1"
-                    Margin="0 0 0 5"
-                    Style="{StaticResource ButtonCustomColorPositive}"/>
-            <Button Width="195" Height="31"
-                    Content="Hủy đơn"  
-                    Style="{StaticResource ButtonCancelRed}"/>
-        </StackPanel>
-    </Grid>
+    <Frame Source="/../../Pages/CreateOrderMainPage.xaml" NavigationUIVisibility="Hidden"/>
 </UserControl>
