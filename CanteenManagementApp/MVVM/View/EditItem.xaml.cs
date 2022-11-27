@@ -16,14 +16,13 @@ using System.Windows.Shapes;
 namespace CanteenManagementApp.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for StorageView.xaml
+    /// Interaction logic for EditItem.xaml
     /// </summary>
-    public partial class StorageView : UserControl
+    public partial class EditItem : Window
     {
-        public StorageView()
+        public EditItem()
         {
             InitializeComponent();
         }
-
     }
 }

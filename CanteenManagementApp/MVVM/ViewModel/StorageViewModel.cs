@@ -1,5 +1,6 @@
 ﻿using CanteenManagementApp.Core;
 using CanteenManagementApp.MVVM.Model;
+using CanteenManagementApp.MVVM.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace CanteenManagementApp.MVVM.ViewModel
@@ -16,6 +18,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
     {
         private CollectionViewSource StorageItemsCollection;
         public ICollectionView StorageSourceCollection => StorageItemsCollection.View;
+        public ICommand EditItemCommand { get; set; }
         public StorageViewModel()
         {
             var _allItems = new ObservableCollection<Item>
@@ -47,7 +50,18 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
             };
             StorageItemsCollection = new CollectionViewSource {  Source = _allItems };
-           
+            // ViewBillCommand = new RelayCommand<PayWindow>((parameter) => true, (parameter) => ViewBill(parameter));
+            //EditItemCommand = new RelayCommand(StorageView =>  ShowEditItem(StorageView) );
+            EditItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => ShowEditItem(parameter));
         }
+
+        private void ShowEditItem(StorageView storageView)
+        {
+            EditItem screen = new EditItem();
+            screen.Show();
+            //screen.show
+        }
+
+       
     }
 }

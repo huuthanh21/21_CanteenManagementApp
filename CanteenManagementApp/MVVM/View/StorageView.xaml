@@ -4,13 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CanteenManagementApp.MVVM.View"
+             xmlns:Model="clr-namespace:CanteenManagementApp.MVVM.Model"
              xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
              mc:Ignorable="d" 
+             x:Name="ucStorage"
              d:Background="#F8F8F8"
              d:DesignHeight="600" d:DesignWidth="665">
     <UserControl.Resources >
         <ResourceDictionary Source="/ScrollBar.xaml"></ResourceDictionary>
     </UserControl.Resources>
+    
     <UserControl.DataContext>
         <viewModel:StorageViewModel/>
     </UserControl.DataContext>
@@ -33,6 +36,23 @@
                    Grid.Row="1"
                    Style="{StaticResource TextblockTitle}"/>
 
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <TextBox 
+                 Width="409" Height="31"
+                 HorizontalAlignment="Left"
+                 Text="Nhập món cần tìm"
+                 Style="{StaticResource TextboxSearchBar}"
+                Margin="15 0 20 0"/>
+            <Button Grid.Column="2" Grid.Row="2"
+                HorizontalAlignment="Left"
+                Width="95" Height="31"
+                Content="Tìm kiếm"
+                Background="#E1251B"
+                Style="{StaticResource ButtonCustomColorPositive}"/>
+            
+        </StackPanel>
+
+
         <StackPanel Grid.Row="3">
             <StackPanel Orientation="Horizontal">
                 <Image Source="/Images/up.png" Margin="5 0 0 0" Width="15" Height="11"/>
@@ -40,7 +60,19 @@
                     Margin="15 12 0 10"
                    Style="{StaticResource TextblockTitleSmall}"
                           VerticalAlignment="Center"/>
-                <Image Source="/Images/Add.png" Width="22" Height="23" Margin="10 5 0 0"/>
+                <Button Margin="15 5 0 0" >
+                    <Image Source="/Images/Add.png" Width="22" Height="23"/>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Ellipse Fill="Transparent"/>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
             </StackPanel>
 
 
@@ -51,16 +83,25 @@
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
 
+
+
+
                 <ListView.Resources>
+                    <Model:BindingProxy x:Key="Proxy" Data="{Binding}" />
+
                     <ContextMenu x:Key="bookContextMenu">
-                        <MenuItem Header="Delete" Click="deleteMenuItem_Click">
+                        <MenuItem Header="Delete"
+                                  Command="{Binding Source={StaticResource Proxy}, Path=Data.EditItemCommand}"
+                                  CommandParameter="{Binding ElementName=ucStorage}">
                             <MenuItem.Icon>
-                                <Image Source="/Images/delete.png"></Image>
+                                <Image Width="20" Height="16" Source="/Images/delete.png"></Image>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Edit" Click="editMenuItem_Click">
+                        <MenuItem Header="Edit"  
+                                  Command="{Binding Source={StaticResource Proxy}, Path=Data.EditItemCommand}"
+                                  CommandParameter="{Binding ElementName=ucStorage}">
                             <MenuItem.Icon>
-                                <Image Source="/Images/editing.png"></Image>
+                                <Image  Width="20" Height="16"  Source="/Images/editing.png"></Image>
                             </MenuItem.Icon>
                         </MenuItem>
                     </ContextMenu>
@@ -69,6 +110,7 @@
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}" >
                         <Setter Property="ContextMenu" Value="{StaticResource bookContextMenu}" />
+                        <Setter Property="Tag" Value="{Binding ElementName=thisUserControl}" />
                     </Style>
                 </ListView.ItemContainerStyle>
 
@@ -119,6 +161,5 @@
             </ListView>
 
         </StackPanel>
-
     </Grid>
 </UserControl>
