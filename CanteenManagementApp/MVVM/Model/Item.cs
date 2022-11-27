@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CanteenManagementApp.MVVM.Model
 {
-    public class Item: ObservableObject
+    public class Item: ObservableObject, ICloneable 
     {
         public int Id { get; set; } 
         public string Name { get; set; }
@@ -15,5 +15,10 @@ namespace CanteenManagementApp.MVVM.Model
         public string Describe { get; set; }
         public double Amount { get; set; }
         public string ImagePath { get; set; }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

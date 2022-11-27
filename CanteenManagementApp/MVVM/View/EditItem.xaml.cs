@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CanteenManagementApp.MVVM.Model;
 
 namespace CanteenManagementApp.MVVM.View
 {
@@ -20,9 +21,18 @@ namespace CanteenManagementApp.MVVM.View
     /// </summary>
     public partial class EditItem : Window
     {
-        public EditItem()
+        public Item EditedItem { get; set; }
+        public EditItem(Item item)
         {
             InitializeComponent();
+            EditedItem = (Item)item.Clone();
+            DataContext = EditedItem;
+        }
+
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
         }
     }
 }

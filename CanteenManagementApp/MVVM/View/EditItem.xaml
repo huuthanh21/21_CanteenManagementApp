@@ -17,9 +17,46 @@
         <TextBlock Text="Món ăn hàng ngày"
                    FontSize="16.15"
                    Style="{StaticResource TextblockTitle}" Canvas.Left="203" Canvas.Top="80"/>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Canvas.Left="170" Canvas.Top="123">
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Canvas.Left="124" Canvas.Top="129">
             <TextBlock   Width="30" Height="20" Text="Id:" FontSize="15" Style="{StaticResource TextblockTitleSmall}"/>
-            <TextBox x:Name="nameTextBox" Padding="2" Text="Cà xào" Width="133" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <TextBox x:Name="IdTextBox" Padding="2" Text="{Binding Id}" Width="133" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" />
         </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Canvas.Left="114" Canvas.Top="168">
+            <TextBlock   Width="30" Height="20" Text="Tên:" FontSize="15" Style="{StaticResource TextblockTitleSmall}" />
+            <TextBox x:Name="nameTextBox" Padding="2" Text="{Binding Name}" Width="133" Height="25" 
+                     Margin="10 0 0 0"
+                     HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </StackPanel>
+
+        <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Canvas.Left="85" Canvas.Top="206" VerticalAlignment="Top">
+            <TextBlock   Width="59" Height="20" Text="Đơn giá:" FontSize="15" Style="{StaticResource TextblockTitleSmall}" />
+            <TextBox x:Name="descrbeTextBox" Padding="2" Text="{Binding Price}" Width="133" Height="25" 
+                     Margin="10 0 0 0"
+                     HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </StackPanel>
+
+        <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" Canvas.Left="100" Canvas.Top="249">
+            <TextBlock   Width="46" Height="20" Text="Mô tả:" FontSize="15" Style="{StaticResource TextblockTitleSmall}" VerticalAlignment="Top" />
+            <TextBox x:Name="describeTextBox" Padding="2" Text="{Binding Describe}" Width="266.77" MinHeight="25"
+                     Margin="8 0 0 0"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                     TextWrapping="WrapWithOverflow"/>
+        </StackPanel>
+
+        <StackPanel Canvas.Left="345" Canvas.Top="120">
+            <Image Source="{Binding ImagePath}" Width="108" Height="83"/>
+            <TextBlock Text="Đổi ảnh"/>
+        </StackPanel>
+
+        <Button HorizontalAlignment="Left"
+                Width="95" Height="31"
+                Content="Lưu"
+                Background="#0033A1"
+                Style="{StaticResource ButtonCustomColorPositive}" Canvas.Left="352" Canvas.Top="440" VerticalAlignment="Top"
+                Click="SaveButton_Click" RenderTransformOrigin="0.415,-0.237"/>
+
+
     </Canvas>
 </Window>

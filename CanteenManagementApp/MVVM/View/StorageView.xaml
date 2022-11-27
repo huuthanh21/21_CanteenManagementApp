@@ -76,7 +76,7 @@
             </StackPanel>
 
 
-            <ListView Width="624" Height="190" Margin="0" ItemsSource="{Binding StorageSourceCollection}" Name="foodListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" >
+            <ListView Width="620" Height="190" Margin="0" BorderThickness="0" ItemsSource="{Binding StorageSourceCollection}" Name="foodListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" >
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
@@ -89,28 +89,35 @@
                 <ListView.Resources>
                     <Model:BindingProxy x:Key="Proxy" Data="{Binding}" />
 
-                    <ContextMenu x:Key="bookContextMenu">
-                        <MenuItem Header="Delete"
+                    <ContextMenu x:Key="foodContextMenu">
+                        <MenuItem Header="Edit" 
                                   Command="{Binding Source={StaticResource Proxy}, Path=Data.EditItemCommand}"
-                                  CommandParameter="{Binding ElementName=ucStorage}">
-                            <MenuItem.Icon>
-                                <Image Width="20" Height="16" Source="/Images/delete.png"></Image>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="Edit"  
-                                  Command="{Binding Source={StaticResource Proxy}, Path=Data.EditItemCommand}"
-                                  CommandParameter="{Binding ElementName=ucStorage}">
+                                  CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={
+                                                RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"
+                                  >
                             <MenuItem.Icon>
                                 <Image  Width="20" Height="16"  Source="/Images/editing.png"></Image>
                             </MenuItem.Icon>
                         </MenuItem>
+                        
+                        <MenuItem Header="Delete"
+                                  Command="{Binding Source={StaticResource Proxy}, Path=Data.DeleteCommand}"
+                                  CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={
+                                                RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
+                            <MenuItem.Icon>
+                                <Image Width="20" Height="16" Source="/Images/delete.png"></Image>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        
+
+                        
                     </ContextMenu>
                 </ListView.Resources>
 
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}" >
-                        <Setter Property="ContextMenu" Value="{StaticResource bookContextMenu}" />
-                        <Setter Property="Tag" Value="{Binding ElementName=thisUserControl}" />
+                        <Setter Property="ContextMenu" Value="{StaticResource foodContextMenu}" />
+                        <Setter Property="Tag" Value="{Binding ElementName=ucStorage}" />
                     </Style>
                 </ListView.ItemContainerStyle>
 
@@ -151,7 +158,12 @@
                                          FontSize="14"
                                          Text="{Binding Price}">
                                     </TextBlock>
+
+
                                 </StackPanel>
+                                <!--<Button Grid.Row="4" Width="30" Height="20" Content="remove"  
+                                    Command="{Binding Source={StaticResource Proxy}, Path=Data.DeleteCommand}"
+                                   CommandParameter="{Binding ElementName=ucStorage}"  />-->
                             </StackPanel>
                         </Border>
 
@@ -159,7 +171,10 @@
 
                 </ListView.ItemTemplate>
             </ListView>
-
+            
         </StackPanel>
+        <Button Grid.Row="4" Width="50" Height="50" Content="remove"  
+                Command="{Binding RemoveCommand}"
+                CommandParameter="{Binding ElementName=ucStorage}"  />
     </Grid>
 </UserControl>
