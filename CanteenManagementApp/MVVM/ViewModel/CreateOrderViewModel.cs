@@ -10,6 +10,8 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         public CreateOrderViewModel()
         {
+
+
         }
     }
 }

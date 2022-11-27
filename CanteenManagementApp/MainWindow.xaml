@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:CanteenManagementApp"
         mc:Ignorable="d"
         Title="21 Canteen Manager" 
-        Height="600" Width="816"
+        Height="600" Width="830"
         MouseDown="Window_MouseDown"
         ResizeMode="NoResize"
         WindowStyle="None"

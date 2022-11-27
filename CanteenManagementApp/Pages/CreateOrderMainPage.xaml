@@ -7,19 +7,19 @@
       xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
       mc:Ignorable="d" 
       d:Background="#F8F8F8"
-      d:DesignHeight="600" d:DesignWidth="665"
+      d:DesignHeight="600" d:DesignWidth="680"
       Title="CreateOrderMainPage">
     <Page.DataContext>
         <viewModel:CreateOrderViewModel/>
     </Page.DataContext>
 
-    <Grid Margin="20 10 10 10">
+    <Grid Margin="20 10 0 10">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="70"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="200"/>
-            <RowDefinition/>
+            <RowDefinition Height="140"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -44,16 +44,42 @@
                 Style="{StaticResource ButtonCustomColorPositive}"/>
 
         <StackPanel Grid.Column="1" Grid.Row="4"
-                    Orientation="Vertical">
-            <Button Width="195" Height="31"
+                    Grid.RowSpan="2"
+                    Orientation="Vertical"
+                    VerticalAlignment="Bottom">
+
+            
+            <Line X1="190" 
+                  Margin="0 27 0 27"
+                  HorizontalAlignment="Center"
+                  StrokeThickness="1.4"
+                  Stroke="Black"/>
+            <StackPanel Orientation="Horizontal"
+                        Width="200">
+                <TextBlock Text="Tổng cộng"
+                           Margin="5 5 15    5 "
+                           VerticalAlignment="Bottom"
+                           FontFamily="{DynamicResource Inter}"
+                           FontSize="15"
+                           FontWeight="Bold"/>
+                <TextBlock FontFamily="{DynamicResource Inter}"
+                           FontSize="21"
+                           FontWeight="Bold">
+                    <Run Text="40.000"/>    
+                    <Run Text="đ"/>
+                </TextBlock>
+            </StackPanel>
+            <Button x:Name="ButtonContinue" 
+                    Width="195" Height="33"
                     Content="Tiếp tục"
                     Background="#0033A1"
                     Margin="0 0 0 5"
                     Click="ButtonContinue_Click"
                     Style="{StaticResource ButtonCustomColorPositive}"/>
-            <Button Width="195" Height="31"
+            <Button Width="195" Height="33"
                     Content="Hủy đơn"  
-                    Style="{StaticResource ButtonCancelRed}"/>
+                    Foreground="#E1251B"
+                    Style="{StaticResource ButtonCustomColorCancel}"/>
         </StackPanel>
     </Grid>
 </Page>
