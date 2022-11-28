@@ -35,12 +35,11 @@
                    Style="{StaticResource TextblockTitle}"/>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2">
-            <TextBox 
-                 Width="409" Height="31"
-                 HorizontalAlignment="Left"
-                 Text="Nhập món cần tìm"
-                 Style="{StaticResource TextboxSearchBar}"
-                Margin="15 0 20 0"/>
+            <TextBox Width="409" Height="31"
+                     HorizontalAlignment="Left"
+                     Text="Nhập món cần tìm"
+                     Style="{StaticResource TextboxSearchBar}"
+                     Margin="15 0 20 0"/>
             <Button Grid.Column="2" Grid.Row="2"
                 HorizontalAlignment="Left"
                 Width="95" Height="31"
@@ -74,7 +73,7 @@
             </StackPanel>
 
 
-            <ListView Width="620" Height="190" Margin="0" BorderThickness="0" ItemsSource="{Binding FoodSourceCollection}" Name="foodListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" >
+            <ListView Width="620" Height="190" Margin="0" BorderThickness="0" ItemsSource="{Binding FoodSourceCollection}" Name="foodListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}" >
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
@@ -199,7 +198,7 @@
                 </Button>
             </StackPanel>
             <!--ListView-->
-            <ListView Width="620" Height="190" Margin="0" BorderThickness="0" ItemsSource="{Binding InventorySourceCollection}" Name="inventoryListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" >
+            <ListView Width="620" Height="190" Margin="0" BorderThickness="0" ItemsSource="{Binding InventorySourceCollection}" Name="inventoryListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}" >
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>

@@ -85,21 +85,25 @@
                     Background="#F8F8F8">
                 <StackPanel Margin="0 0 0 0">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <StackPanel.Resources>
-                            <Style TargetType="Button" BasedOn="{StaticResource toolbarButtonStyle}"/>
-                        </StackPanel.Resources>
                         <Button x:Name="ControlButtonMinumize"  
                                 BorderBrush="Transparent"
                                 Background="Transparent"
                                 Width="40"
-                                Click="ControlButtonMinumize_Click"
-                                Content="" IsTabStop="False"/>
+                                Click="ControlButtonMinumize_Click">
+                            <Button.Content>
+                                <Image Source="Images/icon_minimize.png"
+                                       Width="20" Height="20"/>
+                            </Button.Content>
+                        </Button>
                         <Button x:Name="ControlButtonClose"
                                 BorderBrush="Transparent"
                                 Background="Transparent"
                                 Width="40"
-                                Click="ControlButtonClose_Click"
-                                Content="" IsTabStop="False">
+                                Click="ControlButtonClose_Click">
+                            <Button.Content>
+                                <Image Source="Images/icon_close.png"
+                                       Width="15" Height="15"/>
+                            </Button.Content>
                         </Button>
                     </StackPanel>
                     <ContentControl
