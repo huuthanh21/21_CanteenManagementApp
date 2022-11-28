@@ -39,6 +39,7 @@
                 <ResourceDictionary Source="Theme/ViewTitleTheme.xaml"/>
                 <ResourceDictionary Source="Theme/TextboxSearchBar.xaml"/>
                 <ResourceDictionary Source="Theme/ButtonCustomColorPositive.xaml"/>
+                <ResourceDictionary Source="Theme/ScrollBar.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="Theme/ReportButton.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
