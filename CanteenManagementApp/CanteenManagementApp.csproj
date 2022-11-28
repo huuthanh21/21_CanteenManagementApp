@@ -10,12 +10,15 @@
 
   <ItemGroup>
     <None Remove="Fonts\Inter-VariableFont_slnt,wght.ttf" />
+    <None Remove="Fonts\segmdl2.ttf" />
     <None Remove="Images\Add.png" />
     <None Remove="Images\b1.jpg" />
     <None Remove="Images\b2.jpg" />
     <None Remove="Images\b3.jpg" />
     <None Remove="Images\b4.jpg" />
     <None Remove="Images\b5.jpg" />
+    <None Remove="Images\backicon.png" />
+    <None Remove="Images\dailyreport.png" />
     <None Remove="Images\delete.png" />
     <None Remove="Images\editing.png" />
     <None Remove="Images\icon_close.png" />
@@ -27,12 +30,20 @@
     <None Remove="Images\icon_search.png" />
     <None Remove="Images\icon_storage.png" />
     <None Remove="Images\logo.png" />
+    <None Remove="Images\monthlyreport.png" />
     <None Remove="Images\up.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Fonts\Inter-VariableFont_slnt,wght.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\segmdl2.ttf" />
+    <Resource Include="Images\backicon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\dailyreport.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\icon_report.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -91,6 +102,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\monthlyreport.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\up.png">

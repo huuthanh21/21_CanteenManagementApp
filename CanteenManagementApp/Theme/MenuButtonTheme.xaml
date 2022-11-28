@@ -4,22 +4,26 @@
            TargetType="{x:Type RadioButton}"
            x:Key="MenuButtonTheme">
         <Style.Setters>
+            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+
+        <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
                         <Border Background="{TemplateBinding Background}"
-                                Margin="10 0 6 5"
-                                CornerRadius="19">
+                                Margin="0 0 6 5"
+                                Padding="10 5 5 10"
+                                CornerRadius="8">
                             <StackPanel VerticalAlignment="Center" 
                                         Opacity="0.6"
                                         Orientation="Horizontal">
                                 <Image Source="{Binding Path=Tag, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                       Width="18" Height="18"/>
+                                       Width="18" Height="18" Margin="0 0 10 0"/>
                                 <TextBlock Text="{TemplateBinding Property=Content}"
                                            FontFamily="{DynamicResource Inter}"
                                            FontWeight="SemiBold"        
-                                           Margin="10 0 0 0"    
-                                           VerticalAlignment="Center"/>
+                                           Margin="0 0 0 0"/>
                             </StackPanel>
                         </Border>
                     </ControlTemplate>
@@ -35,23 +39,38 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="RadioButton">
                             <Border Background="#F8F8F8" 
-                                    Margin="10 0 6 5"
-                                    CornerRadius="19">
+                                    Margin="0 0 6 5"
+                                    Padding="10 5 5 10"
+                                    CornerRadius="8">
                                 <StackPanel VerticalAlignment="Center" 
                                             Opacity="1"
                                             Background="{TemplateBinding Background}"
                                             Orientation="Horizontal">
                                     <Image Source="{Binding Path=Tag, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                           Width="18" Height="18"/>
+                                           Width="18" Height="18" Margin="0 0 10 0"/>
                                     <TextBlock Text="{TemplateBinding Property=Content}"
                                        FontFamily="{DynamicResource Inter}"
                                        FontWeight="SemiBold"        
-                                       Margin="10 0 0 0"    
-                                       VerticalAlignment="Center"/>
+                                       Margin="0 0 0 0"
+                                       Foreground="#0033A1"/>
 
                                 </StackPanel>
                             </Border>
                         </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform ScaleX="1.03" ScaleY="1.03"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
                     </Setter.Value>
                 </Setter>
             </Trigger>

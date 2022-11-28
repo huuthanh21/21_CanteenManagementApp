@@ -26,14 +26,20 @@
             <DataTemplate DataType="{x:Type viewModel:ReportViewModel}">
                 <view:ReportView/>
             </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModel:DailyReportModel}">
+                <view:DailyReport/>
+            </DataTemplate>
 
             <FontFamily x:Key="Inter">pack://application:,,,/Fonts/#Inter</FontFamily>
+            <FontFamily x:Key="MDL2">pack://application:,,,/Fonts/#Segoe MDL2 Assets</FontFamily>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/MenuButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/ViewTitleTheme.xaml"/>
                 <ResourceDictionary Source="Theme/TextboxSearchBar.xaml"/>
                 <ResourceDictionary Source="Theme/ButtonCustomColorPositive.xaml"/>
+                <ResourceDictionary Source="Theme/ReportButton.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
 
