@@ -4,14 +4,13 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CanteenManagementApp.Pages"
-      xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
+      xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel" 
+      d:DataContext="{d:DesignInstance Type=viewModel:CreateOrderViewModel}"
       mc:Ignorable="d" 
       d:Background="#F8F8F8"
       d:DesignHeight="600" d:DesignWidth="680"
       Title="CreateOrderPaymentPage">
-    <Page.DataContext>
-        <viewModel:CreateOrderViewModel/>
-    </Page.DataContext>
+
     <Grid Margin="20 10 0 10">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -27,7 +26,18 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Button Content="Trở về"
+        <Button Grid.Column="1" 
+                x:Name="CustomerId"
+                Width="105" Height="31"
+                Background="#0033A1"
+                IsEnabled="False"
+                HorizontalAlignment="Right"
+                Margin="0 0 23 10"
+                d:Content="20120582"
+                Style="{StaticResource ButtonCustomColorPositive}"/>
+        
+        <Button x:Name="ButtonBack"
+                Content="Trở về"
                 HorizontalAlignment="Left"
                 Command="NavigationCommands.BrowseBack"
                 Style="{StaticResource ButtonBack}"/>
@@ -43,20 +53,29 @@
               VerticalAlignment="Center"
               StrokeThickness="1.38"/>
 
-        <Button Grid.Column="0" Grid.Row="5"
+        <StackPanel Grid.Row="4" 
+                    Orientation="Horizontal">
+            <RadioButton Content="Tiền mặt"
+                         Style="{StaticResource ButtonPaymentMethod}"/>
+            <RadioButton Content="Trả trước"
+                         IsChecked="True"
+                         Style="{StaticResource ButtonPaymentMethod}"/>
+        </StackPanel>
+        
+        <Button x:Name="ButtonCancel" Grid.Column="0" Grid.Row="5"
                 Content="Hủy đơn"
-                Width="200"
+                Width="200" Height="33"
                 Foreground="#E1251B"
                 Style="{StaticResource ButtonCustomColorCancel}"
+                Click="ButtonCancel_Click"
                 HorizontalAlignment="Right"/>
         <Button x:Name="ButtonNavigateReceiptPage" Grid.Column="1" Grid.Row="5" 
                 Content="Thanh toán"
                 Background="#0033A1"
-                Width="200"
+                Width="200" Height="33"
                 Margin="10 0 0 0"
                 Click="ButtonNavigateReceiptPage_Click"
                 Style="{StaticResource ButtonCustomColorPositive}"
                 HorizontalAlignment="Left"/>
-
     </Grid>
 </Page>

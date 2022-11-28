@@ -39,10 +39,11 @@
                 <ResourceDictionary Source="Theme/ViewTitleTheme.xaml"/>
                 <ResourceDictionary Source="Theme/TextboxSearchBar.xaml"/>
                 <ResourceDictionary Source="Theme/ButtonCustomColorPositive.xaml"/>
-                <ResourceDictionary Source="Theme/ScrollBar.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Theme/ScrollBar.xaml"/>
                 <ResourceDictionary Source="Theme/ReportButton.xaml"/>
                 <ResourceDictionary Source="Theme/ButtonCustomColorCancel.xaml"/>
                 <ResourceDictionary Source="Theme/ButtonBack.xaml"/>
+                <ResourceDictionary Source="Theme/ButtonPaymentMethod.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
 
