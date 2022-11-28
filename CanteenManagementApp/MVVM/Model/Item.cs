@@ -9,7 +9,8 @@ namespace CanteenManagementApp.MVVM.Model
 {
     public class Item: ObservableObject, ICloneable 
     {
-        public int Id { get; set; } 
+        public int Id { get; set; }
+        public int Type { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
         public string Describe { get; set; }
