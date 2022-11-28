@@ -1,5 +1,6 @@
-﻿using System;
+﻿using CanteenManagementApp.MVVM.ViewModel;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace CanteenManagementApp.MVVM.View
 {
@@ -8,9 +9,13 @@ namespace CanteenManagementApp.MVVM.View
     /// </summary>
     public partial class CreateOrderView : UserControl
     {
+        public CreateOrderViewModel viewModel { get; set; }
         public CreateOrderView()
         {
             InitializeComponent();
+
+
+            DataContext = viewModel;
         }
     }
 }

@@ -16,6 +16,7 @@
                                   Margin="6 0 0 0">
                                 <TextBox x:Name="TextboxInput"
                                          Background="Transparent"
+                                         Margin="25 0 0 0"
                                          FontWeight="Medium"
                                          FontSize="15"
                                          FontFamily="{DynamicResource Inter}"
@@ -24,20 +25,22 @@
                                 <StackPanel Orientation="Horizontal"
                                             Panel.ZIndex="0"
                                             Focusable="False">
-                                    <StackPanel.Visibility>
-                                        <MultiBinding Converter="{StaticResource InputToVisibility}">
-                                            <Binding ElementName="TextboxInput" Path="Text" />  
-                                            <Binding ElementName="TextboxInput" Path="IsFocused"/>
-                                        </MultiBinding>
-                                    </StackPanel.Visibility>
                                     <Image Source="../Images/icon_search.png"
                                            Width="17" Height="16"/>
                                     <TextBlock Text="{TemplateBinding Text}"
                                                FontWeight="Medium"
                                                FontSize="15"
+                                               Focusable="False"
                                                FontFamily="{DynamicResource Inter}"
                                                Foreground="#646464"
-                                               Margin="15 0 0 0"/>
+                                               Margin="15 0 0 0">
+                                        <TextBlock.Visibility>
+                                            <MultiBinding Converter="{StaticResource InputToVisibility}">
+                                                <Binding ElementName="TextboxInput" Path="Text" />
+                                                <Binding ElementName="TextboxInput" Path="IsFocused"/>
+                                            </MultiBinding>
+                                        </TextBlock.Visibility>
+                                    </TextBlock>
                                 </StackPanel>
                             </Grid>
                         </Border>

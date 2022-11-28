@@ -41,6 +41,8 @@
                 <ResourceDictionary Source="Theme/ButtonCustomColorPositive.xaml"/>
                 <ResourceDictionary Source="Theme/ScrollBar.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="Theme/ReportButton.xaml"/>
+                <ResourceDictionary Source="Theme/ButtonCustomColorCancel.xaml"/>
+                <ResourceDictionary Source="Theme/ButtonBack.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
 
