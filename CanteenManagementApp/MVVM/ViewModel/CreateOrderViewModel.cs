@@ -34,6 +34,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             CreateOrderReceiptPage = new CreateOrderReceiptPage(this);
 
             CurrentPage = CreateOrderMainPage;
+            Customer = customer;
 
             NavigateMainPageCommand = new RelayCommand(o =>
             {

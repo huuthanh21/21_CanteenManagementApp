@@ -27,7 +27,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         public MainViewModel()  
         {
-            CreateOrderVM = new CreateOrderViewModel();
+            //CreateOrderVM = new CreateOrderViewModel();
             CustomerVM = new CustomerViewModel();
             MenuVM = new MenuViewModel();
             StorageVM = new StorageViewModel();

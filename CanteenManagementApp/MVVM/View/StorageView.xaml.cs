@@ -11,5 +11,10 @@ namespace CanteenManagementApp.MVVM.View
         {
             InitializeComponent();
         }
+
+        private void inventoryListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

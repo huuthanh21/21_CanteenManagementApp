@@ -15,16 +15,23 @@ using System.Windows.Shapes;
 
 namespace CanteenManagementApp.MVVM.View
 {
-
-    public partial class DailyReport : Page
+    /// <summary>
+    /// Interaction logic for Report.xaml
+    /// </summary>
+    public partial class Report : Page
     {
-        public DailyReport()
+        public Report()
         {
             InitializeComponent();
         }
-        private void ButtonLink_Click(object sender, RoutedEventArgs e)
+
+        private void DailyReport_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.ReportViewModel.ReportCommand.Execute(sender);
+            ViewModel.ReportViewModel.DailyReportCommand.Execute(sender);
+        }
+        private void MonthlyReport_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ReportViewModel.MonthlyReportCommand.Execute(sender);
         }
     }
 }

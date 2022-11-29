@@ -10,8 +10,8 @@
              x:Name="ucStorage"
              d:Background="#F8F8F8"
              d:DesignHeight="600" d:DesignWidth="665">
-  
-    
+
+
     <UserControl.DataContext>
         <viewModel:StorageViewModel/>
     </UserControl.DataContext>
@@ -73,7 +73,7 @@
             </StackPanel>
 
 
-            <ListView Width="620" Height="190" Margin="0" BorderThickness="0" ItemsSource="{Binding FoodSourceCollection}" Name="foodListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}" >
+            <ListView Height="190" Margin="0" BorderThickness="0" ItemsSource="{Binding FoodSourceCollection}" Name="foodListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}" >
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
@@ -198,7 +198,7 @@
                 </Button>
             </StackPanel>
             <!--ListView-->
-            <ListView Width="620" Height="190" Margin="0" BorderThickness="0" ItemsSource="{Binding InventorySourceCollection}" Name="inventoryListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}" >
+            <ListView Height="190" Margin="0" BorderThickness="0" ItemsSource="{Binding InventorySourceCollection}" Name="inventoryListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="inventoryListView_SelectionChanged" >
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>

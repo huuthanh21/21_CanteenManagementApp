@@ -30,6 +30,10 @@
             <DataTemplate DataType="{x:Type viewModel:DailyReportModel}">
                 <view:DailyReport/>
             </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModel:MonthlyReportModel}">
+                <view:MonthlyReport/>
+            </DataTemplate>
 
             <FontFamily x:Key="Inter">pack://application:,,,/Fonts/#Inter</FontFamily>
             <FontFamily x:Key="MDL2">pack://application:,,,/Fonts/#Segoe MDL2 Assets</FontFamily>
@@ -41,9 +45,11 @@
                 <ResourceDictionary Source="Theme/ButtonCustomColorPositive.xaml"/>
                 <ResourceDictionary Source="Theme/ScrollBar.xaml"/>
                 <ResourceDictionary Source="Theme/ReportButton.xaml"/>
+                <ResourceDictionary Source="Theme/ReportItem.xaml"/>
                 <ResourceDictionary Source="Theme/ButtonCustomColorCancel.xaml"/>
                 <ResourceDictionary Source="Theme/ButtonBack.xaml"/>
                 <ResourceDictionary Source="Theme/ButtonPaymentMethod.xaml"/>
+                <ResourceDictionary Source="Theme/DatePicker.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
 

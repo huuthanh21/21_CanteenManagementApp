@@ -42,6 +42,7 @@
                 VerticalAlignment="Stretch"
                 Content="Báo cáo ngày"
                 FontSize="32"
+                Click="MonthlyReport_Click"
                 Tag="/Images/monthlyreport.png"
                 Grid.Row="3"
                 Grid.Column="2"

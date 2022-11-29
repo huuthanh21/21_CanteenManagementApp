@@ -9,16 +9,16 @@ using System.Windows.Data;
 namespace CanteenManagementApp.MVVM.ViewModel
 {
 
-    public class DailyReportModel : ObservableObject
+    public class MonthlyReportModel : ObservableObject
     {
-        public ObservableCollection<ReportItem> dailyListItems;
+        public ObservableCollection<ReportItem> monthlyListItems;
 
         private CollectionViewSource ReportItemsCollectionSource;
         public ICollectionView ReportItemsCollection => ReportItemsCollectionSource.View;
         
-        public DailyReportModel()
+        public MonthlyReportModel()
         {
-            dailyListItems = new ObservableCollection<ReportItem>
+            monthlyListItems = new ObservableCollection<ReportItem>
             {
                 new ReportItem() { Name = "Tổng doanh thu", Value = "1.050.000đ"},
                 new ReportItem() { Name = "Tổng hàng tồn kho bán được", Value = "45"},
@@ -27,7 +27,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 new ReportItem() { Name = "Tổng doanh thu món ăn hàng ngày", Value = "600.000đ"},
             };
 
-            ReportItemsCollectionSource = new CollectionViewSource { Source = dailyListItems };
+            ReportItemsCollectionSource = new CollectionViewSource { Source = monthlyListItems };
         }
     }
 }

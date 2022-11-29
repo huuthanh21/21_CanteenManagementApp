@@ -60,7 +60,7 @@
     <Style TargetType="{x:Type Button}" x:Key="toolbarButtonStyle">
         <Setter Property="Background" Value="White" />
         <Setter Property="Foreground" Value="#3a516d" />
-        <Setter Property="FontFamily" Value="{DynamicResource ResourceKey=MDL2}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource MDL2}"/>
         <Setter Property="FontSize" Value="18.2" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
