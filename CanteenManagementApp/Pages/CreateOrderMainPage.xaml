@@ -7,6 +7,7 @@
       xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel" 
       d:DataContext="{d:DesignInstance Type=viewModel:CreateOrderViewModel}"
       mc:Ignorable="d" 
+      Loaded="Page_Loaded"
       d:Background="#F8F8F8"
       d:DesignHeight="600" d:DesignWidth="680"
       Title="CreateOrderMainPage">

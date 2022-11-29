@@ -27,6 +27,29 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public CreateOrderPaymentPage CreateOrderPaymentPage { get; set; }
         public CreateOrderReceiptPage CreateOrderReceiptPage { get; set; }
 
+        public CreateOrderViewModel() {
+            CreateOrderMainPage = new CreateOrderMainPage(this);
+            CreateOrderPaymentPage = new CreateOrderPaymentPage(this);
+            CreateOrderReceiptPage = new CreateOrderReceiptPage(this);
+
+            CurrentPage = CreateOrderMainPage;
+
+            NavigateMainPageCommand = new RelayCommand(o =>
+            {
+                CurrentPage = CreateOrderMainPage;
+            });
+
+            NavigatePaymentPageCommand = new RelayCommand(o =>
+            {
+                CurrentPage = CreateOrderPaymentPage;
+            });
+
+            NavigateReceiptPageCommand = new RelayCommand(o =>
+            {
+                CurrentPage = CreateOrderReceiptPage;
+            });
+        }
+
         public CreateOrderViewModel(Customer customer = null)
         {
             CreateOrderMainPage = new CreateOrderMainPage(this);

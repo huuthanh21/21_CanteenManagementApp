@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace CanteenManagementApp.Theme
+namespace CanteenManagementApp.Converters
 {
     public class BoolToVisibilityConverter : IMultiValueConverter
     {

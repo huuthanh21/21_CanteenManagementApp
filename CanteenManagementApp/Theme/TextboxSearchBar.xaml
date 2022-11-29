@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:CanteenManagementApp.Theme">
+                    xmlns:local="clr-namespace:CanteenManagementApp.Converters">
     <local:BoolToVisibilityConverter x:Key="InputToVisibility"/>
     <Style TargetType="{x:Type TextBox}"
            x:Key="TextboxSearchBar">
