@@ -14,7 +14,6 @@ namespace CanteenManagementApp.Pages
         public CreateOrderPaymentPage(CreateOrderViewModel viewModel)
         {
             CreateOrderVM = viewModel;
-            SetCorrespondingLayout();
 
             InitializeComponent();
         }
@@ -28,7 +27,13 @@ namespace CanteenManagementApp.Pages
             else
             {
                 CustomerId.Visibility = System.Windows.Visibility.Collapsed;
+                PanelPaymentMethods.Visibility = System.Windows.Visibility.Collapsed;
             }
+        }
+
+        private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            SetCorrespondingLayout();
         }
 
         private void ButtonCancel_Click(object sender, System.Windows.RoutedEventArgs e)

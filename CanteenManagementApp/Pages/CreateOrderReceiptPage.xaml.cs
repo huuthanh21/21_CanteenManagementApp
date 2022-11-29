@@ -17,9 +17,28 @@ namespace CanteenManagementApp.Pages
             InitializeComponent();
         }
 
+        private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            SetCorrespondingLayout();
+        }
+
+        private void SetCorrespondingLayout()
+        {
+            if (CreateOrderVM.HasCustomer)
+            {
+                CustomerId.Content = CreateOrderVM.Customer.Id;
+            }
+            else
+            {
+                CustomerId.Visibility = System.Windows.Visibility.Collapsed;
+            }
+        }
+
         private void ButtonNavigateMainPage_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             CreateOrderVM.NavigateMainPageCommand.Execute(null);
         }
+
+        
     }
 }

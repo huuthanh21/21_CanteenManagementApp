@@ -5,11 +5,18 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CanteenManagementApp.Pages"
       xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel" 
+      xmlns:converters="clr-namespace:CanteenManagementApp.Converters"
       d:DataContext="{d:DesignInstance Type=viewModel:CreateOrderViewModel}"
       mc:Ignorable="d" 
+      Loaded="Page_Loaded"
       d:Background="#F8F8F8"
       d:DesignHeight="600" d:DesignWidth="680"
       Title="CreateOrderPaymentPage">
+    <Page.Resources>
+        <ResourceDictionary>
+            <converters:IsCheckedForegroundConverter x:Key="ForegroundConverter"/>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <Grid Margin="20 10 0 10">
         <Grid.RowDefinitions>
@@ -53,13 +60,46 @@
               VerticalAlignment="Center"
               StrokeThickness="1.38"/>
 
-        <StackPanel Grid.Row="4" 
+        <StackPanel Grid.Row="4"
+                    x:Name="PanelPaymentMethods"
                     Orientation="Horizontal">
-            <RadioButton Content="Tiền mặt"
-                         Style="{StaticResource ButtonPaymentMethod}"/>
-            <RadioButton Content="Trả trước"
+            <RadioButton x:Name="ButtonPayInCash" 
+                         Style="{StaticResource ButtonPaymentMethod}"
+                         Margin="0 0 10 0">
+                <RadioButton.Content>
+                    <TextBlock Text="Tiền mặt" 
+                               FontSize="15"
+                               FontFamily="{DynamicResource Inter}"
+                               Foreground="{Binding Path=IsChecked, Converter={StaticResource ForegroundConverter}, ElementName=ButtonPayInCash}"
+                               FontWeight="Bold"   
+                               Margin="0 0 0 0"/>
+                </RadioButton.Content>
+            </RadioButton>
+            <RadioButton x:Name="ButtonPayThroughAccount"  
                          IsChecked="True"
-                         Style="{StaticResource ButtonPaymentMethod}"/>
+                         Style="{StaticResource ButtonPaymentMethod}">
+                <RadioButton.Content>
+                    <TextBlock FontSize="15"
+                               FontFamily="{DynamicResource Inter}"
+                               Foreground="{Binding Path=IsChecked, Converter={StaticResource ForegroundConverter}, ElementName=ButtonPayThroughAccount}"
+                               FontWeight="Bold"   
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Margin="0 0 0 0">
+                        <Run Text="Trả trước"/>
+                        <LineBreak/>
+                        <Run Text="Số dư:"
+                             FontWeight="Medium"
+                             FontSize="11"/>
+                        <Run d:Text="100.000"
+                             FontWeight="Medium"
+                             FontSize="11"/><!--
+                     --><Run d:Text="đ"
+                             FontWeight="Medium"
+                             FontSize="11"/>        
+                    </TextBlock>
+                </RadioButton.Content>
+            </RadioButton>
         </StackPanel>
         
         <Button x:Name="ButtonCancel" Grid.Column="0" Grid.Row="5"

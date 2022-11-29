@@ -13,10 +13,14 @@ namespace CanteenManagementApp.Pages
         public CreateOrderMainPage(CreateOrderViewModel viewModel)
         {
             CreateOrderVM = viewModel;
-            SetCorrespondingLayout();
-            
 
             InitializeComponent();
+        }
+
+
+        private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            SetCorrespondingLayout();
         }
 
         private void SetCorrespondingLayout()
@@ -40,5 +44,6 @@ namespace CanteenManagementApp.Pages
         {
             CreateOrderVM?.NavigateMainPageCommand.Execute(null);
         }
+
     }
 }
