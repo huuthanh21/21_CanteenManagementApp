@@ -43,8 +43,11 @@
                 <ResourceDictionary Source="Theme/ReportButton.xaml"/>
                 <ResourceDictionary Source="Theme/ButtonCustomColorCancel.xaml"/>
                 <ResourceDictionary Source="Theme/ButtonBack.xaml"/>
+                <ResourceDictionary Source="Theme/ButtonAdd.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
             
+
 
         </ResourceDictionary>
     </Application.Resources>

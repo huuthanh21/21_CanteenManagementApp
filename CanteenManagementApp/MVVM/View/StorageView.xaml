@@ -10,8 +10,8 @@
              x:Name="ucStorage"
              d:Background="#F8F8F8"
              d:DesignHeight="600" d:DesignWidth="665">
-  
-    
+
+
     <UserControl.DataContext>
         <viewModel:StorageViewModel/>
     </UserControl.DataContext>
@@ -46,57 +46,48 @@
                 Content="Tìm kiếm"
                 Background="#E1251B"
                 Style="{StaticResource ButtonCustomColorPositive}"/>
-            
+
         </StackPanel>
 
 
         <StackPanel Grid.Row="3">
             <StackPanel Orientation="Horizontal">
-                <Image Source="/Images/up.png" Margin="11 0 0 0" Width="15" Height="11"/>
+                <Image Source="/Images/up.png" Margin="20 0 0 0" Width="15" Height="11"/>
                 <TextBlock Text="Món ăn hàng ngày"
                     Margin="15 12 0 10"
                    Style="{StaticResource TextblockTitleSmall}"
                           VerticalAlignment="Center"/>
-                <Button Margin="15 5 0 0" >
-                    <Image Source="/Images/Add.png" Width="22" Height="23"/>
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Grid>
-                                <Ellipse Fill="Transparent"/>
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
+                <Button Margin="5 5 0 0"
+                        Style="{StaticResource ButtonAdd}"/>
             </StackPanel>
 
 
-            <ListView Width="620" Height="190" Margin="0" BorderThickness="0" ItemsSource="{Binding FoodSourceCollection}" Name="foodListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}" >
+            <ListView
+                      Width="620" Height="190"
+                      Margin="0" BorderThickness="1" 
+                      ItemsSource="{Binding FoodSourceCollection}" 
+                      Name="foodListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}"
+                      >
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
 
-
-
-
                 <ListView.Resources>
                     <Model:BindingProxy x:Key="Proxy" Data="{Binding}" />
-
                     <ContextMenu x:Key="foodContextMenu">
                         <MenuItem Header="Edit" 
                                   Command="{Binding Source={StaticResource Proxy}, Path=Data.EditItemCommand}"
-                                  CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={
-                                                RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"
-                                  >
+                                  CommandParameter="{Binding PlacementTarget.Tag,
+                                                             RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
                             <MenuItem.Icon>
                                 <Image  Width="20" Height="16"  Source="/Images/editing.png"></Image>
                             </MenuItem.Icon>
                         </MenuItem>
-                        
+
                         <MenuItem Header="Delete"
                                   Command="{Binding Source={StaticResource Proxy}, Path=Data.DeleteCommand}"
                                   CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={
@@ -105,100 +96,130 @@
                                 <Image Width="20" Height="16" Source="/Images/delete.png"></Image>
                             </MenuItem.Icon>
                         </MenuItem>
-                        
-
-                        
                     </ContextMenu>
+                    
                 </ListView.Resources>
 
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListViewItem}" >
-                        <Setter Property="ContextMenu" Value="{StaticResource foodContextMenu}" />
-                        <Setter Property="Tag" Value="{Binding ElementName=ucStorage}" />
-                    </Style>
-                </ListView.ItemContainerStyle>
+
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderBrush="#2E4057" 
-                                BorderThickness="1"  
+                        <Border x:Name="border"
+                                BorderBrush="Gray" 
+                                BorderThickness="2"  
                                 CornerRadius="5"
-                                Margin ="2">
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0.5,0" 
-                                                     EndPoint="0.5,1">
-                                    <GradientStop Color="White" 
-                                                  Offset="1.0" />
-                                </LinearGradientBrush>
-                            </Border.Background>
+                                 >
                             <StackPanel Orientation="Vertical" 
                                         Width="104"
-                                        Height="120"
-                                        >
-                                <Image Margin ="0 5 0 5 "
+                                        Height="120" >
+                                <Image Margin ="0 5 0 0 "
+                                       MinWidth="80"
                                        Width="60" Height="54"
                                        Source="{Binding ImagePath}"/>
                                 <StackPanel Orientation="Horizontal" 
                                             VerticalAlignment="Center"
-                                        Margin="0 5 0 0" >
-                                    
-
+                                        Margin="0 0 0 0" >
                                     <TextBlock TextAlignment="Left"
-                                               TextWrapping="WrapWithOverflow"
-                                               Width="48" 
-                                               Foreground="Black" 
-                                               FontSize="10"
-                                               Text="{Binding Name}"
-                                               Style="{StaticResource TextblockTitleSmall}"
-                                               Margin="6 0 0 0"/>
-                                    
+                                                   TextWrapping="WrapWithOverflow"
+                                                   Width="48" 
+                                                   Height="60"
+                                                   Foreground="Black" 
+                                                   FontSize="10"
+                                                   Text="{Binding Name}"
+                                                   Style="{StaticResource TextblockTitleSmall}"
+                                                   Margin="0 0 0 0"
+                                                   Padding="6 10 0 0"/>
+
                                     <TextBlock Foreground="#0033A1" 
-                                         HorizontalAlignment="Left"
-                                         VerticalAlignment="Top"
-                                               Margin="3 0 0 0"
-                                         FontSize="12"
-                                         Style="{StaticResource TextblockTitleSmall}"
-                                         Text="{Binding Price}"/>
+                                                 HorizontalAlignment="Left"
+                                                 VerticalAlignment="Top"
+                                                 Margin="0 0 0 0"
+                                                 Padding="3 10 0 0"
+                                                 FontSize="12"
+                                                 Style="{StaticResource TextblockTitleSmall}"
+                                                 Text="{Binding Price}"
+                                                 Height="60"
+                                                 Width="50"/>
+                                    
 
                                 </StackPanel>
-                                <!--<Button Grid.Row="4" Width="30" Height="20" Content="remove"  
-                                    Command="{Binding Source={StaticResource Proxy}, Path=Data.DeleteCommand}"
-                                   CommandParameter="{Binding ElementName=ucStorage}"  />-->
+                                <!--<StackPanel Orientation="Horizontal">
+                                    <Button Margin="0 0 0 0"
+                                            Width="80"
+                                            Style="{StaticResource ButtonAdd}"
+                                            Command="{Binding Source={StaticResource Proxy}, Path=Data.EditItemCommand}"
+                                            CommandParameter="{Binding ElementName=ucStorage}" 
+                                            />
+                                </StackPanel>-->
                             </StackPanel>
                         </Border>
 
+                        <DataTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                 Value="True">
+                                <Setter Property="BorderBrush"
+                                    TargetName="border"
+                                    Value="#0033A1" />
+
+                                <Setter Property="BorderThickness"
+                                    TargetName="border"
+                                    Value="2" />
+                            </Trigger>
+                            <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={
+                                          RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem }}}"
+                                          Value="True">
+                                <Setter Property="BorderBrush"
+                                    TargetName="border"
+                                    Value="#0033A1" />
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+
                     </DataTemplate>
 
-                </ListView.ItemTemplate>
-            </ListView>
-            
-        </StackPanel>
-        <!--<Button Grid.Row="4" Width="50" Height="50" Content="remove"  
-                Command="{Binding RemoveCommand}"
-                CommandParameter="{Binding ElementName=ucStorage}"  />-->
 
+                </ListView.ItemTemplate>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}" >
+                        <!--remove green selected area-->
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+
+                        <Setter Property="ContextMenu" Value="{StaticResource foodContextMenu}" />
+                        <Setter Property="Tag" Value="{Binding ElementName=ucStorage}" />
+                        <Setter Property="Margin" Value="5"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+            </ListView>
+
+        </StackPanel>
+        
+
+        <!--ListView Inventory-->
         <StackPanel Grid.Row="4">
             <!--Title-->
             <StackPanel Orientation="Horizontal">
-                <Image Source="/Images/up.png" Margin="11 0 0 0" Width="15" Height="11"/>
+                <Image Source="/Images/up.png" Margin="20 0 0 0" Width="15" Height="11"/>
                 <TextBlock Text="Hàng tồn kho"
                     Margin="15 12 0 10"
                    Style="{StaticResource TextblockTitleSmall}"
                           VerticalAlignment="Center"/>
-                <Button Margin="15 5 0 0" >
-                    <Image Source="/Images/Add.png" Width="22" Height="23"/>
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Grid>
-                                <Ellipse Fill="Transparent"/>
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
+                <Button Margin="5 0 0 0"
+                        Style="{StaticResource ButtonAdd}"/>
             </StackPanel>
             <!--ListView-->
-            <ListView Width="620" Height="190" Margin="0" BorderThickness="0" ItemsSource="{Binding InventorySourceCollection}" Name="inventoryListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}" >
+            <ListView Width="620" Height="190" Margin="0" BorderThickness="1"
+                      ItemsSource="{Binding InventorySourceCollection}"
+                      Name="inventoryListView"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center"
+                      d:ItemsSource="{d:SampleData ItemCount=5}" >
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
@@ -228,32 +249,32 @@
                                 <Image Width="20" Height="16" Source="/Images/delete.png"></Image>
                             </MenuItem.Icon>
                         </MenuItem>
-
-
-
                     </ContextMenu>
                 </ListView.Resources>
 
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}" >
+                        <!--remove green selected area-->
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
                         <Setter Property="ContextMenu" Value="{StaticResource foodContextMenu}" />
                         <Setter Property="Tag" Value="{Binding ElementName=ucStorage}" />
+                        <Setter Property="Margin" Value="5"/>
                     </Style>
                 </ListView.ItemContainerStyle>
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderBrush="#2E4057" 
-                                BorderThickness="1"  
+                        <Border x:Name="border"
+                                BorderBrush="Gray" 
+                                BorderThickness="2"  
                                 CornerRadius="5"
-                                Margin ="2">
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0.5,0" 
-                                                     EndPoint="0.5,1">
-                                    <GradientStop Color="White" 
-                                                  Offset="1.0" />
-                                </LinearGradientBrush>
-                            </Border.Background>
+                                 >
                             <StackPanel Orientation="Vertical" 
                                         Width="104"
                                         Height="120"
@@ -262,12 +283,12 @@
                                     <Image Margin ="10 5 0 5 "
                                        Width="60" Height="65"
                                        Source="{Binding ImagePath}"/>
-                                    <TextBlock Width="38" Height="11" VerticalAlignment="Top" Margin="6 6 0 0"
+                                    <TextBlock Width="38" Height="60" VerticalAlignment="Top" Margin="6 6 0 0"
                                                FontSize="9.23"
                                                Style="{StaticResource TextblockTitleSmall}"
                                                Text="{Binding Amount}"/>
                                 </StackPanel>
-                                
+
                                 <StackPanel Orientation="Horizontal" 
                                             VerticalAlignment="Center"
                                         Margin="0 5 0 0" >
@@ -276,24 +297,46 @@
                                     <TextBlock TextAlignment="Left"
                                                TextWrapping="WrapWithOverflow"
                                                Width="48" 
+                                               Height="44"
                                                Foreground="Black" 
                                                FontSize="10"
                                                Text="{Binding Name}"
                                                Style="{StaticResource TextblockTitleSmall}"
-                                               Margin="6 0 0 0"/>
+                                               Padding="6 6 0 0"/>
 
                                     <TextBlock Foreground="#0033A1" 
                                          HorizontalAlignment="Left"
                                          VerticalAlignment="Top"
-                                               Margin="3 0 0 0"
+                                         Padding="6 6 0 0"
                                          FontSize="12"
                                          Style="{StaticResource TextblockTitleSmall}"
-                                         Text="{Binding Price}"/>
+                                         Text="{Binding Price}"
+                                         Height="44"
+                                         Width="50"/>
 
                                 </StackPanel>
                             </StackPanel>
                         </Border>
+                        <DataTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                 Value="True">
+                                <Setter Property="BorderBrush"
+                                    TargetName="border"
+                                    Value="#0033A1" />
 
+                                <Setter Property="BorderThickness"
+                                    TargetName="border"
+                                    Value="2" />
+                            </Trigger>
+                            <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={
+                                          RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem }}}"
+                                          Value="True">
+                                <Setter Property="BorderBrush"
+                                    TargetName="border"
+                                    Value="#0033A1" />
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
                     </DataTemplate>
 
                 </ListView.ItemTemplate>

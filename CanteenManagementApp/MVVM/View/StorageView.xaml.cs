@@ -11,5 +11,6 @@ namespace CanteenManagementApp.MVVM.View
         {
             InitializeComponent();
         }
+
     }
 }
