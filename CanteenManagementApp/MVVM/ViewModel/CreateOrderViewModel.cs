@@ -21,7 +21,9 @@ namespace CanteenManagementApp.MVVM.ViewModel
         }
 
         public Customer Customer { get; set; } = null;
-        public bool HasCustomer { get => Customer != null; set => HasCustomer = value; }
+
+        private bool _hasCustomer;
+        public bool HasCustomer { get => Customer != null; set => _hasCustomer = value; }
 
         public CreateOrderMainPage CreateOrderMainPage { get; set; }
         public CreateOrderPaymentPage CreateOrderPaymentPage { get; set; }

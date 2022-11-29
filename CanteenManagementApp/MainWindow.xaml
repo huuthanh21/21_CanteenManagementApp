@@ -12,8 +12,7 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         Background="Transparent"
-        AllowsTransparency="True"
-        >
+        AllowsTransparency="True">
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
@@ -26,7 +25,7 @@
     </Window.Resources>
 
     <Border Background="White"
-            Height="560" Width="800"
+            Height="660" Width="860"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             CornerRadius="8">

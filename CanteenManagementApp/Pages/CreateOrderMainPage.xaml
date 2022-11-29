@@ -9,12 +9,12 @@
       mc:Ignorable="d" 
       Loaded="Page_Loaded"
       d:Background="#F8F8F8"
-      d:DesignHeight="600" d:DesignWidth="680"
+      d:DesignHeight="560" d:DesignWidth="680"
       Title="CreateOrderMainPage">
 
     <Grid Margin="20 10 0 10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="70"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="200"/>
@@ -52,12 +52,11 @@
                 Background="#E1251B"
                 Style="{StaticResource ButtonCustomColorPositive}"/>
 
-        <StackPanel Grid.Column="1" Grid.Row="4"
+        <StackPanel Grid.Column="1" Grid.Row="3"
                     Grid.RowSpan="2"
                     Orientation="Vertical"
                     VerticalAlignment="Bottom">
 
-            
             <Line X1="190" 
                   Margin="0 27 0 27"
                   HorizontalAlignment="Center"
