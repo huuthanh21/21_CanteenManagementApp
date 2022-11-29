@@ -58,7 +58,9 @@
                    Style="{StaticResource TextblockTitleSmall}"
                           VerticalAlignment="Center"/>
                 <Button Margin="5 5 0 0"
-                        Style="{StaticResource ButtonAdd}"/>
+                        Style="{StaticResource ButtonAdd}"
+                        Command="{Binding AddItemCommand}"
+                        CommandParameter="{Binding ElementName=ucStorage}"  />
             </StackPanel>
 
 
@@ -318,8 +320,7 @@
                             </StackPanel>
                         </Border>
                         <DataTemplate.Triggers>
-                            <Trigger Property="IsMouseOver"
-                                 Value="True">
+                            <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="BorderBrush"
                                     TargetName="border"
                                     Value="#0033A1" />

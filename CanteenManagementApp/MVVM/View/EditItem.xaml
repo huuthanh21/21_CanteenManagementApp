@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:Background="#F8F8F8"
              Height="535" Width="500"
-             d:DesignHeight="535" d:DesignWidth="500">
+             d:DesignHeight="535" d:DesignWidth="500" ResizeMode="NoResize">
     <Canvas>
         <Image Source="/Images/logo.png"
                    Width="56" Canvas.Left="23" Canvas.Top="25" Height="53"/>
