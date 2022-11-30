@@ -75,6 +75,7 @@ namespace CanteenManagementApp.MVVM.View
                 imageBrush.ImageSource = bitmap;
                 grdSelectImg.Background = imageBrush;
                 imageEmpty.Visibility = Visibility.Hidden;
+
             }
         }
     }
