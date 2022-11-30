@@ -79,13 +79,13 @@
 
 
     <Style x:Key="GridButtonStyle"
-           TargetType="RadioButton">
+           TargetType="ListViewItem">
 
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="RadioButton">
+                <ControlTemplate TargetType="ListViewItem">
 
-                    <Grid Margin="0,0,0,0">
+                    <!--<Grid Margin="0,0,0,0">
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="120" />
@@ -103,7 +103,7 @@
                         <Image x:Name="SidebarRadioButtonMenuIcon"
                                Grid.Row="0"
                                Stretch="None"
-                               Source="{Binding Path=Tag}"
+                               Source="{Binding Path=Tag, RelativeSource={RelativeSource TemplatedParent}}"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                Margin="0,0,0,20" />
@@ -118,26 +118,56 @@
                                    FontFamily="Fonts/Roboto-Regular.ttf #Roboto Regular"
                                    Margin="0,0,0,10" />
 
-                        <StackPanel Orientation="Horizontal" 
-                                            VerticalAlignment="Center" >
-                            <TextBlock TextAlignment="Left"
-                                               TextWrapping="WrapWithOverflow"
-                                               Width="65" 
-                                               Foreground="Black" 
-                                               FontSize="14"
-                                               FontWeight="Medium"
-                                               Text="{Binding Name}"
-                                               Margin="5 0 0 5"/>
-                            <TextBlock Foreground="Blue" 
-                                         FontStyle="Italic"
-                                         Margin="3 0 0 0"
-                                         HorizontalAlignment="Right"
-                                         FontSize="14"
-                                         Text="{Binding Price}">
-                            </TextBlock>
-                        </StackPanel>
-                    </Grid>
+                    </Grid>-->
+                    <Border x:Name="border"
+                                BorderBrush="#2E4057" 
+                                BorderThickness="1"  
+                                CornerRadius="5"
+                                Margin ="2">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0.5,0" 
+                                                     EndPoint="0.5,1">
+                                <GradientStop Color="White" 
+                                                  Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <StackPanel Orientation="Vertical" 
+                                        Width="104"
+                                        Height="120"
+                                        >
+                            <Image Margin ="0 5 0 5 "
+                                       Width="60" Height="54"
+                                       Source="{Binding Path=Tag}"/>
+                            <StackPanel Orientation="Horizontal" 
+                                            VerticalAlignment="Center"
+                                        Margin="0 5 0 0" >
 
+
+                                <TextBlock x:Name="nameTextBlock"
+                                    TextAlignment="Left"
+                                               TextWrapping="WrapWithOverflow"
+                                               Width="48" 
+                                               Foreground="Black" 
+                                               FontSize="10"
+                                               Text="{TemplateBinding Property=Content}"
+                                               Style="{StaticResource TextblockTitleSmall}"
+                                               Margin="6 0 0 0"/>
+
+                                <TextBlock x:Name="priceTextBlock"
+                                         Foreground="#0033A1" 
+                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Top"
+                                               Margin="3 0 0 0"
+                                         FontSize="12"
+                                         Style="{StaticResource TextblockTitleSmall}"
+                                         Text="{TemplateBinding Property=Content}"/>
+
+                            </StackPanel>
+                            <!--<Button Grid.Row="4" Width="30" Height="20" Content="remove"  
+                                    Command="{Binding Source={StaticResource Proxy}, Path=Data.DeleteCommand}"
+                                   CommandParameter="{Binding ElementName=ucStorage}"  />-->
+                        </StackPanel>
+                    </Border>
 
                     <ControlTemplate.Triggers>
 
@@ -146,7 +176,7 @@
 
                             <Setter Property="Background"
                                     TargetName="border"
-                                    Value="#fff" />
+                                    Value="#272727" />
 
                             <Setter Property="BorderBrush"
                                     TargetName="border"
@@ -157,12 +187,12 @@
                                     Value="3" />
                         </Trigger>
 
-                        <Trigger Property="IsChecked"
+                        <Trigger Property="IsSelected"
                                  Value="True">
 
                             <Setter Property="Background"
                                     TargetName="border"
-                                    Value="#2E4057" />
+                                    Value="#272727" />
 
                             <Setter Property="BorderBrush"
                                     TargetName="border"
@@ -179,6 +209,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+
 
 
 </ResourceDictionary>
