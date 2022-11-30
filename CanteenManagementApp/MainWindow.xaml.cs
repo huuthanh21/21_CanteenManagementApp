@@ -13,9 +13,9 @@ namespace CanteenManagementApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow() 
         {
-            InitializeComponent();
+            InitializeComponent();  
 
             CreateDatabase();
         }
@@ -40,22 +40,24 @@ namespace CanteenManagementApp
 
         public static async void CreateDatabase()
         {
+            Debug.WriteLine("Vao create ne");
             await DropDatabase();
             using var dbContext = new CanteenContext();
+            Debug.WriteLine("Create ne");
             bool result = await dbContext.Database.EnsureCreatedAsync();
-            _ = result ? "created successfully" : "already created";
+            Debug.WriteLine(result ? "created successfully" : "already created");
         }
 
         public static async Task DropDatabase()
         {
-
+            Debug.WriteLine("Vao drop ne");
             using var context = new CanteenContext();
             String databasename = context.Database.GetDbConnection().Database;
 
+            Debug.WriteLine("Drop ne");
             bool deleted = await context.Database.EnsureDeletedAsync();
             string deletionInfo = deleted ? "đã xóa" : "không xóa được";
             Debug.WriteLine($"{databasename} {deletionInfo}");
-
         }
 
     }

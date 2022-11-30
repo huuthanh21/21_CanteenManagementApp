@@ -12,7 +12,7 @@ namespace CanteenManagementApp.MVVM.Model
     {
         [Key]
         [MaxLength(20)]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         // Navigation Property
         public List<Receipt_Item> Receipt_Items { get; set; }
