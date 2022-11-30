@@ -22,7 +22,7 @@ namespace CanteenManagementApp.MVVM.View
     public partial class AddItem : Window
     {
         public Item NewItem { get; set; }
-        string imageFileName;
+        string imageFileName = "/Images/empty_image.jpg";
         public AddItem()
         {
             InitializeComponent();
@@ -32,7 +32,7 @@ namespace CanteenManagementApp.MVVM.View
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             string id = IdTextBox.Text;
-            string name = IdTextBox.Text;
+            string name = nameTextBox.Text;
             string describe = describeTextBox.Text;
             string price = priceTextBox.Text;
             NewItem = new Item()
@@ -65,6 +65,7 @@ namespace CanteenManagementApp.MVVM.View
                 bitmap.EndInit();
                 imageBrush.ImageSource = bitmap;
                 grdSelectImg.Background = imageBrush;
+                imageEmpty.Visibility = Visibility.Hidden;
             }
         }
     }
