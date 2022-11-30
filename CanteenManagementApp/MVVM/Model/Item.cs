@@ -12,7 +12,7 @@ namespace CanteenManagementApp.MVVM.Model
     public class Item: ObservableObject, ICloneable 
     {
         [Key]
-        [MaxLength(10)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]

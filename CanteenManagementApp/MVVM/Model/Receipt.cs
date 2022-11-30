@@ -11,7 +11,7 @@ namespace CanteenManagementApp.MVVM.Model
     public class Receipt
     {
         [Key]
-        [MaxLength(20)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         // Navigation Property
@@ -19,6 +19,7 @@ namespace CanteenManagementApp.MVVM.Model
 
         // Foreign Key
         [Required]
+        public string CustomerId { get; set; }
         public Customer Customer { get; set; }
 
         [Column(TypeName = "datetime2(0)")]
