@@ -7,5 +7,9 @@
              xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="665">
-    <Frame Source="/../../Pages/CreateOrderMainPage.xaml" NavigationUIVisibility="Hidden"/>
+    <UserControl.DataContext>
+        <viewModel:CreateOrderViewModel/>
+    </UserControl.DataContext>
+    <Frame Content="{Binding CurrentPage}"
+           NavigationUIVisibility="Hidden"/>
 </UserControl>

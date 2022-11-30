@@ -1,19 +1,10 @@
 ﻿using CanteenManagementApp.Core;
 using CanteenManagementApp.MVVM.Model;
 using CanteenManagementApp.MVVM.View;
-using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 
 namespace CanteenManagementApp.MVVM.ViewModel
@@ -24,8 +15,8 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public ObservableCollection<Item> _foodItems;
         public ObservableCollection<Item> _inventoryItems;
         //private CollectionViewSource StorageItemsCollection;
-        private CollectionViewSource InventoryItemsCollection;
-        private CollectionViewSource FoodItemsCollection;
+        private readonly CollectionViewSource InventoryItemsCollection;
+        private readonly CollectionViewSource FoodItemsCollection;
         //public ICollectionView StorageSourceCollection => StorageItemsCollection.View;
         private string imageFileName = "";
 
@@ -102,7 +93,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
 
             EditItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => EditItem(parameter));
-            DeleteCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => deleteItem(parameter));
+            DeleteCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => DeleteItem(parameter));
             EditInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => EditInventoryItem(parameter));
             DeleteInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => DeleteInventoryItem(parameter));
             AddItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => addItem(parameter));
@@ -239,7 +230,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             screen.Close();
         }
 
-        private void deleteItem(StorageView parameter)
+        private void DeleteItem(StorageView parameter)
         {
             int i = parameter.foodListView.SelectedIndex;
             _foodItems.RemoveAt(i);

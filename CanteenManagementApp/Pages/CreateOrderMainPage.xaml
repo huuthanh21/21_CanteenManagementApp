@@ -4,19 +4,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CanteenManagementApp.Pages"
-      xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
-      xmlns:Model="clr-namespace:CanteenManagementApp.MVVM.Model"
+      xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel" 
+      d:DataContext="{d:DesignInstance Type=viewModel:CreateOrderViewModel}"
       mc:Ignorable="d" 
+      Loaded="Page_Loaded"
       d:Background="#F8F8F8"
-      d:DesignHeight="600" d:DesignWidth="680"
+      d:DesignHeight="560" d:DesignWidth="680"
       Title="CreateOrderMainPage">
-    <Page.DataContext>
-        <viewModel:CreateOrderViewModel/>
-    </Page.DataContext>
 
     <Grid Margin="20 10 0 10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="70"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="200"/>
@@ -25,8 +23,18 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="420"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+            <ColumnDefinition/> 
+            </Grid.ColumnDefinitions>
+
+        <Button Grid.Column="1" 
+                x:Name="CustomerId"
+                Width="105" Height="31"
+                Background="#0033A1"
+                HorizontalAlignment="Right"
+                IsEnabled="False"
+                Margin="0 0 23 10"
+                d:Content="20120582"
+                Style="{StaticResource ButtonCustomColorPositive}"/>
 
         <TextBlock Text="Tạo đơn hàng"
                    Grid.Row="1"
@@ -199,12 +207,11 @@
                 Background="#E1251B"
                 Style="{StaticResource ButtonCustomColorPositive}"/>
 
-        <StackPanel Grid.Column="1" Grid.Row="4"
+        <StackPanel Grid.Column="1" Grid.Row="3"
                     Grid.RowSpan="2"
                     Orientation="Vertical"
                     VerticalAlignment="Bottom">
 
-            
             <Line X1="190" 
                   Margin="0 27 0 27"
                   HorizontalAlignment="Center"
@@ -228,12 +235,14 @@
             <Button x:Name="ButtonContinue" 
                     Width="195" Height="33"
                     Content="Tiếp tục"
+                    Click="ButtonContinue_Click"
                     Background="#0033A1"
                     Margin="0 0 0 5"
-                    Click="ButtonContinue_Click"
                     Style="{StaticResource ButtonCustomColorPositive}"/>
-            <Button Width="195" Height="33"
+            <Button x:Name="ButtonCancel" 
+                    Width="195" Height="33"
                     Content="Hủy đơn"  
+                    Click="ButtonCancel_Click"
                     Foreground="#E1251B"
                     Style="{StaticResource ButtonCustomColorCancel}"/>
         </StackPanel>

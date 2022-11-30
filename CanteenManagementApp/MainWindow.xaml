@@ -7,14 +7,14 @@
         xmlns:local="clr-namespace:CanteenManagementApp"
         mc:Ignorable="d"
         Title="21 Canteen Manager" 
-        Height="600" Width="830"
+        Height="660" Width="860"
         MouseDown="Window_MouseDown"
         ResizeMode="NoResize"
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True">
     <Window.DataContext>
-        <viewModel:MainViewModel/>   
+        <viewModel:MainViewModel/>
     </Window.DataContext>
     <Window.Resources>
         <Style TargetType="Image">
@@ -25,11 +25,14 @@
     </Window.Resources>
 
     <Border Background="White"
+            Height="660" Width="860"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
             CornerRadius="8">
         <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="180"/>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="665"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -41,7 +44,7 @@
                    Width="70"/>
 
             <StackPanel Grid.Row="1"
-                        Margin="0 50 0 0">
+                        Margin="10 50 0 0">
                 <RadioButton x:Name="NavigateButtonCreateOrder" 
                              Content="Tạo đơn hàng"
                              Height="43"
@@ -82,28 +85,25 @@
             <Border Grid.Column="1" 
                     Grid.RowSpan="2"
                     CornerRadius="0 8 8 0"
-                    Background="#F8F8F8">
+                    Background="#F8F8F8"
+                     Padding="10 0 10 0">
                 <StackPanel Margin="0 0 0 0">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <StackPanel.Resources>
+                            <Style TargetType="Button" BasedOn="{StaticResource toolbarButtonStyle}"/>
+                        </StackPanel.Resources>
                         <Button x:Name="ControlButtonMinumize"  
                                 BorderBrush="Transparent"
                                 Background="Transparent"
                                 Width="40"
-                                Click="ControlButtonMinumize_Click">
-                            <Button.Content>
-                                <Image Source="Images/icon_minimize.png"
-                                       Width="20" Height="20"/>
-                            </Button.Content>
-                        </Button>
+                                Click="ControlButtonMinumize_Click"
+                                Content="" IsTabStop="False"/>
                         <Button x:Name="ControlButtonClose"
                                 BorderBrush="Transparent"
                                 Background="Transparent"
                                 Width="40"
-                                Click="ControlButtonClose_Click">
-                            <Button.Content>
-                                <Image Source="Images/icon_close.png"
-                                       Width="15" Height="15"/>
-                            </Button.Content>
+                                Click="ControlButtonClose_Click"
+                                Content="" IsTabStop="False">
                         </Button>
                     </StackPanel>
                     <ContentControl

@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using CanteenManagementApp.MVVM.ViewModel;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CanteenManagementApp.Pages
 {
@@ -20,14 +8,37 @@ namespace CanteenManagementApp.Pages
     /// </summary>
     public partial class CreateOrderReceiptPage : Page
     {
-        public CreateOrderReceiptPage()
+        public CreateOrderViewModel CreateOrderVM { get; set; }
+
+        public CreateOrderReceiptPage(CreateOrderViewModel viewModel)
         {
+            CreateOrderVM = viewModel;
+
             InitializeComponent();
         }
 
-        private void ButtonNavigateMainPage_Click(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/Pages/CreateOrderMainPage.xaml", UriKind.Relative));
+            SetCorrespondingLayout();
         }
+
+        private void SetCorrespondingLayout()
+        {
+            if (CreateOrderVM.HasCustomer)
+            {
+                CustomerId.Content = CreateOrderVM.Customer.Id;
+            }
+            else
+            {
+                CustomerId.Visibility = System.Windows.Visibility.Collapsed;
+            }
+        }
+
+        private void ButtonNavigateMainPage_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            CreateOrderVM.NavigateMainPageCommand.Execute(null);
+        }
+
+        
     }
 }

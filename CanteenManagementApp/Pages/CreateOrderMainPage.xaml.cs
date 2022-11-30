@@ -1,7 +1,5 @@
-﻿using System;
-using System.Windows;
+﻿using CanteenManagementApp.MVVM.ViewModel;
 using System.Windows.Controls;
-using System.Windows.Navigation;
 
 namespace CanteenManagementApp.Pages
 {
@@ -10,14 +8,42 @@ namespace CanteenManagementApp.Pages
     /// </summary>
     public partial class CreateOrderMainPage : Page
     {
-        public CreateOrderMainPage()
+        public CreateOrderViewModel CreateOrderVM { get; set; }
+
+        public CreateOrderMainPage(CreateOrderViewModel viewModel)
         {
+            CreateOrderVM = viewModel;
+
             InitializeComponent();
         }
 
-        private void ButtonContinue_Click(object sender, RoutedEventArgs e)
+
+        private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/Pages/CreateOrderPaymentPage.xaml", UriKind.Relative));   
+            SetCorrespondingLayout();
         }
+
+        private void SetCorrespondingLayout()
+        {
+            if (CreateOrderVM.HasCustomer)
+            {
+                CustomerId.Content = CreateOrderVM.Customer.Id;
+            }
+            else
+            {
+                CustomerId.Visibility = System.Windows.Visibility.Collapsed;
+            }
+        }
+
+        private void ButtonContinue_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            CreateOrderVM?.NavigatePaymentPageCommand.Execute(null);
+        }
+
+        private void ButtonCancel_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            CreateOrderVM?.NavigateMainPageCommand.Execute(null);
+        }
+
     }
 }
