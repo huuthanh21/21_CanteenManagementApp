@@ -122,7 +122,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         //        Id = int.Parse(id),
         //        Name = name,
         //        Price = double.Parse(price),
-        //        Describe = describe,
+        //        Description = describe,
         //        Amount = 0,
         //        ImagePath = imageFileName,
         //        Type = 0
@@ -164,7 +164,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             if (screen.ShowDialog() == true)
             {
                 if(screen.NewItem.Id != 0 || screen.NewItem.Name != "" || screen.NewItem.Price != 0 
-                    || screen.NewItem.Describe != "" || screen.NewItem.ImagePath != "")
+                    || screen.NewItem.Description != "" || screen.NewItem.ImagePath != "")
                 {
                     _foodItems.Add(screen.NewItem.Clone() as Item);
                 }

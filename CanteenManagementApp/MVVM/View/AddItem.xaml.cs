@@ -39,8 +39,8 @@ namespace CanteenManagementApp.MVVM.View
             {
                 Id = int.Parse(id),
                 Name = name,
-                Price = double.Parse(price),
-                Describe = describe,
+                Price = float.Parse(price),
+                Description = describe,
                 Amount = 0,
                 ImagePath = imageFileName,
                 Type = 0

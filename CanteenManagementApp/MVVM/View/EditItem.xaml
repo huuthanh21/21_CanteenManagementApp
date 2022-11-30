@@ -39,7 +39,7 @@
 
         <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" Canvas.Left="100" Canvas.Top="249">
             <TextBlock   Width="46" Height="20" Text="Mô tả:" FontSize="15" Style="{StaticResource TextblockTitleSmall}" VerticalAlignment="Top" />
-            <TextBox x:Name="describeTextBox" Padding="2" Text="{Binding Describe}" Width="266.77" MinHeight="25"
+            <TextBox x:Name="describeTextBox" Padding="2" Text="{Binding Description}" Width="266.77" MinHeight="25"
                      Margin="8 0 0 0"
                      HorizontalAlignment="Center" VerticalAlignment="Center"
                      TextWrapping="WrapWithOverflow"/>
