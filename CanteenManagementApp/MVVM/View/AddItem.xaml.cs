@@ -22,29 +22,38 @@ namespace CanteenManagementApp.MVVM.View
     public partial class AddItem : Window
     {
         public Item NewItem { get; set; }
-        string imageFileName = "/Images/empty_image.jpg";
-        public AddItem()
+        string _imageFileName = "/Images/empty_image.jpg";
+        int _type;
+        public AddItem(int type)
         {
             InitializeComponent();
             DataContext = NewItem;
+            if (type == 0)
+            {
+                titleSub.Text = "Món ăn hàng ngày";
+            }
+            else
+            {
+                titleSub.Text = "Hàng tồn kho";
+            }
+            _type = type;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             string id = IdTextBox.Text;
             string name = nameTextBox.Text;
-            string describe = describeTextBox.Text;
+            string description = describeTextBox.Text;
             string price = priceTextBox.Text;
             NewItem = new Item()
             {
                 Id = int.Parse(id),
                 Name = name,
-                Price = double.Parse(price),
-                Describe = describe,
+                Price = float.Parse(price),
+                Description = description,
                 Amount = 0,
-                ImagePath = imageFileName,
-                Type = 0
-
+                ImagePath = _imageFileName,
+                Type = _type
             };
             DialogResult = true;
         }
@@ -56,12 +65,12 @@ namespace CanteenManagementApp.MVVM.View
             op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" + "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" + "Portable Network Graphic (*.png)|*.png";
             if (op.ShowDialog() == true)
             {
-                imageFileName = op.FileName;
+                _imageFileName = op.FileName;
                 ImageBrush imageBrush = new ImageBrush();
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.UriSource = new Uri(imageFileName);
+                bitmap.UriSource = new Uri(_imageFileName);
                 bitmap.EndInit();
                 imageBrush.ImageSource = bitmap;
                 grdSelectImg.Background = imageBrush;

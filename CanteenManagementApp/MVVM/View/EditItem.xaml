@@ -10,23 +10,28 @@
              d:DesignHeight="535" d:DesignWidth="500" ResizeMode="NoResize">
     <Canvas>
         <Image Source="/Images/logo.png"
+               RenderOptions.BitmapScalingMode="HighQuality"
                    Width="56" Canvas.Left="23" Canvas.Top="25" Height="53"/>
+       
 
         <TextBlock Text="Chi tiết mặt hàng"
                    Style="{StaticResource TextblockTitle}" Canvas.Left="97" Canvas.Top="27"/>
         <TextBlock Text="Món ăn hàng ngày"
                    FontSize="16.15"
+                   x:Name="subTitle"
                    Style="{StaticResource TextblockTitle}" Canvas.Left="203" Canvas.Top="80"/>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Canvas.Left="124" Canvas.Top="129">
-            <TextBlock   Width="30" Height="20" Text="Id:" FontSize="15" Style="{StaticResource TextblockTitleSmall}"/>
-            <TextBox x:Name="IdTextBox" Padding="2" Text="{Binding Id}" Width="133" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Canvas.Left="128" Canvas.Top="129" VerticalAlignment="Center">
+            <TextBlock   Width="26" Height="20" Text="Id:" FontSize="15" Style="{StaticResource TextblockTitleSmall}"/>
+            <TextBox x:Name="IdTextBox" Padding="2" Text="{Binding Id}" Width="133" Height="25" 
+                     HorizontalAlignment="Center" VerticalAlignment="Center" 
+                     Margin="0 0 0 0"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Canvas.Left="114" Canvas.Top="168">
-            <TextBlock   Width="30" Height="20" Text="Tên:" FontSize="15" Style="{StaticResource TextblockTitleSmall}" />
+            <TextBlock   Width="32" Height="20" Text="Tên:" FontSize="15" Style="{StaticResource TextblockTitleSmall}" />
             <TextBox x:Name="nameTextBox" Padding="2" Text="{Binding Name}" Width="133" Height="25" 
-                     Margin="10 0 0 0"
+                     Margin="8 0 0 0"
                      HorizontalAlignment="Center" VerticalAlignment="Center" />
         </StackPanel>
 
@@ -39,16 +44,38 @@
 
         <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" Canvas.Left="100" Canvas.Top="249">
             <TextBlock   Width="46" Height="20" Text="Mô tả:" FontSize="15" Style="{StaticResource TextblockTitleSmall}" VerticalAlignment="Top" />
-            <TextBox x:Name="describeTextBox" Padding="2" Text="{Binding Describe}" Width="266.77" MinHeight="25"
+            <TextBox x:Name="describeTextBox" Padding="2" Text="{Binding Description}" Width="266.77" MinHeight="25"
                      Margin="8 0 0 0"
                      HorizontalAlignment="Center" VerticalAlignment="Center"
                      TextWrapping="WrapWithOverflow"/>
         </StackPanel>
 
-        <StackPanel Canvas.Left="345" Canvas.Top="120">
+        <Grid
+            Canvas.Left="300" Canvas.Top="70"
+            x:Name="grdSelectImg"
+            Margin="50,50,0,0" 
+            VerticalAlignment="Top"
+            Width="108"
+            Height="83" 
+            HorizontalAlignment="Left">
+            <Image x:Name="imageEmpty" Source="{Binding ImagePath}" Width="108" Height="83" />
+        </Grid>
+        <Button 
+                x:Name="SelectImage"
+                Background="#0033A1"
+                Click="ChangeImage_Click"
+                Style="{StaticResource ButtonSelectImage}"
+                Height="35" 
+                Width="106" 
+                Content="Đổi ảnh" 
+                FontWeight="SemiBold" 
+                ToolTip="Chọn ảnh từ thiết bị" 
+                HorizontalAlignment="Left" 
+                Padding="0" Canvas.Left="360" Canvas.Top="200" VerticalAlignment="Top" RenderTransformOrigin="0.553,0.813"/>
+        <!--<StackPanel Canvas.Left="345" Canvas.Top="120">
             <Image Source="{Binding ImagePath}" Width="108" Height="83"/>
-            <TextBlock Text="Đổi ảnh"/>
-        </StackPanel>
+           
+        </StackPanel>-->
 
         <Button HorizontalAlignment="Left"
                 Width="95" Height="31"

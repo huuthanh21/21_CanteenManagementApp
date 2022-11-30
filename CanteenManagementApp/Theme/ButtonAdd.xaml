@@ -10,12 +10,15 @@
                             Background="Transparent"
                             SnapsToDevicePixels="True"
                             CornerRadius="90">
-                        <Image Width="23.15" Height="23.08" 
-                                   Margin="0"
-                                   Source="../Images/Add.png"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"/>
-                        
+                        <Path
+                             VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                            Fill="#0033A1"
+                            Data="M11.7736 0.0888672C5.65568 0.0888672 0.696655 5.25452
+                            0.696655 11.6274C0.696655 18.0002 5.65568 23.1659 11.7736 23.1659C17.8916
+                            23.1659 22.8506 18.0002 22.8506 11.6274C22.8506 5.25452 17.8907 0.0888672
+                            11.7736 0.0888672ZM16.3246 12.6009H12.7082V16.368H10.8382V12.6009H7.22178V10.653H10.8382V6.88587H12.7082V10.653H16.3246V12.6009Z"/>
+
                     </Border>
 
                     <ControlTemplate.Triggers>
@@ -51,7 +54,7 @@
                                     >
                             <Image Width="14" Height="14" 
                                    Source="../Images/edit_blue_icon.png"
-                                   Margin="0 0 2 0"
+                                   Margin="0 0 5 0"
                                    />
                             <TextBlock Text="{TemplateBinding Content}" />
                         </StackPanel>

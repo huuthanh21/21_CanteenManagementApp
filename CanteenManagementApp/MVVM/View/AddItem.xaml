@@ -14,11 +14,13 @@
     </Window.DataContext>-->
     <Canvas>
         <Image Source="/Images/logo.png"
+                RenderOptions.BitmapScalingMode="HighQuality"
                    Width="56" Canvas.Left="23" Canvas.Top="25" Height="53"/>
 
-        <TextBlock Text="Chi tiết mặt hàng"
+        <TextBlock Text="Thêm mặt hàng"
                    Style="{StaticResource TextblockTitle}" Canvas.Left="97" Canvas.Top="27"/>
         <TextBlock Text="Món ăn hàng ngày"
+                   x:Name="titleSub"
                    FontSize="16.15"
                    Style="{StaticResource TextblockTitle}" Canvas.Left="203" Canvas.Top="80"/>
 
@@ -64,16 +66,6 @@
             Height="77" 
             HorizontalAlignment="Left">
             <Image x:Name="imageEmpty" Source="/Images/empty_image.jpg" Width="108" Height="83" />
-            <Rectangle 
-                x:Name="recImage"
-                StrokeDashArray="4 2" 
-                StrokeThickness="4" 
-                RadiusX="4" 
-                RadiusY="4"
-                Width="94"
-                Height="77" 
-                HorizontalAlignment="Left" 
-                VerticalAlignment="Top"/>
         </Grid>
 
         <Button 

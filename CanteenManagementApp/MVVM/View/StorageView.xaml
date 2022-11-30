@@ -215,6 +215,8 @@
                    Style="{StaticResource TextblockTitleSmall}"
                           VerticalAlignment="Center"/>
                 <Button Margin="5 0 0 0"
+                        Command="{Binding  AddItemInventoryCommand}"
+                        CommandParameter="{Binding ElementName=ucStorage}"
                         Style="{StaticResource ButtonAdd}"/>
             </StackPanel>
             <!--ListView-->

@@ -36,6 +36,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public ICommand EditInventoryCommand { get; set; } // chỉnh sửa hàng tồn
         public ICommand DeleteInventoryCommand { get; set; } // xóa hàng tồn
         public ICommand AddItemCommand { get; set; } // thêm hàng
+        public ICommand AddItemInventoryCommand { get; set; } // thêm hàng
 
         // Thêm hàng:
         //public ICommand SelectImageCommand { get; set; } //chọn ảnh
@@ -44,42 +45,42 @@ namespace CanteenManagementApp.MVVM.ViewModel
         {
             _allItems = new ObservableCollection<Item>
             {
-                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Describe = "Món ức gà chiên mắm cay có màu sắc hấp dẫn, vị mặn mặn chua chua của nước sốt giúp thịt gà tăng thêm hương vị và kích thích vị giác người ăn. vị đậm đà của mùi nước mắm quyện vào thịt, và vị bùi bùi của tỏi, cay nồng của ớt sừng. Món này ăn kèm cơm nóng, hoặc bánh mì tùy thích.\r\n\r\n\r\n", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Describe = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
-                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Describe = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Describe = "Ngon", Id = 13, Price = 12000,  ImagePath = "/Images/b4.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Describe = "Ngon", Id = 14, Price = 12000,  ImagePath = "/Images/b5.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Describe = "Ngon", Id = 15, Price = 12000,  ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Describe = "Ngon", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Describe = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
-                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Describe = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Describe = "Ngon", Id = 13, Price = 12000,  ImagePath = "/Images/b4.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Describe = "Ngon", Id = 14, Price = 12000,  ImagePath = "/Images/b5.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Describe = "Ngon", Id = 15, Price = 12000,  ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Describe = "Ngon", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Describe = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
-                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Describe = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Describe = "Ngon", Id = 13, Price = 12000,  ImagePath = "/Images/b4.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Describe = "Ngon", Id = 14, Price = 12000,  ImagePath = "/Images/b5.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Describe = "Ngon", Id = 15, Price = 12000,  ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Describe = "Ngon", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Describe = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
-                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Describe = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
-                new Item() { Type = 1, Name = "Cocacola", Amount = 10, Describe = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/coca.jpg" },
-                new Item() { Type = 1, Name = "Pepsi", Amount = 100, Describe = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/pepsi.png" },
-                new Item() { Type = 1, Name = "Sprite", Amount = 520, Describe = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" },
-                new Item() { Type = 1, Name = "Snack", Amount = 420, Describe = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/snack.png" },
-                new Item() { Type = 1, Name = "7-Up", Amount = 440, Describe = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/7up.jpg" },
-                new Item() { Type = 1, Name = "Bò húc", Amount = 521, Describe = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/bohuc.png" },
-                new Item() { Type = 1, Name = "Cocacola", Amount = 1000, Describe = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/coca.jpg" },
-                new Item() { Type = 1, Name = "Pepsi", Amount = 104, Describe = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/pepsi.png" },
-                new Item() { Type = 1, Name = "Sprite", Amount = 1120, Describe = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" },
-                new Item() { Type = 1, Name = "Snack", Amount = 140, Describe = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/snack.png" },
-                new Item() { Type = 1, Name = "7-Up", Amount = 150, Describe = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/7up.jpg" },
-                new Item() { Type = 1, Name = "Bò húc", Amount = 250, Describe = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/bohuc.png" },
-                new Item() { Type = 1, Name = "Cocacola", Amount = 110, Describe = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/coca.jpg" },
-                new Item() { Type = 1, Name = "Pepsi", Amount = 1240, Describe = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/pepsi.png" },
-                new Item() { Type = 1, Name = "Sprite", Amount = 160, Describe = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" },
+                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Món ức gà chiên mắm cay có màu sắc hấp dẫn, vị mặn mặn chua chua của nước sốt giúp thịt gà tăng thêm hương vị và kích thích vị giác người ăn. vị đậm đà của mùi nước mắm quyện vào thịt, và vị bùi bùi của tỏi, cay nồng của ớt sừng. Món này ăn kèm cơm nóng, hoặc bánh mì tùy thích.\r\n\r\n\r\n", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
+                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
+                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
+                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 13, Price = 12000,  ImagePath = "/Images/b4.jpg" },
+                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 14, Price = 12000,  ImagePath = "/Images/b5.jpg" },
+                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 15, Price = 12000,  ImagePath = "/Images/b1.jpg" },
+                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Ngon", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
+                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
+                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
+                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 13, Price = 12000,  ImagePath = "/Images/b4.jpg" },
+                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 14, Price = 12000,  ImagePath = "/Images/b5.jpg" },
+                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 15, Price = 12000,  ImagePath = "/Images/b1.jpg" },
+                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Ngon", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
+                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
+                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
+                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 13, Price = 12000,  ImagePath = "/Images/b4.jpg" },
+                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 14, Price = 12000,  ImagePath = "/Images/b5.jpg" },
+                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 15, Price = 12000,  ImagePath = "/Images/b1.jpg" },
+                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Ngon", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
+                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
+                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
+                new Item() { Type = 1, Name = "Cocacola", Amount = 10, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/coca.jpg" },
+                new Item() { Type = 1, Name = "Pepsi", Amount = 100, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/pepsi.png" },
+                new Item() { Type = 1, Name = "Sprite", Amount = 520, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" },
+                new Item() { Type = 1, Name = "Snack", Amount = 420, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/snack.png" },
+                new Item() { Type = 1, Name = "7-Up", Amount = 440, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/7up.jpg" },
+                new Item() { Type = 1, Name = "Bò húc", Amount = 521, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/bohuc.png" },
+                new Item() { Type = 1, Name = "Cocacola", Amount = 1000, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/coca.jpg" },
+                new Item() { Type = 1, Name = "Pepsi", Amount = 104, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/pepsi.png" },
+                new Item() { Type = 1, Name = "Sprite", Amount = 1120, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" },
+                new Item() { Type = 1, Name = "Snack", Amount = 140, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/snack.png" },
+                new Item() { Type = 1, Name = "7-Up", Amount = 150, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/7up.jpg" },
+                new Item() { Type = 1, Name = "Bò húc", Amount = 250, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/bohuc.png" },
+                new Item() { Type = 1, Name = "Cocacola", Amount = 110, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/coca.jpg" },
+                new Item() { Type = 1, Name = "Pepsi", Amount = 1240, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/pepsi.png" },
+                new Item() { Type = 1, Name = "Sprite", Amount = 160, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" },
 
             };
 
@@ -105,9 +106,29 @@ namespace CanteenManagementApp.MVVM.ViewModel
             EditInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => EditInventoryItem(parameter));
             DeleteInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => DeleteInventoryItem(parameter));
             AddItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => addItem(parameter));
-
+            AddItemInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => addItemInventory(parameter));
             //SelectImageCommand = new RelayCommand<AddItem>((parameter) => true, (parameter) => ChooseImage(parameter));
             //ButtonAddCommand = new RelayCommand<AddItem>((parameter) => true, (parameter) => ButtonAddClick(parameter));
+        }
+
+        private void addItemInventory(StorageView parameter)
+        {
+            var screen = new AddItem(1);
+            if (screen.ShowDialog() == true)
+            {
+                if (screen.NewItem.Id != 0 || screen.NewItem.Name != "" || screen.NewItem.Price != 0
+                    || screen.NewItem.Description != "" || screen.NewItem.ImagePath != "")
+                {
+                    _inventoryItems.Add(screen.NewItem.Clone() as Item);
+                }
+
+            }
+            else
+            {
+
+
+            }
+            screen.Close();
         }
 
         //private void ButtonAddClick(AddItem parameter)
@@ -115,14 +136,14 @@ namespace CanteenManagementApp.MVVM.ViewModel
         //    parameter.DialogResult = true;
         //    string id = parameter.IdTextBox.Text;
         //    string name = parameter.IdTextBox.Text;
-        //    string describe = parameter.describeTextBox.Text;
+        //    string description = parameter.descriptionTextBox.Text;
         //    string price = parameter.priceTextBox.Text;
         //    Item newItem = new()
         //    {
         //        Id = int.Parse(id),
         //        Name = name,
         //        Price = double.Parse(price),
-        //        Describe = describe,
+        //        Description = description,
         //        Amount = 0,
         //        ImagePath = imageFileName,
         //        Type = 0
@@ -152,7 +173,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         private void addItem(StorageView parameter)
         {
-            var screen = new AddItem();
+            var screen = new AddItem(0);
             //screen.Show();
             //if (screen.ShowDialog() == true)
             //{
@@ -164,7 +185,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             if (screen.ShowDialog() == true)
             {
                 if(screen.NewItem.Id != 0 || screen.NewItem.Name != "" || screen.NewItem.Price != 0 
-                    || screen.NewItem.Describe != "" || screen.NewItem.ImagePath != "")
+                    || screen.NewItem.Description != "" || screen.NewItem.ImagePath != "")
                 {
                     _foodItems.Add(screen.NewItem.Clone() as Item);
                 }
