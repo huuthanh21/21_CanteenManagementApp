@@ -57,6 +57,16 @@ namespace CanteenManagementApp.MVVM.Model
 
                 return items;
             }
+            public static Item GetItemById(int itemId)
+            {
+                using var context = new CanteenContext();
+
+                var item = context.Items
+                                .Where(i => i.Id == itemId)
+                                .FirstOrDefault();
+
+                return item;
+            }
             /* Insert */
             public static async Task InsertItemAsync(int itemType, string itemName, float itemPrice, string description = "", int amount = 0)
             {
@@ -85,10 +95,32 @@ namespace CanteenManagementApp.MVVM.Model
                 Debug.WriteLine($"Saved {rows} items");
             }
             /* Update */
+            public static void UpdateItem(Item item)
+            {
+                using var context = new CanteenContext();
 
+                Item oldItem = GetItemById(item.Id);
+                oldItem.Name = item.Name;
+                oldItem.Price = item.Price;
+                oldItem.Description = item.Description;
+                oldItem.Amount = item.Amount;
+
+                int rows = context.SaveChanges();
+                Debug.WriteLine($"{rows} items updated");
+            }
             /* Delete */
-        }
+            public static void DeleteItemById(int itemId)
+            {
+                using var context = new CanteenContext();
 
+                Item item = GetItemById(itemId);
+                context.Items.Remove(item);
+
+                int rows = context.SaveChanges();
+                Debug.WriteLine($"{rows} items deleted");
+            }
+        }
+            
         public static class MenuQueries
         {
             /* Query */
