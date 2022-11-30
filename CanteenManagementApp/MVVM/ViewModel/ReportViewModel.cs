@@ -1,11 +1,4 @@
 ﻿using CanteenManagementApp.Core;
-using CanteenManagementApp.MVVM.Model;
-using CanteenManagementApp.MVVM.View;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Data;
-using System.Windows.Input;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {

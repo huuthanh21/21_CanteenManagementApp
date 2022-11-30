@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace CanteenManagementApp.MVVM.Model
 {

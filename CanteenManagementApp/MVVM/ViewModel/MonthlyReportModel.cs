@@ -1,9 +1,7 @@
 ﻿using CanteenManagementApp.Core;
 using CanteenManagementApp.MVVM.Model;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
 using System.Windows.Data;
 
 namespace CanteenManagementApp.MVVM.ViewModel
