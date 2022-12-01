@@ -1,0 +1,101 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style TargetType="{x:Type Button}"
+           x:Key="AddCustomerButton">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Path
+                          x:Name="Add"
+                          Grid.Column="1"     
+                          Fill="#0033A1"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Data="M25.6951 0.0820312C11.8023 0.0820312 0.541138 11.3432 0.541138 25.236C0.541138
+                            39.1288 11.8023 50.3899 25.6951 50.3899C39.5879 50.3899 50.849 39.1288 50.849 
+                            25.236C50.849 11.3432 39.586 0.0820312 25.6951 0.0820312ZM36.0296 
+                            27.3582H27.8173V35.5705H23.5709V27.3582H15.3586V23.1118H23.5709V14.8995H27.8173V23.1118H36.0296V27.3582Z"
+                       />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="1.02" ScaleY="1.02"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.98" ScaleY="0.98"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type Button}"
+           x:Key="HideMoneyButton">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions> 
+                        <Path
+                          x:Name="Hide"
+                          Grid.Column="1"     
+                          Fill="#F5A800"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Data="M10.2351 12.5051C5.19979 12.5051 1.22904 7.35125 1.06314 7.13303L0.542725
+                            6.44737L1.06314 5.76289C1.22904 5.54348 5.19979 0.389648 10.2351 0.389648C15.2703
+                            0.389648 19.2411 5.54348 19.407 5.76289L19.9274 6.44737L19.407 7.13184C19.2401 7.35125
+                            15.2703 12.5051 10.2351 12.5051ZM2.88607 6.44737C4.07996 7.7555 6.96051 10.4779 10.2351
+                            10.4779C13.5096 10.4779 16.3892 7.7555 17.5831 6.44737C16.3882 5.13923 13.5086 2.41684
+                            10.2351 2.41684C6.96149 2.41684 4.08095 5.13923 2.88607 6.44737ZM10.3812 10.2299C8.66197
+                            10.2299 7.26268 8.54014 7.26268 6.46406C7.26268 4.38798 8.66197 2.69826 10.3812 2.69826C12.1005
+                            2.69826 13.4997 4.38798 13.4997 6.46406C13.4997 8.54014 12.1005 10.2299 10.3812 10.2299Z"
+                       />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="1.02" ScaleY="1.02"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.98" ScaleY="0.98"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

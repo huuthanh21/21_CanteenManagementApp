@@ -11,5 +11,5 @@
         <viewModel:CreateOrderViewModel/>
     </UserControl.DataContext>
     <Frame Content="{Binding CurrentPage}"
-           NavigationUIVisibility="Hidden"/>
+           NavigationUIVisibility="Hidden" Navigated="Frame_Navigated"/>
 </UserControl>

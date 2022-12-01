@@ -15,7 +15,7 @@ namespace CanteenManagementApp.MVVM.Model
         public DbSet<Receipt_Item> Receipt_Items { get; set; }
 
         private const string connectionString = @"
-                Server=LAPTOP-8U6V04UM\SQLEXPRESS;
+                Server=DUYQUANG-PC;
                 Database=CANTEEN_DATABASE;
                 Encrypt=False;
                 Trusted_Connection=True;

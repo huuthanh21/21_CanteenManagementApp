@@ -7,22 +7,105 @@
              mc:Ignorable="d" 
              d:Background="#F8F8F8"
              d:DesignHeight="600" d:DesignWidth="665">
-    <Grid Margin="30 10 10 10">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{DynamicResource Inter}"></Setter>
+            <Setter Property="FontWeight" Value="SemiBold"></Setter>
+            <Setter Property="Padding" Value="2"></Setter>
+            <Setter Property="Background" Value="Transparent"></Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid Margin="20 10 0 10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="70"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="52 "/>
             <RowDefinition Height="200"/>
             <RowDefinition/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="430"/>
+            <ColumnDefinition Width="410"/>
+            <ColumnDefinition Width="10"/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Khách hàng"
                    Grid.Row="1"
                    Style="{StaticResource TextblockTitle}"/>
+
+        <TextBox Grid.Row="2"
+                 Width="409" Height="31"
+                 HorizontalAlignment="Left"
+                 Text="Nhập mã khách hàng cần tìm"
+                 Style="{StaticResource TextboxSearchBar}"/>
+        <Button Grid.Column="2" Grid.Row="2"
+                HorizontalAlignment="Left"
+                Width="95" Height="31"
+                Content="Tìm kiếm"
+                Background="#E1251B"
+                Style="{StaticResource ButtonCustomColorPositive}"/>
+        
+        <Button Grid.Column="3" Grid.Row="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Width="95"
+                Background="#E1251B"
+                Style="{StaticResource AddCustomerButton}"/>
+
+        <StackPanel
+            Grid.Row="3"
+            Grid.RowSpan="2"
+            Margin="0 20 0 0">
+            <TextBlock Text="20120172"
+                       FontSize="32"
+                       FontWeight="ExtraBold"
+                       Foreground="#E1251B"></TextBlock>
+            <TextBlock Text="Vân Duy Quang"
+                        FontSize="16"></TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                    
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Orientation="Horizontal">
+                    <TextBlock Text="Tổng số dư:"
+                               FontSize="16"
+                               VerticalAlignment="Bottom"></TextBlock>
+                    <TextBlock Text="100.000đ"
+                               FontSize="24"
+                               Margin="6 0"
+                               FontWeight="Bold"
+                               VerticalAlignment="Bottom"></TextBlock>
+                    <Button Style="{StaticResource HideMoneyButton}"></Button>
+                </StackPanel>
+                    <Button Content="Nạp tiền"
+                            Background="#E1251B"
+                            Width="100"
+                            HorizontalAlignment="Right"
+                            Grid.Column="1"
+                            Style="{StaticResource ButtonCustomColorPositive}"></Button>
+            </Grid>
+            <TextBlock Text="Mặt hàng thường xuyên mua"
+                       FontSize="16"
+                       Margin="0 20 0 10"
+                       FontWeight="Bold"></TextBlock>
+            
+        </StackPanel>
+        <StackPanel Grid.Row="3"
+                    Grid.Column="2"
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2"
+                    Margin="0 30 0 0"
+            >
+            <TextBlock Text="Lịch sử hoá đơn"
+                       FontSize="16"
+                       FontWeight="Bold"></TextBlock>
+        </StackPanel>
     </Grid>
 </UserControl>
