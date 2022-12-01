@@ -32,7 +32,7 @@
             <RowDefinition Height="70"/>
             <RowDefinition Height="52 "/>
             <RowDefinition Height="200"/>
-            <RowDefinition/>
+            <RowDefinition Height="170"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
@@ -223,6 +223,16 @@
 
             </ListView>
         </StackPanel>
+        <Button Grid.Row="5"
+                Content="Tạo tài khoản"
+                Background="#0033A1"
+                Width="150"
+                Height="36"
+                HorizontalAlignment="Left"
+                Margin="20 0"
+                Style="{StaticResource ResourceKey=ButtonCustomColorPositive}"
+                Command="{Binding AddCustomerCommand}"
+                ></Button>
         <StackPanel Grid.Row="3"
                     Grid.Column="2"
                     Grid.RowSpan="2"

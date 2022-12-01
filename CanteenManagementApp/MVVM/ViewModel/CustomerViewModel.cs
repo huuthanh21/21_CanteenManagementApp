@@ -1,5 +1,6 @@
 ﻿using CanteenManagementApp.Core;
 using CanteenManagementApp.MVVM.Model;
+using CanteenManagementApp.MVVM.View;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Controls;
@@ -13,13 +14,13 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public bool CustomerFound { get; set; } = false;
         public Customer Customer { get; set; }
         public ICommand FindCustomerCommand { get; set; }
+        public ICommand AddCustomerCommand { get; set; }
 
         public ObservableCollection<Item> recentItems;
 
         private readonly CollectionViewSource RecentItemsCollection;
 
         public ICollectionView RecentItemsSourceCollection => RecentItemsCollection.View;
-
 
         public CustomerViewModel()
         {
@@ -43,6 +44,12 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 {
                     CustomerFound = false;
                 }
+            });
+            
+            AddCustomerCommand = new RelayCommand(o =>
+            {
+                var screen = new CreateCustomer();
+                screen.Show();
             });
             // Put the below lines of code outside for testing purposes
             setRecentItems();

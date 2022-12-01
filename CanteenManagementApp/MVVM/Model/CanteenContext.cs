@@ -10,6 +10,8 @@ namespace CanteenManagementApp.MVVM.Model
         public DbSet<Receipt> Receipts { get; set; }
         public DbSet<Receipt_Item> Receipt_Items { get; set; }
 
+        // D.Quang: Server=DUYQUANG-PC
+        // Thanh: Server=.\SQLEXPRESS
         private const string connectionString = @"
                 Server=.\SQLEXPRESS;
                 Database=CANTEEN_DATABASE;
