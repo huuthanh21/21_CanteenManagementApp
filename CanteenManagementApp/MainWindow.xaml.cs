@@ -67,6 +67,7 @@ namespace CanteenManagementApp
             };
 
             await DbQueries.CustomerQueries.InsertCustomerAsync("20120582", "Trần Hữu Thành", "Sinh viên");
+            
             await DbQueries.ReceiptQueries.InsertReceiptAsync("20120582",tuples, "Tiền mặt", 100000);
         }
 

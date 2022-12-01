@@ -12,9 +12,10 @@ namespace CanteenManagementApp.Pages
 
         public CreateOrderMainPage(CreateOrderViewModel viewModel)
         {
-            CreateOrderVM = viewModel;
-
             InitializeComponent();
+            CreateOrderVM = viewModel;
+            DataContext = CreateOrderVM;
+
         }
 
 
@@ -33,16 +34,6 @@ namespace CanteenManagementApp.Pages
             {
                 CustomerId.Visibility = System.Windows.Visibility.Collapsed;
             }
-        }
-
-        private void ButtonContinue_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            CreateOrderVM?.NavigatePaymentPageCommand.Execute(null);
-        }
-
-        private void ButtonCancel_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            CreateOrderVM?.NavigateMainPageCommand.Execute(null);
         }
 
     }

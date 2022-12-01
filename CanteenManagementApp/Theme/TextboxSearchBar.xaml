@@ -7,7 +7,7 @@
         <Style.Setters>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
+                    <ControlTemplate TargetType="{x:Type TextBox}">
                         <Border Background="White"
                                 BorderThickness="1.38"
                                 BorderBrush="#C0C0C0"
@@ -17,6 +17,7 @@
                                 <TextBox x:Name="TextboxInput"
                                          Background="Transparent"
                                          Margin="25 0 0 0"
+                                         Text="{TemplateBinding Tag}"
                                          FontWeight="Medium"
                                          FontSize="15"
                                          FontFamily="{DynamicResource Inter}"

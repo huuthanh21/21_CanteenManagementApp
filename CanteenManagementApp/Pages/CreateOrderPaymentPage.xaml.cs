@@ -12,9 +12,10 @@ namespace CanteenManagementApp.Pages
 
         public CreateOrderPaymentPage(CreateOrderViewModel viewModel)
         {
-            CreateOrderVM = viewModel;
-
             InitializeComponent();
+            CreateOrderVM = viewModel;
+            DataContext = CreateOrderVM;
+
         }
 
         private void SetCorrespondingLayout()
@@ -33,16 +34,6 @@ namespace CanteenManagementApp.Pages
         private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             SetCorrespondingLayout();
-        }
-
-        private void ButtonCancel_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            CreateOrderVM.NavigateMainPageCommand.Execute(null);
-        }
-
-        private void ButtonNavigateReceiptPage_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            CreateOrderVM.NavigateReceiptPageCommand.Execute(null);
         }
     }
 }

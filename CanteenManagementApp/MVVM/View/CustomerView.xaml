@@ -4,17 +4,28 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CanteenManagementApp.MVVM.View"
+             xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
+             xmlns:converters="clr-namespace:CanteenManagementApp.Converters"
              mc:Ignorable="d" 
              d:Background="#F8F8F8"
              d:DesignHeight="600" d:DesignWidth="665">
     <UserControl.Resources>
-        <Style TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="{DynamicResource Inter}"></Setter>
-            <Setter Property="FontWeight" Value="SemiBold"></Setter>
-            <Setter Property="Padding" Value="2"></Setter>
-            <Setter Property="Background" Value="Transparent"></Setter>
-        </Style>
+        <ResourceDictionary>
+            <converters:FloatToCurrencyConverter x:Key="FloatToCurrency"/>
+            <converters:CustomerBoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="{DynamicResource Inter}"></Setter>
+                <Setter Property="FontWeight" Value="SemiBold"></Setter>
+                <Setter Property="Padding" Value="2"></Setter>
+                <Setter Property="Background" Value="Transparent"></Setter>
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
+    
+    <UserControl.DataContext>
+        <viewModel:CustomerViewModel/>
+    </UserControl.DataContext>
+    
     <Grid Margin="20 10 0 10">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -38,6 +49,7 @@
                    Style="{StaticResource TextblockTitle}"/>
 
         <TextBox Grid.Row="2"
+                 x:Name="TextboxSearch"
                  Width="409" Height="31"
                  HorizontalAlignment="Left"
                  Text="Nhập mã khách hàng cần tìm"
@@ -46,6 +58,8 @@
                 HorizontalAlignment="Left"
                 Width="95" Height="31"
                 Content="Tìm kiếm"
+                Command="{Binding FindCustomerCommand}"
+                CommandParameter="{Binding ElementName=TextboxSearch}"
                 Background="#E1251B"
                 Style="{StaticResource ButtonCustomColorPositive}"/>
         
@@ -56,16 +70,19 @@
                 Background="#E1251B"
                 Style="{StaticResource AddCustomerButton}"/>
 
-        <StackPanel
-            Grid.Row="3"
-            Grid.RowSpan="2"
+        <StackPanel x:Name="PanelCustomerInfo" Grid.Row="3" Grid.RowSpan="2"
             Margin="0 20 0 0">
-            <TextBlock Text="20120172"
+            <StackPanel.Visibility>
+                <Binding Path="CustomerFound" Converter="{StaticResource BoolToVisibilityConverter}"/>
+            </StackPanel.Visibility>
+            <TextBlock Text="{Binding Customer.Id}" 
+                       d:Text="20120172"
                        FontSize="32"
                        FontWeight="ExtraBold"
                        Foreground="#E1251B"></TextBlock>
-            <TextBlock Text="Vân Duy Quang"
-                        FontSize="16"></TextBlock>
+            <TextBlock Text="{Binding Customer.Name}" 
+                       d:Text="Vân Duy Quang"
+                       FontSize="16"></TextBlock>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
@@ -77,7 +94,9 @@
                     <TextBlock Text="Tổng số dư:"
                                FontSize="16"
                                VerticalAlignment="Bottom"></TextBlock>
-                    <TextBlock Text="100.000đ"
+                    <TextBlock Text="{Binding Path=Customer.Balance, Converter={StaticResource FloatToCurrency},
+                                ConverterCulture=vi-VN}" 
+                               d:Text="100.000đ"
                                FontSize="24"
                                Margin="6 0"
                                FontWeight="Bold"
@@ -101,8 +120,10 @@
                     Grid.Column="2"
                     Grid.RowSpan="2"
                     Grid.ColumnSpan="2"
-                    Margin="0 30 0 0"
-            >
+                    Margin="0 30 0 0">
+            <StackPanel.Visibility>
+                <Binding Path="CustomerFound" Converter="{StaticResource BoolToVisibilityConverter}"/>
+            </StackPanel.Visibility>
             <TextBlock Text="Lịch sử hoá đơn"
                        FontSize="16"
                        FontWeight="Bold"></TextBlock>
