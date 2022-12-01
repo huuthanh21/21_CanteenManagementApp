@@ -21,7 +21,7 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-    
+
     <UserControl.DataContext>
         <viewModel:CustomerViewModel/>
     </UserControl.DataContext>
@@ -68,6 +68,7 @@
                 VerticalAlignment="Center"
                 Width="95"
                 Background="#E1251B"
+                Command="{Binding CreateOrderCommand}"
                 Style="{StaticResource AddCustomerButton}"/>
 
         <StackPanel x:Name="PanelCustomerInfo" Grid.Row="3" Grid.RowSpan="2"
@@ -93,15 +94,23 @@
                     Orientation="Horizontal">
                     <TextBlock Text="Tổng số dư:"
                                FontSize="16"
-                               VerticalAlignment="Bottom"></TextBlock>
-                    <TextBlock Text="{Binding Path=Customer.Balance, Converter={StaticResource FloatToCurrency},
-                                ConverterCulture=vi-VN}" 
-                               d:Text="100.000đ"
+                               VerticalAlignment="Bottom"/>
+                    <TextBlock d:Text="100.000đ"
                                FontSize="24"
                                Margin="6 0"
                                FontWeight="Bold"
-                               VerticalAlignment="Bottom"></TextBlock>
-                    <Button Style="{StaticResource HideMoneyButton}"></Button>
+                               VerticalAlignment="Bottom">
+                        <TextBlock.Text>
+                            <MultiBinding Converter="{StaticResource FloatToCurrency}"
+                                          ConverterCulture="vi-VN">
+                                <Binding Path="Customer.Balance"/>
+                                <Binding Path="IsShowing"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <Button x:Name="ButtonHideMoney"
+                            Style="{StaticResource HideMoneyButton}"
+                            Command="{Binding PasswordStateCommand}"/>
                 </StackPanel>
                     <Button Content="Nạp tiền"
                             Background="#E1251B"
@@ -133,8 +142,7 @@
                         <Border x:Name="border"
                                 BorderBrush="Gray" 
                                 BorderThickness="2"  
-                                CornerRadius="5"
-                                 >
+                                CornerRadius="5">
                             <StackPanel Orientation="Vertical" 
                                         Width="104"
                                         Height="120" >
@@ -231,8 +239,8 @@
                 HorizontalAlignment="Left"
                 Margin="20 0"
                 Style="{StaticResource ResourceKey=ButtonCustomColorPositive}"
-                Command="{Binding AddCustomerCommand}"
-                ></Button>
+                Command="{Binding AddCustomerCommand}">
+        </Button>
         <StackPanel Grid.Row="3"
                     Grid.Column="2"
                     Grid.RowSpan="2"
@@ -243,7 +251,7 @@
             </StackPanel.Visibility>
             <TextBlock Text="Lịch sử hoá đơn"
                        FontSize="16"
-                       FontWeight="Bold"></TextBlock>
+                       FontWeight="Bold"/>
         </StackPanel>
     </Grid>
 </UserControl>

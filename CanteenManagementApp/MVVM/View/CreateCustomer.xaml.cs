@@ -15,9 +15,34 @@ namespace CanteenManagementApp.MVVM.View
         }
 
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            string customerType = GetCheckedRadioButton();
+            string customerId = TextBoxId.Text;
+            string customerName = TextBoxName.Text;
+
+            if (string.IsNullOrWhiteSpace(customerType) || string.IsNullOrWhiteSpace(customerId) || string.IsNullOrWhiteSpace(customerName))
+            {
+                MessageBox.Show("Có trường còn trống, xin hãy kiểm tra lại.", "Lưu lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                Close();
+                await DbQueries.CustomerQueries.InsertCustomerAsync(customerId, customerName, customerType);
+            }
+        }
+
+        private string GetCheckedRadioButton()
+        {
+            if ((bool)RadioButtonSV.IsChecked)
+            {
+                return RadioButtonSV.Content.ToString();
+            }
+            if ((bool)RadioButtonGV.IsChecked)
+            {
+                return RadioButtonGV.Content.ToString();
+            }
+            return RadioButtonCBNV.Content.ToString();
         }
     }
 }

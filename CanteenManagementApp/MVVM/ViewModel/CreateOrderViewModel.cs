@@ -18,10 +18,8 @@ namespace CanteenManagementApp.MVVM.ViewModel
             set { _currentPage = value; }
         }
 
-        public Customer Customer { get; set; } = null;
-
-        private bool _hasCustomer;
-        public bool HasCustomer { get => Customer != null; set => _hasCustomer = value; }
+        public static Customer Customer { get; set; } = null;
+        public static bool HasCustomer { get => Customer != null; set { } }
 
         public CreateOrderMainPage CreateOrderMainPage { get; set; }
         public CreateOrderPaymentPage CreateOrderPaymentPage { get; set; }
@@ -33,31 +31,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
             CreateOrderReceiptPage = new CreateOrderReceiptPage(this);
 
             CurrentPage = CreateOrderMainPage;
-
-            NavigateMainPageCommand = new RelayCommand(o =>
-            {
-                CurrentPage = CreateOrderMainPage;
-            });
-
-            NavigatePaymentPageCommand = new RelayCommand(o =>
-            {
-                CurrentPage = CreateOrderPaymentPage;
-            });
-
-            NavigateReceiptPageCommand = new RelayCommand(o =>
-            {
-                CurrentPage = CreateOrderReceiptPage;
-            });
-        }
-
-        public CreateOrderViewModel(Customer customer = null)
-        {
-            CreateOrderMainPage = new CreateOrderMainPage(this);
-            CreateOrderPaymentPage = new CreateOrderPaymentPage(this);
-            CreateOrderReceiptPage = new CreateOrderReceiptPage(this);
-
-            CurrentPage = CreateOrderMainPage;
-            Customer = customer;
 
             NavigateMainPageCommand = new RelayCommand(o =>
             {

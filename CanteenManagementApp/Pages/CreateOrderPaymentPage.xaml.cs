@@ -20,9 +20,9 @@ namespace CanteenManagementApp.Pages
 
         private void SetCorrespondingLayout()
         {
-            if (CreateOrderVM.HasCustomer)
+            if (CreateOrderViewModel.HasCustomer)
             {
-                CustomerId.Content = CreateOrderVM.Customer.Id;
+                CustomerId.Content = CreateOrderViewModel.Customer.Id;
             }
             else
             {
