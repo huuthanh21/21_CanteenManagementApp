@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CanteenManagementApp.MVVM.View"
              xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
-             mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="665">
+             mc:Ignorable="d">
     <UserControl.DataContext>
         <viewModel:CreateOrderViewModel/>
     </UserControl.DataContext>

@@ -51,6 +51,7 @@
                 <ResourceDictionary Source="Theme/ButtonAdd.xaml"/>
                 <ResourceDictionary Source="Theme/ButtonPaymentMethod.xaml"/>
                 <ResourceDictionary Source="Theme/DatePicker.xaml"/>
+                <ResourceDictionary Source="Theme/TotalItemOrder.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             

@@ -12,9 +12,9 @@ namespace CanteenManagementApp.Pages
 
         public CreateOrderMainPage(CreateOrderViewModel viewModel)
         {
-            CreateOrderVM = viewModel;
-
             InitializeComponent();
+            CreateOrderVM = viewModel;
+            DataContext = CreateOrderVM;
         }
 
 
@@ -45,5 +45,27 @@ namespace CanteenManagementApp.Pages
             CreateOrderVM?.NavigateMainPageCommand.Execute(null);
         }
 
+        private void Decrease_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            int indexSelected = foodListView.SelectedIndex;
+            if(indexSelected != -1)
+            {
+                if (CreateOrderVM._ListItemOrder[indexSelected]._amount > 0)
+                {
+                    CreateOrderVM._ListItemOrder[indexSelected]._amount--;
+                }
+            }
+            CreateOrderVM.UpdateTotalOrder();
+
+        }
+
+        private void Increase_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            int indexSelected = foodListView.SelectedIndex;
+            if (indexSelected != -1)
+                CreateOrderVM._ListItemOrder[indexSelected]._amount++;
+
+            CreateOrderVM.UpdateTotalOrder();
+        }
     }
 }
