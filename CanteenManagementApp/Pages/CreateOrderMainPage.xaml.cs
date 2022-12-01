@@ -50,9 +50,9 @@ namespace CanteenManagementApp.Pages
             int indexSelected = foodListView.SelectedIndex;
             if(indexSelected != -1)
             {
-                if (CreateOrderVM._ListItemOrder[indexSelected]._amount > 0)
+                if (CreateOrderVM._ListFoodItemOrder[indexSelected]._amount > 0)
                 {
-                    CreateOrderVM._ListItemOrder[indexSelected]._amount--;
+                    CreateOrderVM._ListFoodItemOrder[indexSelected]._amount--;
                 }
             }
             CreateOrderVM.UpdateTotalOrder();
@@ -63,7 +63,7 @@ namespace CanteenManagementApp.Pages
         {
             int indexSelected = foodListView.SelectedIndex;
             if (indexSelected != -1)
-                CreateOrderVM._ListItemOrder[indexSelected]._amount++;
+                CreateOrderVM._ListFoodItemOrder[indexSelected]._amount++;
 
             CreateOrderVM.UpdateTotalOrder();
         }

@@ -38,7 +38,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public ObservableCollection<Item> _foodItems;
         public ObservableCollection<Item> _inventoryItems;
 
-        public ObservableCollection<ItemOrder> _ListItemOrder;
+        public ObservableCollection<ItemOrder> _ListFoodItemOrder;
         public ObservableCollection<ItemOrder> _TotalItemOrder;
         //private CollectionViewSource StorageItemsCollection;
         private CollectionViewSource InventoryItemsCollection;
@@ -50,6 +50,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public ICollectionView FoodSourceCollection => FoodItemsCollection.View;
         public ICollectionView InventorySourceCollection => InventoryItemsCollection.View;
         public ICollectionView TotalOrderSourceCollection => TotalOrderItemsCollection.View;
+
         public ICommand IncreaseAmountOrderCommand;
         //----------------
         public CreateOrderViewModel()
@@ -118,9 +119,9 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
             };
 
-            _ListItemOrder = new ObservableCollection<ItemOrder>
+            _ListFoodItemOrder = new ObservableCollection<ItemOrder>
             {
-                 new ItemOrder() {  _item = (Item) _allItems[0].Clone() },
+                new ItemOrder() {  _item = (Item) _allItems[0].Clone() },
                 new ItemOrder() {  _item = (Item) _allItems[1].Clone() },
                 new ItemOrder() {  _item = (Item) _allItems[2].Clone() },
                 new ItemOrder() {  _item = (Item) _allItems[3].Clone() },
@@ -156,16 +157,9 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 }
             }
 
-            //_ListItemOrder.f
-            foreach(ItemOrder itemOrder in _ListItemOrder)
-            {
-                if (itemOrder._amount > 0)
-                {
-                    _TotalItemOrder.Add(itemOrder);
-                }
-            }
+            
 
-            FoodItemsCollection = new CollectionViewSource { Source = _ListItemOrder };
+            FoodItemsCollection = new CollectionViewSource { Source = _ListFoodItemOrder };
             TotalOrderItemsCollection = new CollectionViewSource { Source = _TotalItemOrder };
             InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
             IncreaseAmountOrderCommand = new RelayCommand<CreateOrderMainPage>((parameter) => true, (parameter) => IncreaseAmountOrder(parameter));
@@ -174,7 +168,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         private void IncreaseAmountOrder(CreateOrderMainPage parameter)
         {
             int indexSelected = parameter.foodListView.SelectedIndex;
-            _ListItemOrder[indexSelected]._amount++;
+            _ListFoodItemOrder[indexSelected]._amount++;
         }
 
         public CreateOrderViewModel(Customer customer = null)
@@ -244,7 +238,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
             };
 
-            _ListItemOrder = new ObservableCollection<ItemOrder>
+            _ListFoodItemOrder = new ObservableCollection<ItemOrder>
             {
                 new ItemOrder() {  _item = (Item) _allItems[0].Clone() },
                 new ItemOrder() {  _item = (Item) _allItems[1].Clone() },
@@ -280,14 +274,14 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 }
             }
 
-            FoodItemsCollection = new CollectionViewSource { Source = _ListItemOrder };
+            FoodItemsCollection = new CollectionViewSource { Source = _ListFoodItemOrder };
             InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
             IncreaseAmountOrderCommand = new RelayCommand<CreateOrderMainPage>((parameter) => true, (parameter) => IncreaseAmountOrder(parameter));
         }
 
         public void UpdateTotalOrder()
         {
-            foreach (ItemOrder itemOrder in _ListItemOrder)
+            foreach (ItemOrder itemOrder in _ListFoodItemOrder)
             {
                 if (!_TotalItemOrder.Contains(itemOrder))
                 {
