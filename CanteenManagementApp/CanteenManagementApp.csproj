@@ -163,6 +163,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="MVVM\View\CreateCustomer.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="Pages\MonthlyReport.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
