@@ -83,6 +83,7 @@
                                FontFamily="{DynamicResource Inter}"
                                Foreground="{Binding Path=IsChecked, Converter={StaticResource ForegroundConverter}, ElementName=ButtonPayThroughAccount}"
                                FontWeight="Bold"   
+                               TextAlignment="Center"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                Margin="0 0 0 0">

@@ -48,11 +48,14 @@
                 <ResourceDictionary Source="Theme/ReportItem.xaml"/>
                 <ResourceDictionary Source="Theme/ButtonCustomColorCancel.xaml"/>
                 <ResourceDictionary Source="Theme/ButtonBack.xaml"/>
+                <ResourceDictionary Source="Theme/ButtonAdd.xaml"/>
                 <ResourceDictionary Source="Theme/ButtonPaymentMethod.xaml"/>
                 <ResourceDictionary Source="Theme/DatePicker.xaml"/>
                 <ResourceDictionary Source="Theme/AddCustomerButton.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
             
+
 
         </ResourceDictionary>
     </Application.Resources>

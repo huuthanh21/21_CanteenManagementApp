@@ -1,5 +1,4 @@
-﻿using CanteenManagementApp.MVVM.Model;
-using CanteenManagementApp.MVVM.ViewModel;
+﻿using CanteenManagementApp.MVVM.ViewModel;
 using System.Windows.Controls;
 
 namespace CanteenManagementApp.Pages

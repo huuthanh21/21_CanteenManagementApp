@@ -3,9 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CanteenManagementApp.MVVM.Model
 {
@@ -15,7 +12,7 @@ namespace CanteenManagementApp.MVVM.Model
     public class Item: ObservableObject, ICloneable 
     {
         [Key]
-        [MaxLength(10)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]

@@ -1,8 +1,6 @@
 ﻿using CanteenManagementApp.Core;
 using CanteenManagementApp.MVVM.Model;
 using CanteenManagementApp.Pages;
-using System;
-using System.Windows.Navigation;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {

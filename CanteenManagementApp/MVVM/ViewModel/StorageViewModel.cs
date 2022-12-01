@@ -1,16 +1,11 @@
 ﻿using CanteenManagementApp.Core;
 using CanteenManagementApp.MVVM.Model;
 using CanteenManagementApp.MVVM.View;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
+
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
@@ -23,12 +18,19 @@ namespace CanteenManagementApp.MVVM.ViewModel
         private readonly CollectionViewSource InventoryItemsCollection;
         private readonly CollectionViewSource FoodItemsCollection;
         //public ICollectionView StorageSourceCollection => StorageItemsCollection.View;
+        private string imageFileName = "";
+
         public ICollectionView FoodSourceCollection => FoodItemsCollection.View;
         public ICollectionView InventorySourceCollection => InventoryItemsCollection.View;
-        public ICommand EditItemCommand { get; set; }
-        public ICommand DeleteCommand { get; set; }
-        public ICommand EditInventoryCommand { get; set; }
-        public ICommand DeleteInventoryCommand { get; set; }
+        public ICommand EditItemCommand { get; set; } // chỉnh sửa món ăn
+        public ICommand DeleteCommand { get; set; } // xóa món ăn
+        public ICommand EditInventoryCommand { get; set; } // chỉnh sửa hàng tồn
+        public ICommand DeleteInventoryCommand { get; set; } // xóa hàng tồn
+        public ICommand AddItemCommand { get; set; } // thêm hàng
+
+        // Thêm hàng:
+        //public ICommand SelectImageCommand { get; set; } //chọn ảnh
+        //public ICommand ButtonAddCommand { get; set; } 
         public StorageViewModel()
         {
             _allItems = new ObservableCollection<Item>
@@ -88,12 +90,83 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
             FoodItemsCollection = new CollectionViewSource {  Source = _foodItems };
             InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
-            // ViewBillCommand = new RelayCommand<PayWindow>((parameter) => true, (parameter) => ViewBill(parameter));
-            //EditItemCommand = new RelayCommand(StorageView =>  ShowEditItem(StorageView) );
+
             EditItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => EditItem(parameter));
             DeleteCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => DeleteItem(parameter));
             EditInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => EditInventoryItem(parameter));
             DeleteInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => DeleteInventoryItem(parameter));
+            AddItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => addItem(parameter));
+
+            //SelectImageCommand = new RelayCommand<AddItem>((parameter) => true, (parameter) => ChooseImage(parameter));
+            //ButtonAddCommand = new RelayCommand<AddItem>((parameter) => true, (parameter) => ButtonAddClick(parameter));
+        }
+
+        //private void ButtonAddClick(AddItem parameter)
+        //{
+        //    parameter.DialogResult = true;
+        //    string id = parameter.IdTextBox.Text;
+        //    string name = parameter.IdTextBox.Text;
+        //    string describe = parameter.describeTextBox.Text;
+        //    string price = parameter.priceTextBox.Text;
+        //    Item newItem = new()
+        //    {
+        //        Id = int.Parse(id),
+        //        Name = name,
+        //        Price = double.Parse(price),
+        //        Description = describe,
+        //        Amount = 0,
+        //        ImagePath = imageFileName,
+        //        Type = 0
+
+        //    };
+        //    _foodItems.Add(newItem);
+        //}
+
+        //private void ChooseImage(AddItem parameter)
+        //{
+        //    OpenFileDialog op = new OpenFileDialog();
+        //    op.Title = "Chọn ảnh";
+        //    op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" + "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" + "Portable Network Graphic (*.png)|*.png";
+        //    if (op.ShowDialog() == true)
+        //    {
+        //        imageFileName = op.FileName;
+        //        ImageBrush imageBrush = new ImageBrush();
+        //        BitmapImage bitmap = new BitmapImage();
+        //        bitmap.BeginInit();
+        //        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+        //        bitmap.UriSource = new Uri(imageFileName);
+        //        bitmap.EndInit();
+        //        imageBrush.ImageSource = bitmap;
+        //        parameter.grdSelectImg.Background = imageBrush;
+        //    }
+        //}
+
+        private void addItem(StorageView parameter)
+        {
+            var screen = new AddItem();
+            //screen.Show();
+            //if (screen.ShowDialog() == true)
+            //{
+            //    if (screen.NewBook.Name != "" || screen.NewBook.PublishedYear != "" || screen.NewBook.Author != "")
+            //    {
+            //        _allItems.Add(screen.NewBook.Clone() as Book);
+            //    }
+            //}
+            if (screen.ShowDialog() == true)
+            {
+                if(screen.NewItem.Id != 0 || screen.NewItem.Name != "" || screen.NewItem.Price != 0 
+                    || screen.NewItem.Description != "" || screen.NewItem.ImagePath != "")
+                {
+                    _foodItems.Add(screen.NewItem.Clone() as Item);
+                }
+                
+            }
+            else
+            {
+
+
+            }
+            screen.Close();
         }
 
         private void DeleteInventoryItem(StorageView parameter)

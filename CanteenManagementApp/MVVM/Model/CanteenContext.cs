@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Diagnostics;
 
 namespace CanteenManagementApp.MVVM.Model
 {
@@ -11,11 +8,10 @@ namespace CanteenManagementApp.MVVM.Model
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
-
         public DbSet<Receipt_Item> Receipt_Items { get; set; }
 
         private const string connectionString = @"
-                Server=DUYQUANG-PC;
+                Server=.\SQLEXPRESS;
                 Database=CANTEEN_DATABASE;
                 Encrypt=False;
                 Trusted_Connection=True;
@@ -26,6 +22,7 @@ namespace CanteenManagementApp.MVVM.Model
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer(connectionString);
         }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
