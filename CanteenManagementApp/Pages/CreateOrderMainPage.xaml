@@ -42,6 +42,8 @@
         <TextBlock Text="Tạo đơn hàng"
                    Grid.Row="1"
                    Style="{StaticResource TextblockTitle}"/>
+        
+        <!--Display list of food item-->
         <StackPanel Grid.Row="3">
             <StackPanel Orientation="Horizontal">
                 <Image Source="/Images/up.png" Margin="20 0 0 0" VerticalAlignment="Center" Width="15" Height="11"/>
@@ -49,10 +51,6 @@
                     Margin="15 12 0 10"
                    Style="{StaticResource TextblockTitleSmall}"
                           VerticalAlignment="Center"/>
-                <Button Margin="5 5 0 0"
-                        Style="{StaticResource ButtonAdd}"
-                        Command="{Binding AddItemCommand}"
-                        CommandParameter="{Binding ElementName=ucStorage}"  />
             </StackPanel>
 
 
@@ -63,7 +61,9 @@
                       Name="foodListView" 
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       ScrollViewer.VerticalScrollBarVisibility="Visible"
-                      HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}" >
+                      HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}" 
+                      PreviewMouseLeftButtonDown="List_PreviewLeftMouseDown"
+                >
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
@@ -72,37 +72,14 @@
 
                 <ListView.Resources>
                     <Model:BindingProxy x:Key="Proxy" Data="{Binding}" />
-                    <ContextMenu x:Key="foodContextMenu">
-                        <MenuItem Header="Edit" 
-                                  Command="{Binding Source={StaticResource Proxy}, Path=Data.EditItemCommand}"
-                                  CommandParameter="{Binding PlacementTarget.Tag,
-                                                             RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
-                            <MenuItem.Icon>
-                                <Image  Width="20" Height="16"  Source="/Images/editing.png"></Image>
-                            </MenuItem.Icon>
-                        </MenuItem>
-
-                        <MenuItem Header="Delete"
-                                  Command="{Binding Source={StaticResource Proxy}, Path=Data.DeleteCommand}"
-                                  CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={
-                                                RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
-                            <MenuItem.Icon>
-                                <Image Width="20" Height="16" Source="/Images/delete.png"></Image>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                    </ContextMenu>
-
                 </ListView.Resources>
-
-
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border x:Name="border"
                                 BorderBrush="Gray" 
                                 BorderThickness="2"  
-                                CornerRadius="5"
-                                 >
+                                CornerRadius="5"  >
                             <StackPanel Orientation="Vertical" 
                                         Width="95"
                                         Height="120" >
@@ -155,6 +132,150 @@
                                             Click="Increase_Click"
                                             />
                                 </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <DataTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver"
+                                 Value="True">
+                                <Setter Property="BorderBrush"
+                                    TargetName="border"
+                                    Value="Black" />
+
+                                <Setter Property="BorderThickness"
+                                    TargetName="border"
+                                    Value="2" />
+                                
+                            </Trigger>
+                            <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={
+                                          RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem }}}"
+                                          Value="True">
+                                <Setter Property="BorderBrush"
+                                    TargetName="border"
+                                    Value="#0033A1" />
+                                <Setter Property="Cursor" Value="Hand"/>
+                                
+                            </DataTrigger>
+
+                           
+                        </DataTemplate.Triggers>
+
+                    </DataTemplate>
+
+
+                </ListView.ItemTemplate>
+
+                <ListView.ItemContainerStyle>
+                    
+                    <Style TargetType="{x:Type ListViewItem}" >
+                        <!--remove green selected area-->
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Tag" Value="{Binding ElementName=PageOrderMain}" />
+                        <Setter Property="Margin" Value="5"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+            </ListView>
+
+        </StackPanel>
+        <!--Display list of inventory item-->
+        <StackPanel Grid.Row="4">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Images/up.png" Margin="20 0 0 0" VerticalAlignment="Center" Width="15" Height="11"/>
+                <TextBlock Text="Hàng tồn kho"
+                    Margin="15 12 0 10"
+                   Style="{StaticResource TextblockTitleSmall}"
+                          VerticalAlignment="Center"/>
+            </StackPanel>
+
+
+            <ListView
+                      Width="463" Height="190"
+                      Margin="0" BorderThickness="0" 
+                      ItemsSource="{Binding InventorySourceCollection}" 
+                      Name="inventoryListView" 
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}"
+                        PreviewMouseLeftButtonDown="List_PreviewLeftMouseDown"
+                        PreviewMouseDown="List_PreviewLeftMouseDown"
+                      >
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListView.Resources>
+                    <Model:BindingProxy x:Key="Proxy" Data="{Binding}" />
+                </ListView.Resources>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border x:Name="border"
+                                BorderBrush="Gray" 
+                                BorderThickness="2"  
+                                CornerRadius="5"
+                                 >
+                            <StackPanel Orientation="Vertical" 
+                                        Width="95"
+                                        Height="120" >
+                                <Image Margin ="0 5 0 0 "
+                                       MinWidth="80"
+                                       Width="60" Height="54"
+                                       Source="{Binding _item.ImagePath}"/>
+                                <StackPanel Orientation="Horizontal" 
+                                            VerticalAlignment="Center"
+                                        Margin="0 0 0 0" >
+                                    <TextBlock TextAlignment="Left"
+                                                  
+                                                   Width="48" 
+                                                   Height="35"
+                                                   Foreground="Black" 
+                                                   FontSize="10"
+                                                   TextWrapping="WrapWithOverflow"
+                                                   Text="{Binding _item.Name}"
+                                                   Style="{StaticResource TextblockTitleSmall}"
+                                                   Margin="0 0 0 0"
+                                                   Padding="6 10 0 0"/>
+
+                                    <TextBlock Foreground="#0033A1" 
+                                                 HorizontalAlignment="Left"
+                                                 VerticalAlignment="Top"
+                                                 TextWrapping="WrapWithOverflow"
+                                                 Margin="0 0 0 0"
+                                                 Padding="3 10 0 0"
+                                                 FontSize="12"
+                                                 Style="{StaticResource TextblockTitleSmall}"
+                                                 Text="{Binding _item.Price}"
+                                                 Height="35"
+                                                 Width="50"/>
+
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                            Height="25"
+                                            >
+                                    <Button Style="{StaticResource ButtonDecrease}" 
+                                            Margin="0 5 10 0"
+                                            Click="DecreaseInventory_Click"
+                                           />
+                                    <TextBlock Text="{Binding _amount}"
+                                               Style="{StaticResource TextblockTitleSmall}"
+                                               Margin="0 5 0 0"
+                                               FontSize="15"/>
+                                    <Button Style="{StaticResource ButtonIncrease}" 
+                                            Margin="10 3 0 0"
+                                            Click="IncreaseInventory_Click"
+                                            />
+                                </StackPanel>
 
                                 <!--<StackPanel Orientation="Horizontal">
                                     <Button Margin="0 0 0 0"
@@ -185,7 +306,7 @@
                                     TargetName="border"
                                     Value="#0033A1" />
                                 <Setter Property="Cursor" Value="Hand"/>
-                                
+
                             </DataTrigger>
                         </DataTemplate.Triggers>
 
@@ -193,7 +314,7 @@
 
 
                 </ListView.ItemTemplate>
-
+                
                 <ListView.ItemContainerStyle>
                     
                     <Style TargetType="{x:Type ListViewItem}" >
@@ -205,17 +326,16 @@
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
-
-                        <Setter Property="ContextMenu" Value="{StaticResource foodContextMenu}" />
                         <Setter Property="Tag" Value="{Binding ElementName=PageOrderMain}" />
                         <Setter Property="Margin" Value="5"/>
+                        
                     </Style>
                 </ListView.ItemContainerStyle>
 
             </ListView>
 
         </StackPanel>
-        
+
         <TextBox Grid.Row="2"
                  Width="409" Height="31"
                  HorizontalAlignment="Left"
@@ -232,7 +352,7 @@
         <StackPanel Grid.Row="3"
                     Grid.Column="1">
             <ListView Margin="0 20 0 0"
-                      Height="200"
+                      Height="220"
                       VerticalAlignment="Bottom"
                       Background="Transparent" BorderThickness="0" ItemsSource="{Binding TotalOrderSourceCollection}" Name="DailyReportListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}">
                 <ListView.ItemsPanel>

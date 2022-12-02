@@ -2,9 +2,11 @@
 using CanteenManagementApp.MVVM.Model;
 using CanteenManagementApp.MVVM.View;
 using CanteenManagementApp.Pages;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -34,18 +36,17 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public CreateOrderReceiptPage CreateOrderReceiptPage { get; set; }
 
         //----------------
-        public ObservableCollection<Item> _allItems;
         public ObservableCollection<Item> _foodItems;
         public ObservableCollection<Item> _inventoryItems;
 
         public ObservableCollection<ItemOrder> _ListFoodItemOrder;
+        public ObservableCollection<ItemOrder> _ListInventoryItemOrder;
+        // total items selected by customer
         public ObservableCollection<ItemOrder> _TotalItemOrder;
-        //private CollectionViewSource StorageItemsCollection;
+
         private CollectionViewSource InventoryItemsCollection;
         private CollectionViewSource FoodItemsCollection;
         private CollectionViewSource TotalOrderItemsCollection;
-        //public ICollectionView StorageSourceCollection => StorageItemsCollection.View;
-        //private string imageFileName = "";
 
         public ICollectionView FoodSourceCollection => FoodItemsCollection.View;
         public ICollectionView InventorySourceCollection => InventoryItemsCollection.View;
@@ -76,8 +77,9 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 CurrentPage = CreateOrderReceiptPage;
             });
 
-            //--------------
-            _allItems = new ObservableCollection<Item>
+            //-------------- 
+            // hard data assignment
+            _foodItems = new ObservableCollection<Item>
             {
 
                 new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Món ức gà chiên mắm cay có màu sắc hấp dẫn, vị mặn mặn chua chua của nước sốt giúp thịt gà tăng thêm hương vị và kích thích vị giác người ăn. vị đậm đà của mùi nước mắm quyện vào thịt, và vị bùi bùi của tỏi, cay nồng của ớt sừng. Món này ăn kèm cơm nóng, hoặc bánh mì tùy thích.\r\n\r\n\r\n", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
@@ -100,7 +102,10 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 15, Price = 12000,  ImagePath = "/Images/b1.jpg" },
                 new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Ngon", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
                 new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
-                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
+                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"}
+            };
+            _inventoryItems = new ObservableCollection<Item>
+            {
                 new Item() { Type = 1, Name = "Cocacola", Amount = 10, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/coca.jpg" },
                 new Item() { Type = 1, Name = "Pepsi", Amount = 100, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/pepsi.png" },
                 new Item() { Type = 1, Name = "Sprite", Amount = 520, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" },
@@ -115,53 +120,29 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 new Item() { Type = 1, Name = "Bò húc", Amount = 250, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/bohuc.png" },
                 new Item() { Type = 1, Name = "Cocacola", Amount = 110, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/coca.jpg" },
                 new Item() { Type = 1, Name = "Pepsi", Amount = 1240, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/pepsi.png" },
-                new Item() { Type = 1, Name = "Sprite", Amount = 160, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" },
-
+                new Item() { Type = 1, Name = "Sprite", Amount = 160, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" }
             };
 
-            _ListFoodItemOrder = new ObservableCollection<ItemOrder>
-            {
-                new ItemOrder() {  _item = (Item) _allItems[0].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[1].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[2].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[3].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[4].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[5].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[6].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[7].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[8].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[9].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[10].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[11].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[12].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[13].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[14].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[15].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[16].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[17].Clone() }
-            };
 
-            _foodItems = new ObservableCollection<Item> { };
-            _inventoryItems = new ObservableCollection<Item> { };
-            _TotalItemOrder = new ObservableCollection<ItemOrder> { };
+            // set up data to display
+            _ListFoodItemOrder = new ObservableCollection<ItemOrder>{ };
+            _ListInventoryItemOrder = new ObservableCollection<ItemOrder> { };
 
-            foreach (Item item in _allItems)
+            foreach (Item item in _foodItems)
             {
-                if (item.Type == 1)
-                {
-                    _inventoryItems.Add(item);
-                }
-                else
-                {
-                    _foodItems.Add(item);
-                }
+                _ListFoodItemOrder.Add(new ItemOrder() { _item = (Item) item.Clone() }) ;
+            }
+            foreach (Item item in _inventoryItems)
+            {
+                _ListInventoryItemOrder.Add(new ItemOrder() { _item = (Item)item.Clone() });
             }
 
+            _TotalItemOrder = new ObservableCollection<ItemOrder> { };
             
 
             FoodItemsCollection = new CollectionViewSource { Source = _ListFoodItemOrder };
             TotalOrderItemsCollection = new CollectionViewSource { Source = _TotalItemOrder };
-            InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
+            InventoryItemsCollection = new CollectionViewSource { Source = _ListInventoryItemOrder };
             IncreaseAmountOrderCommand = new RelayCommand<CreateOrderMainPage>((parameter) => true, (parameter) => IncreaseAmountOrder(parameter));
         }
 
@@ -196,7 +177,8 @@ namespace CanteenManagementApp.MVVM.ViewModel
             });
 
             //------------
-            _allItems = new ObservableCollection<Item>
+            // hard data assignment
+            _foodItems = new ObservableCollection<Item>
             {
 
                 new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Món ức gà chiên mắm cay có màu sắc hấp dẫn, vị mặn mặn chua chua của nước sốt giúp thịt gà tăng thêm hương vị và kích thích vị giác người ăn. vị đậm đà của mùi nước mắm quyện vào thịt, và vị bùi bùi của tỏi, cay nồng của ớt sừng. Món này ăn kèm cơm nóng, hoặc bánh mì tùy thích.\r\n\r\n\r\n", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
@@ -219,7 +201,10 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 15, Price = 12000,  ImagePath = "/Images/b1.jpg" },
                 new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Ngon", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
                 new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
-                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
+                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"}
+            };
+            _inventoryItems = new ObservableCollection<Item>
+            {
                 new Item() { Type = 1, Name = "Cocacola", Amount = 10, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/coca.jpg" },
                 new Item() { Type = 1, Name = "Pepsi", Amount = 100, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/pepsi.png" },
                 new Item() { Type = 1, Name = "Sprite", Amount = 520, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" },
@@ -234,48 +219,25 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 new Item() { Type = 1, Name = "Bò húc", Amount = 250, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/bohuc.png" },
                 new Item() { Type = 1, Name = "Cocacola", Amount = 110, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/coca.jpg" },
                 new Item() { Type = 1, Name = "Pepsi", Amount = 1240, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/pepsi.png" },
-                new Item() { Type = 1, Name = "Sprite", Amount = 160, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" },
-
+                new Item() { Type = 1, Name = "Sprite", Amount = 160, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" }
             };
 
-            _ListFoodItemOrder = new ObservableCollection<ItemOrder>
+            // set up data to display
+            foreach (Item item in _foodItems)
             {
-                new ItemOrder() {  _item = (Item) _allItems[0].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[1].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[2].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[3].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[4].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[5].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[6].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[7].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[8].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[9].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[10].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[11].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[12].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[13].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[14].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[15].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[16].Clone() },
-                new ItemOrder() {  _item = (Item) _allItems[17].Clone() }
-            };
-
-            _foodItems = new ObservableCollection<Item> { };
-            _inventoryItems = new ObservableCollection<Item> { };
-            foreach (Item item in _allItems)
+                _ListFoodItemOrder.Add(new ItemOrder() { _item = (Item)item.Clone() });
+            }
+            foreach (Item item in _inventoryItems)
             {
-                if (item.Type == 1)
-                {
-                    _inventoryItems.Add(item);
-                }
-                else
-                {
-                    _foodItems.Add(item);
-                }
+                _ListInventoryItemOrder.Add(new ItemOrder() { _item = (Item)item.Clone() });
             }
 
+            _TotalItemOrder = new ObservableCollection<ItemOrder> { };
+
+
             FoodItemsCollection = new CollectionViewSource { Source = _ListFoodItemOrder };
-            InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
+            TotalOrderItemsCollection = new CollectionViewSource { Source = _TotalItemOrder };
+            InventoryItemsCollection = new CollectionViewSource { Source = _ListInventoryItemOrder };
             IncreaseAmountOrderCommand = new RelayCommand<CreateOrderMainPage>((parameter) => true, (parameter) => IncreaseAmountOrder(parameter));
         }
 
@@ -297,8 +259,26 @@ namespace CanteenManagementApp.MVVM.ViewModel
                         _TotalItemOrder.Remove(itemOrder);
                     }
                 }
-               
             }
+            foreach (ItemOrder itemOrder in _ListInventoryItemOrder)
+            {
+                if (!_TotalItemOrder.Contains(itemOrder))
+                {
+                    if (itemOrder._amount > 0)
+                    {
+                        _TotalItemOrder.Add(itemOrder);
+                    }
+                }
+                else
+                {
+                    if (itemOrder._amount <= 0)
+                    {
+                        _TotalItemOrder.Remove(itemOrder);
+                    }
+                }
+
+            }
+
         }
     }
 }
