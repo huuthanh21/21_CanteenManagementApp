@@ -123,14 +123,13 @@
                        FontSize="16"
                        Margin="0 20 0 10"
                        FontWeight="Bold"></TextBlock>
-            <ListView
-                      Height="140"
+            <ListView Height="140"
+                      MinWidth="374"
                       Margin="0" BorderThickness="1" 
                       ItemsSource="{Binding RecentItemsSourceCollection}" 
                       Name="foodListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       ScrollViewer.VerticalScrollBarVisibility="Visible"
-                      HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}"
-                      >
+                      HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
