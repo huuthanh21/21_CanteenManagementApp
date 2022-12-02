@@ -31,18 +31,18 @@
 
         <Button Grid.Column="1" 
                 x:Name="CustomerId"
-                Width="105" Height="31"
+                Width="104" Height="31"
                 Background="#0033A1"
-                HorizontalAlignment="Right"
+                HorizontalAlignment="Left"
                 IsEnabled="False"
-                Margin="0 0 23 10"
+                Margin="85,15,0,14"
                 d:Content="20120582"
-                Style="{StaticResource ButtonCustomColorPositive}"/>
+                Style="{StaticResource ButtonCustomColorPositive}" Grid.Row="1"/>
 
         <TextBlock Text="Tạo đơn hàng"
                    Grid.Row="1"
                    Style="{StaticResource TextblockTitle}"/>
-        
+
         <!--Display list of food item-->
         <StackPanel Grid.Row="3">
             <StackPanel Orientation="Horizontal">
@@ -146,7 +146,7 @@
                                 <Setter Property="BorderThickness"
                                     TargetName="border"
                                     Value="2" />
-                                
+
                             </Trigger>
                             <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={
                                           RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem }}}"
@@ -155,10 +155,10 @@
                                     TargetName="border"
                                     Value="#0033A1" />
                                 <Setter Property="Cursor" Value="Hand"/>
-                                
+
                             </DataTrigger>
 
-                           
+
                         </DataTemplate.Triggers>
 
                     </DataTemplate>
@@ -167,7 +167,7 @@
                 </ListView.ItemTemplate>
 
                 <ListView.ItemContainerStyle>
-                    
+
                     <Style TargetType="{x:Type ListViewItem}" >
                         <!--remove green selected area-->
                         <Setter Property="Template">
@@ -314,9 +314,9 @@
 
 
                 </ListView.ItemTemplate>
-                
+
                 <ListView.ItemContainerStyle>
-                    
+
                     <Style TargetType="{x:Type ListViewItem}" >
                         <!--remove green selected area-->
                         <Setter Property="Template">
@@ -328,7 +328,7 @@
                         </Setter>
                         <Setter Property="Tag" Value="{Binding ElementName=PageOrderMain}" />
                         <Setter Property="Margin" Value="5"/>
-                        
+
                     </Style>
                 </ListView.ItemContainerStyle>
 
@@ -397,25 +397,27 @@
                                 <Run Text="{Binding _amount}"/>
                             </TextBlock>
                         </StackPanel>
-                       
+
                     </DataTemplate>
-                    
-                    
+
+
                 </ListView.ItemTemplate>
 
                 <!--<ListView.View>
                     <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}" >
                         <GridView.Columns>
                             <GridViewColumn Width="120"  DisplayMemberBinding="{Binding _item.Name}"/>
-                            --><!--<GridViewColumn Width="100" DisplayMemberBinding="{Binding _amount}"/>--><!--
+                            -->
+                <!--<GridViewColumn Width="100" DisplayMemberBinding="{Binding _amount}"/>-->
+                <!--
                         </GridView.Columns>
                     </GridView>
 
                 </ListView.View>-->
             </ListView>
         </StackPanel>
-        
-        
+
+
         <StackPanel Grid.Column="1" Grid.Row="4"
                     Orientation="Vertical"
                     VerticalAlignment="Top">

@@ -18,6 +18,7 @@ namespace CanteenManagementApp
         {
             InitializeComponent();
 
+            // Write your testing code in this method
             QueryTest();
         }
 
