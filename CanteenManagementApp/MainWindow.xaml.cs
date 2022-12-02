@@ -17,8 +17,6 @@ namespace CanteenManagementApp
         public MainWindow() 
         {
             InitializeComponent();  
-
-            CreateDatabase();
         }
 
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
