@@ -16,7 +16,9 @@ namespace CanteenManagementApp
     {
         public MainWindow() 
         {
-            InitializeComponent();  
+            InitializeComponent();
+
+            QueryTest();
         }
 
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -41,6 +43,7 @@ namespace CanteenManagementApp
         {
             Debug.WriteLine("Vao create ne");
             await DropDatabase();
+            
             using var dbContext = new CanteenContext();
             Debug.WriteLine("Create ne");
             bool result = await dbContext.Database.EnsureCreatedAsync();
@@ -65,6 +68,7 @@ namespace CanteenManagementApp
             };
 
             await DbQueries.CustomerQueries.InsertCustomerAsync("20120582", "Trần Hữu Thành", "Sinh viên");
+            
             await DbQueries.ReceiptQueries.InsertReceiptAsync("20120582",tuples, "Tiền mặt", 100000);
         }
 
@@ -80,5 +84,16 @@ namespace CanteenManagementApp
             Debug.WriteLine($"{databasename} {deletionInfo}");
         }
 
+        public static async void QueryTest()
+        {
+            using var dbContext = new CanteenContext();
+
+            var items = await DbQueries.CustomerQueries.GetFrequentlyBoughtItemsByCustomerIdAsync("20120582");
+
+            foreach (var item in items)
+            {
+                Debug.WriteLine(item.Name);
+            }
+        }
     }
 }

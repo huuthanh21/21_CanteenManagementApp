@@ -12,9 +12,9 @@ namespace CanteenManagementApp.Pages
 
         public CreateOrderReceiptPage(CreateOrderViewModel viewModel)
         {
-            CreateOrderVM = viewModel;
-
             InitializeComponent();
+            CreateOrderVM = viewModel;
+            DataContext = CreateOrderVM;
         }
 
         private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -24,21 +24,14 @@ namespace CanteenManagementApp.Pages
 
         private void SetCorrespondingLayout()
         {
-            if (CreateOrderVM.HasCustomer)
+            if (CreateOrderViewModel.HasCustomer)
             {
-                CustomerId.Content = CreateOrderVM.Customer.Id;
+                CustomerId.Content = CreateOrderViewModel.Customer.Id;
             }
             else
             {
                 CustomerId.Visibility = System.Windows.Visibility.Collapsed;
             }
         }
-
-        private void ButtonNavigateMainPage_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            CreateOrderVM.NavigateMainPageCommand.Execute(null);
-        }
-
-        
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using CanteenManagementApp.MVVM.ViewModel;
+using System.Windows.Controls;
 
 namespace CanteenManagementApp.MVVM.View
 {
@@ -7,9 +8,12 @@ namespace CanteenManagementApp.MVVM.View
     /// </summary>
     public partial class CustomerView : UserControl
     {
+        CustomerViewModel CustomerViewModel { get; set; } = new CustomerViewModel(null);
         public CustomerView()
-        {
+        {   
             InitializeComponent();
+
+            DataContext = CustomerViewModel;
         }
     }
 }

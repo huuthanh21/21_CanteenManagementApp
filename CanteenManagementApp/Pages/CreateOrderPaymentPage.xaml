@@ -46,7 +46,7 @@
         <Button x:Name="ButtonBack"
                 Content="Trở về"
                 HorizontalAlignment="Left"
-                Command="NavigationCommands.BrowseBack"
+                Command="{Binding NavigateMainPageCommand}"
                 Style="{StaticResource ButtonBack}"/>
 
         <TextBlock Text="Thanh toán"
@@ -93,9 +93,10 @@
                              FontWeight="Medium"
                              FontSize="11"/>
                         <Run d:Text="100.000"
+                             Text="{Binding Customer.Balance}"
                              FontWeight="Medium"
                              FontSize="11"/><!--
-                     --><Run d:Text="đ"
+                     --><Run Text="đ"
                              FontWeight="Medium"
                              FontSize="11"/>        
                     </TextBlock>
@@ -108,14 +109,14 @@
                 Width="200" Height="33"
                 Foreground="#E1251B"
                 Style="{StaticResource ButtonCustomColorCancel}"
-                Click="ButtonCancel_Click"
+                Command="{Binding NavigateMainPageCommand}"
                 HorizontalAlignment="Right"/>
         <Button x:Name="ButtonNavigateReceiptPage" Grid.Column="1" Grid.Row="5" 
                 Content="Thanh toán"
                 Background="#0033A1"
                 Width="200" Height="33"
                 Margin="10 0 0 0"
-                Click="ButtonNavigateReceiptPage_Click"
+                Command="{Binding NavigateReceiptPageCommand}"
                 Style="{StaticResource ButtonCustomColorPositive}"
                 HorizontalAlignment="Left"/>
     </Grid>

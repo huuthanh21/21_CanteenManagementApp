@@ -443,14 +443,14 @@
             <Button x:Name="ButtonContinue" 
                     Width="180" Height="33"
                     Content="Tiếp tục"
-                    Click="ButtonContinue_Click"
+                    Command="{Binding NavigatePaymentPageCommand}"
                     Background="#0033A1"
                     Margin="0 0 0 5"
                     Style="{StaticResource ButtonCustomColorPositive}"/>
             <Button x:Name="ButtonCancel" 
                     Width="180" Height="33"
                     Content="Hủy đơn"  
-                    Click="ButtonCancel_Click"
+                    Command="{Binding NavigateMainPageCommand}"
                     Foreground="#E1251B"
                     Style="{StaticResource ButtonCustomColorCancel}"/>
         </StackPanel>

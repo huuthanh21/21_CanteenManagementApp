@@ -21,6 +21,7 @@ namespace CanteenManagementApp.Pages
             InitializeComponent();
             CreateOrderVM = viewModel;
             DataContext = CreateOrderVM;
+
         }
 
 
@@ -31,24 +32,14 @@ namespace CanteenManagementApp.Pages
 
         private void SetCorrespondingLayout()
         {
-            if (CreateOrderVM.HasCustomer)
+            if (CreateOrderViewModel.HasCustomer)
             {
-                CustomerId.Content = CreateOrderVM.Customer.Id;
+                CustomerId.Content = CreateOrderViewModel.Customer.Id;
             }
             else
             {
                 CustomerId.Visibility = System.Windows.Visibility.Collapsed;
             }
-        }
-
-        private void ButtonContinue_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            CreateOrderVM?.NavigatePaymentPageCommand.Execute(null);
-        }
-
-        private void ButtonCancel_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            CreateOrderVM?.NavigateMainPageCommand.Execute(null);
         }
 
         private void Decrease_Click(object sender, System.Windows.RoutedEventArgs e)
