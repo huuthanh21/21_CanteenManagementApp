@@ -10,12 +10,15 @@
                             Background="Transparent"
                             SnapsToDevicePixels="True"
                             CornerRadius="90">
-                        <Image Width="23.15" Height="23.08" 
-                                   Margin="0"
-                                   Source="../Images/Add.png"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"/>
-                        
+                        <Path
+                             VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                            Fill="#0033A1"
+                            Data="M11.7736 0.0888672C5.65568 0.0888672 0.696655 5.25452
+                            0.696655 11.6274C0.696655 18.0002 5.65568 23.1659 11.7736 23.1659C17.8916
+                            23.1659 22.8506 18.0002 22.8506 11.6274C22.8506 5.25452 17.8907 0.0888672
+                            11.7736 0.0888672ZM16.3246 12.6009H12.7082V16.368H10.8382V12.6009H7.22178V10.653H10.8382V6.88587H12.7082V10.653H16.3246V12.6009Z"/>
+
                     </Border>
 
                     <ControlTemplate.Triggers>
@@ -24,6 +27,105 @@
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.8"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Button}"
+           x:Key="ButtonSelectImage">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Foreground" Value="#0033A1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="ButtonBorder"
+                            Width="100" 
+                            Height="19"
+                            Background="Transparent"
+                            SnapsToDevicePixels="True">
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                    >
+                            <Image Width="14" Height="14" 
+                                   Source="../Images/edit_blue_icon.png"
+                                   Margin="0 0 5 0"
+                                   />
+                            <TextBlock Text="{TemplateBinding Content}" />
+                        </StackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonBorder" Property="Opacity"  Value="0.6"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.6"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Button}"
+           x:Key="ButtonIncrease">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="ButtonBorder"
+                            Width="11" Height="11" 
+                            Background="Transparent"
+                            SnapsToDevicePixels="True"
+                            >
+                        <Path
+                             VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                            Fill="#E1251B"
+                            Data="M11.1548 4.29574H6.93705V0.0780029H4.75611V4.29574H0.539368V6.47569H4.75611V10.6934H6.93705V6.47569H11.1548V4.29574Z"/>
+
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonBorder" Property="Opacity"  Value="0.7"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.7"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Button}"
+           x:Key="ButtonDecrease">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="ButtonBorder"
+                            Width="11" Height="11" 
+                            Background="Transparent"
+                            SnapsToDevicePixels="True"
+                            >
+                        <Path
+                             VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                            Fill="#E1251B"
+                            Data="M11.3088 2.46285V0.155151L0.693357 0.155151V2.46285L11.3088 2.46285Z"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonBorder" Property="Opacity"  Value="0.7"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.7"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -10,25 +10,23 @@ namespace CanteenManagementApp.MVVM.View
     /// <summary>
     /// Interaction logic for AddItem.xaml
     /// </summary>
-    public partial class AddItem : Window
+    public partial class AddFoodItem : Window
     {
         public Item NewItem { get; set; }
         string imageFileName;
-        public AddItem()
+        public AddFoodItem()
         {
             InitializeComponent();
             DataContext = NewItem;
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            string id = IdTextBox.Text;
-            string name = IdTextBox.Text;
+            string name = nameTextBox.Text;
             string describe = describeTextBox.Text;
             string price = priceTextBox.Text;
             NewItem = new Item()
             {
-                Id = int.Parse(id),
                 Name = name,
                 Price = float.Parse(price),
                 Description = describe,
@@ -37,6 +35,7 @@ namespace CanteenManagementApp.MVVM.View
                 Type = 0
 
             };
+            await DbQueries.ItemQueries.InsertItemAsync(NewItem);
             DialogResult = true;
         }
 

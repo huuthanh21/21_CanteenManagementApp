@@ -12,6 +12,8 @@ namespace CanteenManagementApp.MVVM.Model
 
         // D.Quang: Server=DUYQUANG-PC
         // Thanh: Server=.\SQLEXPRESS
+        // Thinh: Server= ZEROX\SQLEXPRESS
+
         private const string connectionString = @"
                 Server=.\SQLEXPRESS;
                 Database=CANTEEN_DATABASE;

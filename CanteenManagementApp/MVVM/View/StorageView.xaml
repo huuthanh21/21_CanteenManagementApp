@@ -59,7 +59,7 @@
                           VerticalAlignment="Center"/>
                 <Button Margin="5 5 0 0"
                         Style="{StaticResource ButtonAdd}"
-                        Command="{Binding AddItemCommand}"
+                        Command="{Binding AddFoodItemCommand}"
                         CommandParameter="{Binding ElementName=ucStorage}"  />
             </StackPanel>
 
@@ -214,7 +214,9 @@
                    Style="{StaticResource TextblockTitleSmall}"
                           VerticalAlignment="Center"/>
                 <Button Margin="5 0 0 0"
-                        Style="{StaticResource ButtonAdd}"/>
+                        Style="{StaticResource ButtonAdd}"
+                        Command="{Binding AddInventoryItemCommand}"
+                        CommandParameter="{Binding ElementName=ucStorage}"/>
             </StackPanel>
             <!--ListView-->
             <ListView Width="620" Height="190" Margin="0" BorderThickness="0" ItemsSource="{Binding InventorySourceCollection}" Name="inventoryListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}" >

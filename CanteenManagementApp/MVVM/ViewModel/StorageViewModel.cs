@@ -1,6 +1,7 @@
 ﻿using CanteenManagementApp.Core;
 using CanteenManagementApp.MVVM.Model;
 using CanteenManagementApp.MVVM.View;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Data;
@@ -11,7 +12,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 {
     public class StorageViewModel : ObservableObject
     {
-        public ObservableCollection<Item> _allItems;
+        /*public ObservableCollection<Item> _allItems;*/
         public ObservableCollection<Item> _foodItems;
         public ObservableCollection<Item> _inventoryItems;
         //private CollectionViewSource StorageItemsCollection;
@@ -26,57 +27,23 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public ICommand DeleteCommand { get; set; } // xóa món ăn
         public ICommand EditInventoryCommand { get; set; } // chỉnh sửa hàng tồn
         public ICommand DeleteInventoryCommand { get; set; } // xóa hàng tồn
-        public ICommand AddItemCommand { get; set; } // thêm hàng
+        public ICommand AddFoodItemCommand { get; set; } // thêm hàng
+        public ICommand AddInventoryItemCommand { get; set; }
 
         // Thêm hàng:
         //public ICommand SelectImageCommand { get; set; } //chọn ảnh
         //public ICommand ButtonAddCommand { get; set; } 
         public StorageViewModel()
         {
-            _allItems = new ObservableCollection<Item>
+            /*var items = DbQueries.ItemQueries.GetAllItem();
+            foreach (var item in items)
             {
-                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Món ức gà chiên mắm cay có màu sắc hấp dẫn, vị mặn mặn chua chua của nước sốt giúp thịt gà tăng thêm hương vị và kích thích vị giác người ăn. vị đậm đà của mùi nước mắm quyện vào thịt, và vị bùi bùi của tỏi, cay nồng của ớt sừng. Món này ăn kèm cơm nóng, hoặc bánh mì tùy thích.\r\n\r\n\r\n", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
-                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 13, Price = 12000,  ImagePath = "/Images/b4.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 14, Price = 12000,  ImagePath = "/Images/b5.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 15, Price = 12000,  ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Ngon", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
-                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 13, Price = 12000,  ImagePath = "/Images/b4.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 14, Price = 12000,  ImagePath = "/Images/b5.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 15, Price = 12000,  ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Ngon", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
-                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 13, Price = 12000,  ImagePath = "/Images/b4.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 14, Price = 12000,  ImagePath = "/Images/b5.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 15, Price = 12000,  ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Ngon", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
-                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
-                new Item() { Type = 1, Name = "Cocacola", Amount = 10, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/coca.jpg" },
-                new Item() { Type = 1, Name = "Pepsi", Amount = 100, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/pepsi.png" },
-                new Item() { Type = 1, Name = "Sprite", Amount = 520, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" },
-                new Item() { Type = 1, Name = "Snack", Amount = 420, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/snack.png" },
-                new Item() { Type = 1, Name = "7-Up", Amount = 440, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/7up.jpg" },
-                new Item() { Type = 1, Name = "Bò húc", Amount = 521, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/bohuc.png" },
-                new Item() { Type = 1, Name = "Cocacola", Amount = 1000, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/coca.jpg" },
-                new Item() { Type = 1, Name = "Pepsi", Amount = 104, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/pepsi.png" },
-                new Item() { Type = 1, Name = "Sprite", Amount = 1120, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" },
-                new Item() { Type = 1, Name = "Snack", Amount = 140, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/snack.png" },
-                new Item() { Type = 1, Name = "7-Up", Amount = 150, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/7up.jpg" },
-                new Item() { Type = 1, Name = "Bò húc", Amount = 250, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/bohuc.png" },
-                new Item() { Type = 1, Name = "Cocacola", Amount = 110, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/coca.jpg" },
-                new Item() { Type = 1, Name = "Pepsi", Amount = 1240, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/pepsi.png" },
-                new Item() { Type = 1, Name = "Sprite", Amount = 160, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" },
+                _allItems.Add( item );
+            } */   
+            _foodItems = new ObservableCollection<Item> (DbQueries.ItemQueries.GetItemsByType(0));
+            _inventoryItems = new ObservableCollection<Item> (DbQueries.ItemQueries.GetItemsByType(1));
 
-            };
-
-            _foodItems = new ObservableCollection<Item> { };
-            _inventoryItems = new ObservableCollection<Item> { };
-            foreach (Item item in _allItems)
+           /* foreach (Item item in _allItems)
             {
                 if(item.Type == 1)
                 {
@@ -86,7 +53,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 {
                     _foodItems.Add(item);
                 }
-            }
+            }*/
 
             FoodItemsCollection = new CollectionViewSource {  Source = _foodItems };
             InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
@@ -95,7 +62,8 @@ namespace CanteenManagementApp.MVVM.ViewModel
             DeleteCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => DeleteItem(parameter));
             EditInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => EditInventoryItem(parameter));
             DeleteInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => DeleteInventoryItem(parameter));
-            AddItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => addItem(parameter));
+            AddFoodItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => addFoodItem(parameter));
+            AddInventoryItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => addInventoryItem(parameter));
 
             //SelectImageCommand = new RelayCommand<AddItem>((parameter) => true, (parameter) => ChooseImage(parameter));
             //ButtonAddCommand = new RelayCommand<AddItem>((parameter) => true, (parameter) => ButtonAddClick(parameter));
@@ -141,9 +109,9 @@ namespace CanteenManagementApp.MVVM.ViewModel
         //    }
         //}
 
-        private void addItem(StorageView parameter)
+        private void addFoodItem(StorageView parameter)
         {
-            var screen = new AddItem();
+            var screen = new AddFoodItem();
             //screen.Show();
             //if (screen.ShowDialog() == true)
             //{
@@ -160,6 +128,34 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     _foodItems.Add(screen.NewItem.Clone() as Item);
                 }
                 
+            }
+            else
+            {
+
+
+            }
+            screen.Close();
+        }
+
+        private void addInventoryItem(StorageView parameter)
+        {
+            var screen = new AddInventoryItem();
+            //screen.Show();
+            //if (screen.ShowDialog() == true)
+            //{
+            //    if (screen.NewBook.Name != "" || screen.NewBook.PublishedYear != "" || screen.NewBook.Author != "")
+            //    {
+            //        _allItems.Add(screen.NewBook.Clone() as Book);
+            //    }
+            //}
+            if (screen.ShowDialog() == true)
+            {
+                if (screen.NewItem.Id != 0 || screen.NewItem.Name != "" || screen.NewItem.Price != 0
+                    || screen.NewItem.Description != "" || screen.NewItem.ImagePath != "")
+                {
+                    _inventoryItems.Add(screen.NewItem.Clone() as Item);
+                }
+
             }
             else
             {
