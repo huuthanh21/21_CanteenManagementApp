@@ -88,7 +88,7 @@ namespace CanteenManagementApp.Pages
             int indexSelected = inventoryListView.Items.IndexOf(btn.DataContext);
             if (indexSelected != -1)
             {
-                if (CreateOrderVM._ListInventoryItemOrder[indexSelected]._amount-- > 0)
+                if (CreateOrderVM._ListInventoryItemOrder[indexSelected]._amount > 0)
                     CreateOrderVM._ListInventoryItemOrder[indexSelected]._amount--;
             }
             CreateOrderVM.UpdateTotalOrder();
