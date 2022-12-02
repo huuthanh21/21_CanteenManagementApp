@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -19,6 +20,26 @@ namespace CanteenManagementApp.MVVM.Model
                                         .Where(c => c.Id == customerId)
                                         .FirstOrDefault();
                 return customer;
+            }
+
+            public static async Task<List<Item>> GetFrequentlyBoughtItemsByCustomerIdAsync(string customerId)
+            {
+                using var context = new CanteenContext();
+                var items = await context.Customers
+                                    .Where(c => c.Id == customerId)
+                                    .Join(context.Receipts, c => c.Id, r => r.CustomerId, (c, r) => new { r.Id })
+                                    .Join(context.Receipt_Items, cr => cr.Id, ri => ri.ReceiptId, (cr, ri) => new { ri.Item, ri.Amount })
+                                    .GroupBy(crri => crri.Item)
+                                    .Select(itemGroup => new
+                                    {
+                                        Item = itemGroup.Key,
+                                        Sum = itemGroup.Sum(crri => crri.Amount)
+                                    })
+                                    .OrderByDescending(i => i.Sum)
+                                    .Select(i => i.Item)
+                                    .Take(5)
+                                    .ToListAsync();
+                return items;
             }
 
             /* Insert */

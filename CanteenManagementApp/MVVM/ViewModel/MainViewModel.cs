@@ -41,9 +41,10 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
             CreateOrderViewCommand = new RelayCommand(o => 
             {
-                CurrentView = CreateOrderVM;
                 CreateOrderViewModel.Customer = null;
                 CreateOrderViewModel.HasCustomer = false;
+                CurrentView = CreateOrderVM;
+
             });
             
             CreateOrderViewWithCustomerCommand = new RelayCommand(o => 
