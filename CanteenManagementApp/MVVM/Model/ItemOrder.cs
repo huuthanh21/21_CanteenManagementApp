@@ -9,8 +9,8 @@ namespace CanteenManagementApp.MVVM.Model
 {
     public class ItemOrder: ObservableObject
     {
-        public Item _item { get; set; }
-        public int _amount { get; set; } = 0;
+        public Item Item { get; set; }
+        public int Amount { get; set; } = 0;
        
     }
 }

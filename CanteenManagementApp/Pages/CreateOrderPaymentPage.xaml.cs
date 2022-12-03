@@ -35,5 +35,7 @@ namespace CanteenManagementApp.Pages
         {
             SetCorrespondingLayout();
         }
+
+        
     }
 }

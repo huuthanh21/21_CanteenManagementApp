@@ -21,7 +21,6 @@ namespace CanteenManagementApp.Pages
             InitializeComponent();
             CreateOrderVM = viewModel;
             DataContext = CreateOrderVM;
-
         }
 
 
@@ -50,9 +49,9 @@ namespace CanteenManagementApp.Pages
             int indexSelected = foodListView.Items.IndexOf(btn.DataContext);
             if (indexSelected != -1)
             {
-                if (CreateOrderVM._ListFoodItemOrder[indexSelected]._amount > 0)
+                if (CreateOrderVM.ListFoodItemOrder[indexSelected].Amount > 0)
                 {
-                    CreateOrderVM._ListFoodItemOrder[indexSelected]._amount--;
+                    CreateOrderVM.ListFoodItemOrder[indexSelected].Amount--;
                 }
             }
             CreateOrderVM.UpdateTotalOrder();
@@ -66,7 +65,7 @@ namespace CanteenManagementApp.Pages
 
             int indexSelected = foodListView.Items.IndexOf(btn.DataContext);
             if (indexSelected != -1)
-                CreateOrderVM._ListFoodItemOrder[indexSelected]._amount++;
+                CreateOrderVM.ListFoodItemOrder[indexSelected].Amount++;
 
             CreateOrderVM.UpdateTotalOrder();
         }
@@ -79,12 +78,11 @@ namespace CanteenManagementApp.Pages
             int indexSelected = inventoryListView.Items.IndexOf(btn.DataContext);
             if (indexSelected != -1)
             {
-                if (CreateOrderVM._ListInventoryItemOrder[indexSelected]._amount > 0)
-                    CreateOrderVM._ListInventoryItemOrder[indexSelected]._amount--;
+                if (CreateOrderVM.ListInventoryItemOrder[indexSelected].Amount > 0)
+                    CreateOrderVM.ListInventoryItemOrder[indexSelected].Amount--;
             }
             CreateOrderVM.UpdateTotalOrder();
         }
-
 
         private void IncreaseInventory_Click(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -93,7 +91,7 @@ namespace CanteenManagementApp.Pages
 
                 int indexSelected = inventoryListView.Items.IndexOf(btn.DataContext);
                 if (indexSelected != -1)
-                    CreateOrderVM._ListInventoryItemOrder[indexSelected]._amount++;
+                    CreateOrderVM.ListInventoryItemOrder[indexSelected].Amount++;
 
                 CreateOrderVM.UpdateTotalOrder();
          }
@@ -113,7 +111,6 @@ namespace CanteenManagementApp.Pages
 
 
         }
-
 
         private DependencyObject GetParentDependencyObjectFromVisualTree(DependencyObject startObject, Type type)
         {

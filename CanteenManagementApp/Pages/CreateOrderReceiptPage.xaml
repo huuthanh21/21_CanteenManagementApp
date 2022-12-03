@@ -5,12 +5,19 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CanteenManagementApp.Pages"
       xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel" d:DataContext="{d:DesignInstance Type=viewModel:CreateOrderViewModel}"
+      xmlns:converters="clr-namespace:CanteenManagementApp.Converters"
       mc:Ignorable="d" 
       Loaded="Page_Loaded"
       d:Background="#F8F8F8"
       d:DesignHeight="600" d:DesignWidth="680"
       Title="CreateOrderPaymentPage">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <converters:IsCheckedForegroundConverter x:Key="ForegroundConverter"/>
+            <converters:FloatToCurrencyConverter x:Key="FloatToCurrencyConverter"/>
+            <converters:PriceAndAmountToTotal x:Key="PriceAndAmountToTotal"/>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid Margin="20 10 0 10">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -39,6 +46,115 @@
         <TextBlock Text="Hóa đơn"
                    Grid.Row="1"
                    Style="{StaticResource TextblockTitle}"/>
+
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" 
+                    Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" 
+                        Margin="0 0 0 10"
+                        VerticalAlignment="Center">
+                <StackPanel.Resources>
+                    <Style x:Key="LabelTextblock" TargetType="TextBlock">
+                        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+                        <Setter Property="FontSize" Value="14.77"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                    </Style>
+                </StackPanel.Resources>
+                <TextBlock Text="Tên hàng"
+                           Style="{StaticResource LabelTextblock}"
+                           Margin="23 0 0 0"/>
+                <TextBlock Text="Đơn giá"
+                           Style="{StaticResource LabelTextblock}"
+                           Margin="157 0 0 0"/>
+                <TextBlock Text="Số lượng"  
+                           Style="{StaticResource LabelTextblock}"
+                           Margin="70 0 0 0"/>
+                <TextBlock Text="Thành tiền"
+                           Style="{StaticResource LabelTextblock}"
+                           Margin="86 0 0 0"/>
+            </StackPanel>
+
+            <ListView x:Name="ListviewItemOrder" 
+                      Margin="0,0,10,0"
+                      BorderThickness="0"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      d:ItemsSource="{d:SampleData ItemCount=10}"
+                      ItemsSource="{Binding TotalOrderSourceCollection}"
+                      Background="Transparent">
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}" >
+                        <!--remove green selected area-->
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ListView.Resources>
+                    <Style x:Key="ListviewTextblock" 
+                           TargetType="{x:Type TextBlock}">
+                        <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
+                        <Setter Property="FontSize" Value="14.77"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="FontWeight" Value="Medium"/>
+                    </Style>
+                </ListView.Resources>
+
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel VerticalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal"
+                                    Height="25">
+                            <TextBlock Text="{Binding Item.Name}" 
+                                       d:Text="Ức gà chiên tỏi"
+                                       Margin="22 0 22 0"
+                                       VerticalAlignment="Center"
+                                       Style="{StaticResource ListviewTextblock}"
+                                       Width="176.77"/>
+                            <TextBlock Text="{Binding Path=Item.Price, Converter={StaticResource FloatToCurrencyConverter},
+                                        ConverterCulture=vi-VN}" 
+                                       d:Text="28.000đ"
+                                       TextAlignment="Right"
+                                       Margin="0 0 108.08 0"
+                                       Style="{StaticResource ListviewTextblock}"
+                                       Width="79.7"/>
+                            <TextBlock Width="25.12"
+                                       Margin="0 0 82.69 0"
+                                       Style="{StaticResource ListviewTextblock}"
+                                       TextAlignment="Right">
+                                <Run Text="x"/><!--
+                             --><Run Text="{Binding Amount}"
+                                     d:Text="2"/>
+                            </TextBlock>
+                            <TextBlock d:Text="56.000đ"
+                                       Width="79.7"
+                                       Style="{StaticResource ListviewTextblock}"
+                                       TextAlignment="Right">
+                                <TextBlock.Text>
+                                    <MultiBinding Converter="{StaticResource PriceAndAmountToTotal}"
+                                                  ConverterCulture="vi-VN">
+                                        <Binding Path="Item.Price"/>
+                                        <Binding Path="Amount"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
 
         <Line Grid.Row="3"
               Grid.ColumnSpan="2"
