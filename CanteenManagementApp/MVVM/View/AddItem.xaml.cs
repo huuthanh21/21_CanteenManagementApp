@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -30,23 +32,39 @@ namespace CanteenManagementApp.MVVM.View
             _type = type;
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        async private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            string id = IdTextBox.Text;
             string name = nameTextBox.Text;
             string description = describeTextBox.Text;
             string price = priceTextBox.Text;
             NewItem = new Item()
             {
-                Id = int.Parse(id),
                 Name = name,
                 Price = float.Parse(price),
                 Description = description,
                 Amount = 0,
-                ImagePath = _imageFileName,
                 Type = _type
             };
+
+            await DbQueries.ItemQueries.InsertItemAsync(NewItem);
+            
+            CopyFileToAppFolder(NewItem.Id.ToString(), _imageFileName);
             DialogResult = true;
+        }
+
+        private void CopyFileToAppFolder(string id, string sourceFileName)
+        {
+            var appdataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var appFolder = "21CanteenManager";
+
+            var appPath = Path.Combine(appdataPath, appFolder);
+            StringBuilder stringBuilder = new();
+            stringBuilder.Append(id);
+            stringBuilder.Append(".jpg");
+
+            var filePath = Path.Combine(appPath, stringBuilder.ToString());
+
+            File.Copy(sourceFileName, filePath);
         }
 
         private void SelectImage_Click(object sender, RoutedEventArgs e)
@@ -66,7 +84,6 @@ namespace CanteenManagementApp.MVVM.View
                 imageBrush.ImageSource = bitmap;
                 grdSelectImg.Background = imageBrush;
                 imageEmpty.Visibility = Visibility.Hidden;
-
             }
         }
     }

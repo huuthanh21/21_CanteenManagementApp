@@ -1,6 +1,7 @@
 ﻿using CanteenManagementApp.Core;
 using CanteenManagementApp.MVVM.Model;
 using CanteenManagementApp.MVVM.View;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Data;
@@ -34,7 +35,15 @@ namespace CanteenManagementApp.MVVM.ViewModel
         //public ICommand ButtonAddCommand { get; set; } 
         public StorageViewModel()
         {
-            _allItems = new ObservableCollection<Item>
+            _allItems = new ObservableCollection<Item> { };
+            using var dbContext = new CanteenContext();
+            var items = dbContext.Items;
+            foreach (var item in items)
+            {
+                _allItems.Add(item);
+            }
+
+            /*_allItems = new ObservableCollection<Item>
             {
                 new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Món ức gà chiên mắm cay có màu sắc hấp dẫn, vị mặn mặn chua chua của nước sốt giúp thịt gà tăng thêm hương vị và kích thích vị giác người ăn. vị đậm đà của mùi nước mắm quyện vào thịt, và vị bùi bùi của tỏi, cay nồng của ớt sừng. Món này ăn kèm cơm nóng, hoặc bánh mì tùy thích.\r\n\r\n\r\n", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
                 new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
@@ -72,14 +81,12 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 new Item() { Type = 1, Name = "Cocacola", Amount = 110, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/coca.jpg" },
                 new Item() { Type = 1, Name = "Pepsi", Amount = 1240, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/pepsi.png" },
                 new Item() { Type = 1, Name = "Sprite", Amount = 160, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" },
-
-            };
-
+            };*/
             _foodItems = new ObservableCollection<Item> { };
             _inventoryItems = new ObservableCollection<Item> { };
-            foreach (Item item in _allItems)
+            foreach (var item in _allItems)
             {
-                if(item.Type == 1)
+                if (item.Type == 1)
                 {
                     _inventoryItems.Add(item);
                 }
@@ -87,7 +94,11 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 {
                     _foodItems.Add(item);
                 }
+
             }
+
+            FoodItemsCollection = new CollectionViewSource { Source = _foodItems };
+            InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
 
             FoodItemsCollection = new CollectionViewSource {  Source = _foodItems };
             InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };

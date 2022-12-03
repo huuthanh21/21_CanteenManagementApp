@@ -19,6 +19,7 @@ namespace CanteenManagementApp
             InitializeComponent();
 
             // Write your testing code in this method
+            /*CreateDatabase();*/
             QueryTest();
         }
 

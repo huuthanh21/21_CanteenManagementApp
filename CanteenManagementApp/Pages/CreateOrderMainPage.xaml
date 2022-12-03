@@ -70,10 +70,6 @@
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
 
-                <ListView.Resources>
-                    <Model:BindingProxy x:Key="Proxy" Data="{Binding}" />
-                </ListView.Resources>
-
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border x:Name="border"

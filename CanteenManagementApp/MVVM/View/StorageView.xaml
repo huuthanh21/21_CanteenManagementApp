@@ -79,6 +79,7 @@
                 </ListView.ItemsPanel>
 
                 <ListView.Resources>
+                    
                     <Model:BindingProxy x:Key="Proxy" Data="{Binding}" />
                     <ContextMenu x:Key="foodContextMenu">
                         <MenuItem Header="Edit" 
@@ -117,7 +118,9 @@
                                 <Image Margin ="0 5 0 0 "
                                        MinWidth="80"
                                        Width="60" Height="54"
-                                       Source="{Binding ImagePath}"/>
+                                       x:Name="ImageItem"
+                                       Source="{Binding Path=Id, Converter={StaticResource IdToImagePathConverter}}"/>
+                                
                                 <StackPanel Orientation="Horizontal" 
                                             VerticalAlignment="Center"
                                         Margin="0 0 0 0" >
