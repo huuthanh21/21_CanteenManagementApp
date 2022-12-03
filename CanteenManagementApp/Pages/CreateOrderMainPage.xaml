@@ -69,7 +69,11 @@
                         <WrapPanel/>
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
-
+                
+                <ListView.Resources>
+                    <Model:BindingProxy x:Key="Proxy" Data="{Binding}" />
+                </ListView.Resources>
+                
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border x:Name="border"
@@ -125,8 +129,19 @@
                                                FontSize="15"/>
                                     <Button Style="{StaticResource ButtonIncrease}" 
                                             Margin="10 3 0 0"
-                                            Click="Increase_Click"
+                                            Command="{Binding Source={StaticResource Proxy}, Path=Data.IncreaseAmountOrderCommand}"
+                                            CommandParameter="{Binding ElementName=PageOrderMain}"
+                                            
                                             />
+                                    <!--<StackPanel Orientation="Horizontal">
+                                    <Button Margin="0 0 0 0"
+                                            Width="80"
+                                            Style="{StaticResource ButtonAdd}"
+                                            Command="{Binding Source={StaticResource Proxy}, Path=Data.EditItemCommand}"
+                                            CommandParameter="{Binding ElementName=ucStorage}" 
+                                            />
+                                </StackPanel>-->
+                                    <!--Click="Increase_Click"-->
                                 </StackPanel>
                             </StackPanel>
                         </Border>
@@ -361,7 +376,7 @@
                     <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ResourceKey=myTotalItemOrder}" >
                     </Style>
                 </ListView.ItemContainerStyle>-->
-
+               
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}" >
                         <!--remove green selected area-->
@@ -389,10 +404,10 @@
                                     Style="{StaticResource TextblockTitleNormal}"
                                     Width="120"
                                     HorizontalAlignment="Right">
-                                x
                                 <Run Text="{Binding _amount}"/>
                             </TextBlock>
                         </StackPanel>
+                       
 
                     </DataTemplate>
 

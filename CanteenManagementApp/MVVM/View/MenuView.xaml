@@ -7,12 +7,62 @@
              mc:Ignorable="d" 
              d:Background="#F8F8F8"
              d:DesignHeight="600" d:DesignWidth="665">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TabItem}"
+            x:Key="TabItemStyle">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#0033A1"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Margin" Value="0 0 5 0"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid SnapsToDevicePixels="True">
+                            <Border CornerRadius="5"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Margin="{TemplateBinding Margin}"
+                                />
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              SnapsToDevicePixels="True"
+                                              RecognizesAccessKey="True"
+                                              Margin="{TemplateBinding Margin}"
+                                              ContentSource="Header"
+                                              Focusable="False"
+                                              />
+                        </Grid>
+                       
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{TemplateBinding Background}"/>
+                                <Setter Property="Foreground" Value="{TemplateBinding Foreground}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="{TemplateBinding Background}"/>
+                                <Setter Property="Foreground" Value="{TemplateBinding Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid Margin="30 10 10 10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="70"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="200"/>
+            <!--<RowDefinition Height="50"/>
+            <RowDefinition Height="200"/>-->
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -24,5 +74,21 @@
         <TextBlock Text="Thực đơn"
                    Grid.Row="1"
                    Style="{StaticResource TextblockTitle}"/>
+
+        <TabControl Grid.Row="2"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center">
+            <TabItem Header="Hôm qua" Style="{DynamicResource TabItemStyle}">
+                <Grid>
+                    <TextBlock Text="Home"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Hôm nay" Style="{DynamicResource TabItemStyle}">
+                <Grid>
+                    <TextBlock Text="House"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

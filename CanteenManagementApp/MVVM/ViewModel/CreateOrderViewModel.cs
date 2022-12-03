@@ -123,13 +123,31 @@ namespace CanteenManagementApp.MVVM.ViewModel
             FoodItemsCollection = new CollectionViewSource { Source = _ListFoodItemOrder };
             TotalOrderItemsCollection = new CollectionViewSource { Source = _TotalItemOrder };
             InventoryItemsCollection = new CollectionViewSource { Source = _ListInventoryItemOrder };
+
             IncreaseAmountOrderCommand = new RelayCommand<CreateOrderMainPage>((parameter) => true, (parameter) => IncreaseAmountOrder(parameter));
         }
 
         private void IncreaseAmountOrder(CreateOrderMainPage parameter)
         {
-            int indexSelected = parameter.foodListView.SelectedIndex;
-            _ListFoodItemOrder[indexSelected]._amount++;
+            var screen = new AddItem(0);
+            //int indexSelected = parameter.foodListView.SelectedIndex;
+            //_ListFoodItemOrder[indexSelected]._amount++;
+            if (screen.ShowDialog() == true)
+            {
+                if (screen.NewItem.Id != 0 || screen.NewItem.Name != "" || screen.NewItem.Price != 0
+                    || screen.NewItem.Description != "" || screen.NewItem.ImagePath != "")
+                {
+                    _foodItems.Add(screen.NewItem.Clone() as Item);
+                }
+
+            }
+            else
+            {
+
+
+            }
+            screen.Close();
+
         }
 
         public void UpdateTotalOrder()
