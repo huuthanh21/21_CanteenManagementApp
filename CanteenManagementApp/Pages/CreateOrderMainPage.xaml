@@ -63,6 +63,7 @@
                       ScrollViewer.VerticalScrollBarVisibility="Visible"
                       HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}" 
                       PreviewMouseLeftButtonDown="List_PreviewLeftMouseDown"
+                
                 >
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -404,7 +405,7 @@
                                     Style="{StaticResource TextblockTitleNormal}"
                                     Width="120"
                                     HorizontalAlignment="Right">
-                                <Run Text="{Binding _amount}"/>
+                                x<Run Text="{Binding _amount}"/>
                             </TextBlock>
                         </StackPanel>
                        

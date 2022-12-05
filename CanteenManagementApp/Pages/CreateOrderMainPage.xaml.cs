@@ -88,11 +88,11 @@ namespace CanteenManagementApp.Pages
 
         private void IncreaseInventory_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-                Button btn = (Button)e.OriginalSource;
-                inventoryListView.SelectedItem = btn.DataContext;
+            Button btn = (Button)e.OriginalSource;
+            inventoryListView.SelectedItem = btn.DataContext;
 
-                int indexSelected = inventoryListView.Items.IndexOf(btn.DataContext);
-                if (indexSelected != -1)
+            int indexSelected = inventoryListView.Items.IndexOf(btn.DataContext);
+            if (indexSelected != -1)
                     CreateOrderVM._ListInventoryItemOrder[indexSelected]._amount++;
 
                 CreateOrderVM.UpdateTotalOrder();
