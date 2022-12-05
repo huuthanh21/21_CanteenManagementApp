@@ -191,6 +191,34 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     Total = 32000,
                     DateTime = new System.DateTime(2022, 11, 11)
                  },
+                new Receipt() {
+                    Receipt_Items= new List<Receipt_Item>
+                    {
+                        new Receipt_Item() {
+                            ItemId = 100000,
+                            Amount = 1 },
+                        new Receipt_Item() {
+                            ItemId = 100001,
+                            Amount = 2 }
+                    },
+                    Id = 10,
+                    Total = 35000,
+                    DateTime = new System.DateTime(2022, 11, 11),
+                 },
+                new Receipt() {
+                    Receipt_Items= new List<Receipt_Item>
+                    {
+                        new Receipt_Item() {
+                            ItemId = 100000,
+                            Amount = 1 },
+                        new Receipt_Item() {
+                            ItemId = 100001,
+                            Amount = 2 }
+                    },
+                    Id = 10,
+                    Total = 35000,
+                    DateTime = new System.DateTime(2022, 11, 11),
+                 },
 
             };
         }

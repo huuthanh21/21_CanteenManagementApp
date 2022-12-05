@@ -119,7 +119,7 @@
                     <Grid>
                         <Border CornerRadius="3.25" Background="{TemplateBinding Background}" Height="{TemplateBinding Height}" SnapsToDevicePixels="True">
                             <Grid >
-                                <Rectangle Width="70" Fill="#0033A1" Height="1.5"
+                                <Rectangle Width="60" Fill="#0033A1" Height="1.5"
                                            VerticalAlignment="Bottom"/>
                                     <ContentPresenter x:Name="MyContentPresenter" 
                                                   Content="{TemplateBinding Content}"

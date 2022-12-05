@@ -243,7 +243,7 @@
         <StackPanel Grid.Row="3"
                     Grid.Column="2"
                     Grid.RowSpan="2"
-                    Grid.ColumnSpan="2"
+                    Grid.ColumnSpan="3"
                     Margin="0 30 0 0">
             <StackPanel.Visibility>
                 <Binding Path="CustomerFound" Converter="{StaticResource BoolToVisibilityConverter}"/>
@@ -276,7 +276,7 @@
                             <StackPanel Orientation="Horizontal" 
                                             VerticalAlignment="Top"
                                         Margin="0 0 0 0"
-                                            Width="185"
+                                            Width="175"
                                         Height="80" >
                                 <StackPanel Orientation="Vertical">
                                     
@@ -286,7 +286,7 @@
                                             Height="30"
                                             Foreground="#E1251B" 
                                             FontSize="18"
-                                            Text="{Binding Id}"
+                                            Text="{Binding Id, StringFormat='DH-{0}'}"
                                             Style="{StaticResource TextblockTitleSmall}"
                                             Margin="0"
                                             Padding="10 10 0 0"
