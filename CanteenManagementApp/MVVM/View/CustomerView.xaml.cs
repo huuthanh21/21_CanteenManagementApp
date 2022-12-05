@@ -11,5 +11,15 @@ namespace CanteenManagementApp.MVVM.View
         {
             InitializeComponent();
         }
+
+        private void billListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void TextBlock_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
     }
 }
