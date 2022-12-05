@@ -75,9 +75,10 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     MainViewModel.CreateOrderViewWithCustomerCommand.Execute(Customer);
                 }
             });
-
             recentItems = new ObservableCollection<Item>();
             RecentItemsCollection = new CollectionViewSource { Source = recentItems };
+            setReceipts();
+            ReceiptsCollection = new CollectionViewSource { Source = receipts };
         }
 
         public CustomerViewModel(MainViewModel mainViewModel)
@@ -109,7 +110,12 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 {
                     CustomerFound = false;
                 }
+
             });
+            recentItems = new ObservableCollection<Item>();
+            RecentItemsCollection = new CollectionViewSource { Source = recentItems };
+            setReceipts();
+            ReceiptsCollection = new CollectionViewSource { Source = receipts };
             
             AddCustomerCommand = new RelayCommand(o =>
             {
@@ -130,8 +136,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 }
             });
 
-            recentItems = new ObservableCollection<Item>();
-            RecentItemsCollection = new CollectionViewSource { Source = recentItems };
         }
         
         public async void UpdateFrequentlyBoughtItems()
