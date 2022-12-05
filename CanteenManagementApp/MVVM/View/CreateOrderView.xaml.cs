@@ -8,17 +8,8 @@ namespace CanteenManagementApp.MVVM.View
     /// </summary>
     public partial class CreateOrderView : UserControl
     {
-        public Customer Customer { get; set; } = null;
-
         public CreateOrderView()
         {
-            InitializeComponent();
-        }
-
-        public CreateOrderView(Customer customer = null)
-        {
-            Customer = customer;
-
             InitializeComponent();
         }
     }

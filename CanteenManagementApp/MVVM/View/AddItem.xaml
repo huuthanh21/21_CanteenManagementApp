@@ -14,23 +14,25 @@
     </Window.DataContext>-->
     <Canvas>
         <Image Source="/Images/logo.png"
+                RenderOptions.BitmapScalingMode="HighQuality"
                    Width="56" Canvas.Left="23" Canvas.Top="25" Height="53"/>
 
-        <TextBlock Text="Chi tiết mặt hàng"
+        <TextBlock Text="Thêm mặt hàng"
                    Style="{StaticResource TextblockTitle}" Canvas.Left="97" Canvas.Top="27"/>
         <TextBlock Text="Món ăn hàng ngày"
+                   x:Name="titleSub"
                    FontSize="16.15"
                    Style="{StaticResource TextblockTitle}" Canvas.Left="203" Canvas.Top="80"/>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Canvas.Left="124" Canvas.Top="129">
-            <TextBlock   Width="30" Height="20" Text="Id:" FontSize="15" Style="{StaticResource TextblockTitleSmall}"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Canvas.Left="128" Canvas.Top="132">
+            <TextBlock   Width="26" Height="20" Text="Id:" FontSize="15" Style="{StaticResource TextblockTitleSmall}"/>
             <TextBox x:Name="IdTextBox" Padding="2" Width="133" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" />
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Canvas.Left="114" Canvas.Top="168">
-            <TextBlock   Width="30" Height="20" Text="Tên:" FontSize="15" Style="{StaticResource TextblockTitleSmall}" />
+            <TextBlock   Width="32" Height="20" Text="Tên:" FontSize="15" Style="{StaticResource TextblockTitleSmall}" />
             <TextBox x:Name="nameTextBox" Padding="2" Width="133" Height="25" 
-                     Margin="10 0 0 0"
+                     Margin="8 0 0 0"
                      HorizontalAlignment="Center" VerticalAlignment="Center" />
         </StackPanel>
 
@@ -43,9 +45,10 @@
 
         <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" Canvas.Left="100" Canvas.Top="249">
             <TextBlock   Width="46" Height="20" Text="Mô tả:" FontSize="15" Style="{StaticResource TextblockTitleSmall}" VerticalAlignment="Top" />
-            <TextBox x:Name="describeTextBox" Padding="2" Width="266.77" MinHeight="25"
-                     Margin="8 0 0 0"
+            <TextBox x:Name="describeTextBox" Padding="2 2 10 2" Width="267" MinHeight="25"
+                     Margin="8 0 0 0" 
                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                     TextAlignment="Left"
                      TextWrapping="WrapWithOverflow"/>
         </StackPanel>
 
@@ -55,43 +58,29 @@
         </StackPanel>-->
 
         <Grid
-            Canvas.Left="290" Canvas.Top="80"
+            Canvas.Left="310" Canvas.Top="70"
             x:Name="grdSelectImg"
             Margin="50,50,0,0" 
             VerticalAlignment="Top"
-            Width="120"
-            Height="100" 
+            Width="94"
+            Height="77" 
             HorizontalAlignment="Left">
-            <Rectangle 
-                x:Name="recImage"
-                StrokeDashArray="4 2" 
-                StrokeThickness="4" 
-                RadiusX="4" 
-                RadiusY="4"
-                Width="120"
-                Height="100" 
-                HorizontalAlignment="Left" 
-                VerticalAlignment="Top"/>
+            <Image x:Name="imageEmpty" Source="/Images/empty_image.jpg" Width="108" Height="83" />
         </Grid>
 
         <Button 
                 x:Name="SelectImage"
                 Background="#0033A1"
                 Click="SelectImage_Click"
-                Command="{Binding SelectImageCommand}"
-                CommandParameter="{Binding ElementName=wdAddItem}"
-                Style="{StaticResource ButtonCustomColorPositive}"
+               
+                Style="{StaticResource ButtonSelectImage}"
                 Height="35" 
-                Width="100" 
+                Width="106" 
                 Content="Chọn ảnh" 
-                FontSize="16"
                 FontWeight="SemiBold" 
-                ToolTip="Chọn ảnh"
-                Margin="0,0,0,12" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Bottom"
-                FocusVisualStyle="{x:Null}"
-                Padding="0"/>
+                ToolTip="Chọn ảnh từ thiết bị" 
+                HorizontalAlignment="Left" 
+                Padding="0" Canvas.Left="361" Canvas.Top="194" VerticalAlignment="Top" RenderTransformOrigin="0.553,0.813"/>
         <Button HorizontalAlignment="Left"
                 Width="95" Height="31"
                 Content="Thêm"
@@ -100,9 +89,10 @@
                 Click="AddButton_Click"
                 
                 RenderTransformOrigin="0.415,-0.237"/>
-                <!--Command="{Binding ButtonAddCommand}"
-                CommandParameter="{Binding ElementName=wdAddItem}"--> 
+        <!--Command="{Binding ButtonAddCommand}"
+                CommandParameter="{Binding ElementName=wdAddItem}"-->
 
-
+        <!--Command="{Binding SelectImageCommand}"
+                CommandParameter="{Binding ElementName=wdAddItem}"-->
     </Canvas>
 </Window>

@@ -5,40 +5,336 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CanteenManagementApp.Pages"
       xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel" 
+      xmlns:Model="clr-namespace:CanteenManagementApp.MVVM.Model" 
       d:DataContext="{d:DesignInstance Type=viewModel:CreateOrderViewModel}"
       mc:Ignorable="d" 
       Loaded="Page_Loaded"
+      x:Name="PageOrderMain"
       d:Background="#F8F8F8"
       d:DesignHeight="560" d:DesignWidth="680"
       Title="CreateOrderMainPage">
 
-    <Grid Margin="20 10 0 10">
+
+    <Grid Margin="5 0 0 5">
         <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="70"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="200"/>
-            <RowDefinition Height="140"/>
+            <RowDefinition Height="230"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="420"/>
-            <ColumnDefinition/> 
-            </Grid.ColumnDefinitions>
+            <ColumnDefinition Width="450"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
         <Button Grid.Column="1" 
                 x:Name="CustomerId"
-                Width="105" Height="31"
+                Width="104" Height="31"
                 Background="#0033A1"
-                HorizontalAlignment="Right"
+                HorizontalAlignment="Left"
                 IsEnabled="False"
-                Margin="0 0 23 10"
+                Margin="85,15,0,14"
                 d:Content="20120582"
-                Style="{StaticResource ButtonCustomColorPositive}"/>
+                Style="{StaticResource ButtonCustomColorPositive}" Grid.Row="1"/>
 
         <TextBlock Text="Tạo đơn hàng"
                    Grid.Row="1"
                    Style="{StaticResource TextblockTitle}"/>
+
+        <!--Display list of food item-->
+        <StackPanel Grid.Row="3">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Images/up.png" Margin="20 0 0 0" VerticalAlignment="Center" Width="15" Height="11"/>
+                <TextBlock Text="Món ăn hàng ngày"
+                    Margin="15 12 0 10"
+                   Style="{StaticResource TextblockTitleSmall}"
+                          VerticalAlignment="Center"/>
+            </StackPanel>
+
+
+            <ListView
+                      Width="463" Height="190"
+                      Margin="0" BorderThickness="0" 
+                      ItemsSource="{Binding FoodSourceCollection}" 
+                      Name="foodListView" 
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}" 
+                      PreviewMouseLeftButtonDown="List_PreviewLeftMouseDown"
+                >
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListView.Resources>
+                    <Model:BindingProxy x:Key="Proxy" Data="{Binding}" />
+                </ListView.Resources>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border x:Name="border"
+                                BorderBrush="Gray" 
+                                BorderThickness="2"  
+                                CornerRadius="5"  >
+                            <StackPanel Orientation="Vertical" 
+                                        Width="95"
+                                        Height="120" >
+                                <Image Margin ="0 5 0 0 "
+                                       MinWidth="80"
+                                       Width="60" Height="54"
+                                       Source="{Binding _item.ImagePath}"/>
+                                <StackPanel Orientation="Horizontal" 
+                                            VerticalAlignment="Center"
+                                        Margin="0 0 0 0" >
+                                    <TextBlock TextAlignment="Left"
+                                                  
+                                                   Width="48" 
+                                                   Height="35"
+                                                   Foreground="Black" 
+                                                   FontSize="10"
+                                                   TextWrapping="WrapWithOverflow"
+                                                   Text="{Binding _item.Name}"
+                                                   Style="{StaticResource TextblockTitleSmall}"
+                                                   Margin="0 0 0 0"
+                                                   Padding="6 10 0 0"/>
+
+                                    <TextBlock Foreground="#0033A1" 
+                                                 HorizontalAlignment="Left"
+                                                 VerticalAlignment="Top"
+                                                 TextWrapping="WrapWithOverflow"
+                                                 Margin="0 0 0 0"
+                                                 Padding="3 10 0 0"
+                                                 FontSize="12"
+                                                 Style="{StaticResource TextblockTitleSmall}"
+                                                 Text="{Binding _item.Price}"
+                                                 Height="35"
+                                                 Width="50"/>
+
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                            Height="25"
+                                            >
+                                    <Button Style="{StaticResource ButtonDecrease}" 
+                                            Margin="0 5 10 0"
+                                            Click="Decrease_Click"
+                                           />
+                                    <TextBlock Text="{Binding _amount}"
+                                               Style="{StaticResource TextblockTitleSmall}"
+                                               Margin="0 5 0 0"
+                                               FontSize="15"/>
+                                    <Button Style="{StaticResource ButtonIncrease}" 
+                                            Margin="10 3 0 0"
+                                            Click="Increase_Click"
+                                            />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <DataTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver"
+                                 Value="True">
+                                <Setter Property="BorderBrush"
+                                    TargetName="border"
+                                    Value="Black" />
+
+                                <Setter Property="BorderThickness"
+                                    TargetName="border"
+                                    Value="2" />
+
+                            </Trigger>
+                            <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={
+                                          RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem }}}"
+                                          Value="True">
+                                <Setter Property="BorderBrush"
+                                    TargetName="border"
+                                    Value="#0033A1" />
+                                <Setter Property="Cursor" Value="Hand"/>
+
+                            </DataTrigger>
+
+
+                        </DataTemplate.Triggers>
+
+                    </DataTemplate>
+
+
+                </ListView.ItemTemplate>
+
+                <ListView.ItemContainerStyle>
+
+                    <Style TargetType="{x:Type ListViewItem}" >
+                        <!--remove green selected area-->
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Tag" Value="{Binding ElementName=PageOrderMain}" />
+                        <Setter Property="Margin" Value="5"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+            </ListView>
+
+        </StackPanel>
+        <!--Display list of inventory item-->
+        <StackPanel Grid.Row="4">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Images/up.png" Margin="20 0 0 0" VerticalAlignment="Center" Width="15" Height="11"/>
+                <TextBlock Text="Hàng tồn kho"
+                    Margin="15 12 0 10"
+                   Style="{StaticResource TextblockTitleSmall}"
+                          VerticalAlignment="Center"/>
+            </StackPanel>
+
+
+            <ListView
+                      Width="463" Height="190"
+                      Margin="0" BorderThickness="0" 
+                      ItemsSource="{Binding InventorySourceCollection}" 
+                      Name="inventoryListView" 
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}"
+                        PreviewMouseLeftButtonDown="List_PreviewLeftMouseDown"
+                        PreviewMouseDown="List_PreviewLeftMouseDown"
+                      >
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListView.Resources>
+                    <Model:BindingProxy x:Key="Proxy" Data="{Binding}" />
+                </ListView.Resources>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border x:Name="border"
+                                BorderBrush="Gray" 
+                                BorderThickness="2"  
+                                CornerRadius="5"
+                                 >
+                            <StackPanel Orientation="Vertical" 
+                                        Width="95"
+                                        Height="120" >
+                                <Image Margin ="0 5 0 0 "
+                                       MinWidth="80"
+                                       Width="60" Height="54"
+                                       Source="{Binding _item.ImagePath}"/>
+                                <StackPanel Orientation="Horizontal" 
+                                            VerticalAlignment="Center"
+                                        Margin="0 0 0 0" >
+                                    <TextBlock TextAlignment="Left"
+                                                  
+                                                   Width="48" 
+                                                   Height="35"
+                                                   Foreground="Black" 
+                                                   FontSize="10"
+                                                   TextWrapping="WrapWithOverflow"
+                                                   Text="{Binding _item.Name}"
+                                                   Style="{StaticResource TextblockTitleSmall}"
+                                                   Margin="0 0 0 0"
+                                                   Padding="6 10 0 0"/>
+
+                                    <TextBlock Foreground="#0033A1" 
+                                                 HorizontalAlignment="Left"
+                                                 VerticalAlignment="Top"
+                                                 TextWrapping="WrapWithOverflow"
+                                                 Margin="0 0 0 0"
+                                                 Padding="3 10 0 0"
+                                                 FontSize="12"
+                                                 Style="{StaticResource TextblockTitleSmall}"
+                                                 Text="{Binding _item.Price}"
+                                                 Height="35"
+                                                 Width="50"/>
+
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                            Height="25"
+                                            >
+                                    <Button Style="{StaticResource ButtonDecrease}" 
+                                            Margin="0 5 10 0"
+                                            Click="DecreaseInventory_Click"
+                                           />
+                                    <TextBlock Text="{Binding _amount}"
+                                               Style="{StaticResource TextblockTitleSmall}"
+                                               Margin="0 5 0 0"
+                                               FontSize="15"/>
+                                    <Button Style="{StaticResource ButtonIncrease}" 
+                                            Margin="10 3 0 0"
+                                            Click="IncreaseInventory_Click"
+                                            />
+                                </StackPanel>
+
+                                <!--<StackPanel Orientation="Horizontal">
+                                    <Button Margin="0 0 0 0"
+                                            Width="80"
+                                            Style="{StaticResource ButtonAdd}"
+                                            Command="{Binding Source={StaticResource Proxy}, Path=Data.EditItemCommand}"
+                                            CommandParameter="{Binding ElementName=ucStorage}" 
+                                            />
+                                </StackPanel>-->
+                            </StackPanel>
+                        </Border>
+
+                        <DataTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                 Value="True">
+                                <Setter Property="BorderBrush"
+                                    TargetName="border"
+                                    Value="Black" />
+
+                                <Setter Property="BorderThickness"
+                                    TargetName="border"
+                                    Value="2" />
+                            </Trigger>
+                            <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={
+                                          RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem }}}"
+                                          Value="True">
+                                <Setter Property="BorderBrush"
+                                    TargetName="border"
+                                    Value="#0033A1" />
+                                <Setter Property="Cursor" Value="Hand"/>
+
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+
+                    </DataTemplate>
+
+
+                </ListView.ItemTemplate>
+
+                <ListView.ItemContainerStyle>
+
+                    <Style TargetType="{x:Type ListViewItem}" >
+                        <!--remove green selected area-->
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Tag" Value="{Binding ElementName=PageOrderMain}" />
+                        <Setter Property="Margin" Value="5"/>
+
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+            </ListView>
+
+        </StackPanel>
 
         <TextBox Grid.Row="2"
                  Width="409" Height="31"
@@ -50,12 +346,81 @@
                 Width="95" Height="31"
                 Content="Tìm kiếm"
                 Background="#E1251B"
+                Margin="-10 0 0 0"
                 Style="{StaticResource ButtonCustomColorPositive}"/>
 
-        <StackPanel Grid.Column="1" Grid.Row="3"
-                    Grid.RowSpan="2"
+        <StackPanel Grid.Row="3"
+                    Grid.Column="1">
+            <ListView Margin="0 20 0 0"
+                      Height="220"
+                      VerticalAlignment="Bottom"
+                      Background="Transparent" BorderThickness="0" ItemsSource="{Binding TotalOrderSourceCollection}" Name="DailyReportListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <!--<ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ResourceKey=myTotalItemOrder}" >
+                    </Style>
+                </ListView.ItemContainerStyle>-->
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}" >
+                        <!--remove green selected area-->
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Width="220">
+                            <TextBlock  TextWrapping="WrapWithOverflow"
+                                        Width="130"
+                                        Text="{Binding _item.Name}"
+                                        Style="{StaticResource TextblockTitleNormal}"
+                                        HorizontalAlignment="Left"
+                                        Margin="5 0 0 5"/>
+
+                            <TextBlock  TextWrapping="WrapWithOverflow"
+                                    Style="{StaticResource TextblockTitleNormal}"
+                                    Width="120"
+                                    HorizontalAlignment="Right">
+                                x
+                                <Run Text="{Binding _amount}"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                    </DataTemplate>
+
+
+                </ListView.ItemTemplate>
+
+                <!--<ListView.View>
+                    <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}" >
+                        <GridView.Columns>
+                            <GridViewColumn Width="120"  DisplayMemberBinding="{Binding _item.Name}"/>
+                            -->
+                <!--<GridViewColumn Width="100" DisplayMemberBinding="{Binding _amount}"/>-->
+                <!--
+                        </GridView.Columns>
+                    </GridView>
+
+                </ListView.View>-->
+            </ListView>
+        </StackPanel>
+
+
+        <StackPanel Grid.Column="1" Grid.Row="4"
                     Orientation="Vertical"
-                    VerticalAlignment="Bottom">
+                    VerticalAlignment="Top">
 
             <Line X1="190" 
                   Margin="0 27 0 27"
@@ -78,14 +443,14 @@
                 </TextBlock>
             </StackPanel>
             <Button x:Name="ButtonContinue" 
-                    Width="195" Height="33"
+                    Width="180" Height="33"
                     Content="Tiếp tục"
                     Command="{Binding NavigatePaymentPageCommand}"
                     Background="#0033A1"
                     Margin="0 0 0 5"
                     Style="{StaticResource ButtonCustomColorPositive}"/>
             <Button x:Name="ButtonCancel" 
-                    Width="195" Height="33"
+                    Width="180" Height="33"
                     Content="Hủy đơn"  
                     Command="{Binding NavigateMainPageCommand}"
                     Foreground="#E1251B"

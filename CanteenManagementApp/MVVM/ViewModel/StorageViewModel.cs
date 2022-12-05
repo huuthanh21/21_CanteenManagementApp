@@ -27,6 +27,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public ICommand EditInventoryCommand { get; set; } // chỉnh sửa hàng tồn
         public ICommand DeleteInventoryCommand { get; set; } // xóa hàng tồn
         public ICommand AddItemCommand { get; set; } // thêm hàng
+        public ICommand AddItemInventoryCommand { get; set; } // thêm hàng
 
         // Thêm hàng:
         //public ICommand SelectImageCommand { get; set; } //chọn ảnh
@@ -96,9 +97,29 @@ namespace CanteenManagementApp.MVVM.ViewModel
             EditInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => EditInventoryItem(parameter));
             DeleteInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => DeleteInventoryItem(parameter));
             AddItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => addItem(parameter));
-
+            AddItemInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => addItemInventory(parameter));
             //SelectImageCommand = new RelayCommand<AddItem>((parameter) => true, (parameter) => ChooseImage(parameter));
             //ButtonAddCommand = new RelayCommand<AddItem>((parameter) => true, (parameter) => ButtonAddClick(parameter));
+        }
+
+        private void addItemInventory(StorageView parameter)
+        {
+            var screen = new AddItem(1);
+            if (screen.ShowDialog() == true)
+            {
+                if (screen.NewItem.Id != 0 || screen.NewItem.Name != "" || screen.NewItem.Price != 0
+                    || screen.NewItem.Description != "" || screen.NewItem.ImagePath != "")
+                {
+                    _inventoryItems.Add(screen.NewItem.Clone() as Item);
+                }
+
+            }
+            else
+            {
+
+
+            }
+            screen.Close();
         }
 
         //private void ButtonAddClick(AddItem parameter)
@@ -106,14 +127,14 @@ namespace CanteenManagementApp.MVVM.ViewModel
         //    parameter.DialogResult = true;
         //    string id = parameter.IdTextBox.Text;
         //    string name = parameter.IdTextBox.Text;
-        //    string describe = parameter.describeTextBox.Text;
+        //    string description = parameter.descriptionTextBox.Text;
         //    string price = parameter.priceTextBox.Text;
         //    Item newItem = new()
         //    {
         //        Id = int.Parse(id),
         //        Name = name,
         //        Price = double.Parse(price),
-        //        Description = describe,
+        //        Description = description,
         //        Amount = 0,
         //        ImagePath = imageFileName,
         //        Type = 0
@@ -143,7 +164,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         private void addItem(StorageView parameter)
         {
-            var screen = new AddItem();
+            var screen = new AddItem(0);
             //screen.Show();
             //if (screen.ShowDialog() == true)
             //{

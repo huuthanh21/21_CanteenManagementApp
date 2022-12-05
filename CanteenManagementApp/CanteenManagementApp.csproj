@@ -24,6 +24,7 @@
     <None Remove="Images\dailyreport.png" />
     <None Remove="Images\delete.png" />
     <None Remove="Images\editing.png" />
+    <None Remove="Images\edit_blue_icon.png" />
     <None Remove="Images\empty_image.jpg" />
     <None Remove="Images\icon_back.png" />
     <None Remove="Images\icon_close.png" />
@@ -45,6 +46,9 @@
   <ItemGroup>
     <Resource Include="Fonts\Inter-VariableFont_slnt,wght.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\edit_blue_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\empty_image.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

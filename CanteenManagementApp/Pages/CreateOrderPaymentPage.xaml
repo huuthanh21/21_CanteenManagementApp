@@ -46,7 +46,7 @@
         <Button x:Name="ButtonBack"
                 Content="Trở về"
                 HorizontalAlignment="Left"
-                Command="NavigationCommands.BrowseBack"
+                Command="{Binding NavigateMainPageCommand}"
                 Style="{StaticResource ButtonBack}"/>
 
         <TextBlock Text="Thanh toán"
@@ -93,9 +93,10 @@
                              FontWeight="Medium"
                              FontSize="11"/>
                         <Run d:Text="100.000"
+                             Text="{Binding Customer.Balance}"
                              FontWeight="Medium"
                              FontSize="11"/><!--
-                     --><Run d:Text="đ"
+                     --><Run Text="đ"
                              FontWeight="Medium"
                              FontSize="11"/>        
                     </TextBlock>

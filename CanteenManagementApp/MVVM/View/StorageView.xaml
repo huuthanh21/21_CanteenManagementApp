@@ -135,6 +135,7 @@
                                     <TextBlock Foreground="#0033A1" 
                                                  HorizontalAlignment="Left"
                                                  VerticalAlignment="Top"
+                                                 TextWrapping="WrapWithOverflow"
                                                  Margin="0 0 0 0"
                                                  Padding="3 10 0 0"
                                                  FontSize="12"
@@ -214,6 +215,8 @@
                    Style="{StaticResource TextblockTitleSmall}"
                           VerticalAlignment="Center"/>
                 <Button Margin="5 0 0 0"
+                        Command="{Binding  AddItemInventoryCommand}"
+                        CommandParameter="{Binding ElementName=ucStorage}"
                         Style="{StaticResource ButtonAdd}"/>
             </StackPanel>
             <!--ListView-->
