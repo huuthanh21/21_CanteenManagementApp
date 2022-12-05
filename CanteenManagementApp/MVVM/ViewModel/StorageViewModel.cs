@@ -1,12 +1,16 @@
 ﻿using CanteenManagementApp.Core;
 using CanteenManagementApp.MVVM.Model;
 using CanteenManagementApp.MVVM.View;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reflection.Metadata;
+using System.Windows.Controls;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-
+using System.Windows.Media;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
@@ -29,6 +33,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public ICommand DeleteInventoryCommand { get; set; } // xóa hàng tồn
         public ICommand AddItemCommand { get; set; } // thêm hàng
         public ICommand AddItemInventoryCommand { get; set; } // thêm hàng
+
 
         // Thêm hàng:
         //public ICommand SelectImageCommand { get; set; } //chọn ảnh
@@ -100,7 +105,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             FoodItemsCollection = new CollectionViewSource { Source = _foodItems };
             InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
 
-            FoodItemsCollection = new CollectionViewSource {  Source = _foodItems };
+            FoodItemsCollection = new CollectionViewSource { Source = _foodItems };
             InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
 
             EditItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => EditItem(parameter));

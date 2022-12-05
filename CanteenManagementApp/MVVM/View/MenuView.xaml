@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CanteenManagementApp.MVVM.View"
              xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
-              xmlns:Model="clr-namespace:CanteenManagementApp.MVVM.Model"
+             xmlns:Model="clr-namespace:CanteenManagementApp.MVVM.Model"
+             x:Name="ucMenu"
              d:DataContext="{d:DesignInstance Type=viewModel:MenuViewModel}"
              mc:Ignorable="d" 
              d:Background="#F8F8F8"
@@ -112,12 +113,9 @@
                             <Button Margin="5 5 0 0"
                                     Style="{StaticResource ButtonAdd}"
                                     Click="Button_Click"
-                                      />
-                            <!--Command="{Binding AddItemCommand}"
-                                    CommandParameter="{Binding ElementName=ucStorage}"-->
+                                    Command="{Binding AddItemToMenuCommand}"
+                                    CommandParameter="{Binding ElementName=ucMenu}" />
                         </StackPanel>
-
-
                     <ListView Width="630" Height="410"
                               Margin="0"
                               Padding="10 0 0 0"
@@ -183,7 +181,7 @@
                                                    Margin="0 0 0 0"
                                                    Padding="6 10 0 0"/>
 
-                                                <!--<TextBlock Foreground="#0033A1" 
+                                                <TextBlock Foreground="#0033A1" 
                                                  HorizontalAlignment="Left"
                                                  VerticalAlignment="Top"
                                                  TextWrapping="WrapWithOverflow"
@@ -193,11 +191,7 @@
                                                  Style="{StaticResource TextblockTitleSmall}"
                                                  Text="{Binding Price}"
                                                  Height="60"
-                                                 Width="50"/>-->
-                                                <TextBox x:Name="textBox" Width="50" Height="30" BorderBrush="#0033A1" Text="{Binding Amount}"></TextBox>
-
-                                                <!--<CheckBox x:Name="checkBox"
-                                                          BorderBrush="#0033A1" />-->
+                                                 Width="50"/>
                                             </StackPanel>
                                         </StackPanel>
                                     </Border>
