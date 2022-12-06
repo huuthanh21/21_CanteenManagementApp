@@ -7,9 +7,9 @@
         xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
         mc:Ignorable="d"
         x:Name="wdAddItemToMenu"
-        Title="AddItemToMenu" Height="558" Width="585">
+        Title="AddItemToMenu" Height="610" Width="585">
     <Window.DataContext>
-        <viewModel:MenuViewModel/>
+        <viewModel:AddItemToMenuViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
@@ -84,11 +84,17 @@
                             <StackPanel Orientation="Vertical" 
                                                  Width="104"
                                                     Height="120" >
-                                <Image Margin ="0 5 0 0 "
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin ="0 5 3 0 "
                                                MinWidth="80"
-                                               Width="60" Height="54"
+                                               Width="50" Height="54"
                                                x:Name="ImageItem"
                                                Source="{Binding Path=Id, Converter={StaticResource IdToImagePathConverter}}"/>
+                                    <Image x:Name="check_select"
+                                           Width="17" Height="17" Source="/Images/check_select.png" VerticalAlignment="Top"
+                                           Margin="0 8 6 0" Visibility="Hidden" />
+                                </StackPanel>
+                                
                                 <StackPanel Orientation="Vertical" 
                                             VerticalAlignment="Center"
                                             Margin="0 0 0 0" >
@@ -102,14 +108,14 @@
                                                    Text="{Binding Name}"
                                                    Style="{StaticResource TextblockTitleSmall}"
                                                    Margin="0 0 0 0"
-                                                   Padding="6 10 0 0"/>
+                                                   Padding="3 5 0 0"/>
 
                                         <TextBlock Foreground="#0033A1" 
                                                  HorizontalAlignment="Left"
                                                  VerticalAlignment="Top"
                                                  TextWrapping="WrapWithOverflow"
                                                  Margin="0 0 0 0"
-                                                 Padding="3 10 0 0"
+                                                 Padding="3 5 0 0"
                                                  FontSize="12"
                                                  Style="{StaticResource TextblockTitleSmall}"
                                                  Text="{Binding Price}"
@@ -117,7 +123,10 @@
                                                  Width="50"/>
                                     </StackPanel>
                                     <!--TextBox Amount-->
-                                    <TextBox x:Name="textBox" Width="45" Height="20" BorderBrush="#0033A1" Text="{Binding Amount}"/>
+                                    <TextBox x:Name="textBox" Width="45" Height="18"
+                                             BorderBrush="#0033A1" Text="{Binding Amount}"
+                                             Margin="0 8 0 0"
+                                             Visibility="Hidden"/>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
@@ -135,7 +144,8 @@
                             <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={
                                                       RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem }}}"
                                                       Value="True">
-                                <!--<Setter Property="IsChecked" Value="true" TargetName="checkBox"/>-->
+                                <Setter Property="Visibility" Value="Visible" TargetName="check_select"/>
+                                <Setter Property="Visibility" Value="Visible" TargetName="textBox"/>
                                 <Setter Property="BorderBrush"
                                                     TargetName="border"
                                                     Value="#0033A1" />
