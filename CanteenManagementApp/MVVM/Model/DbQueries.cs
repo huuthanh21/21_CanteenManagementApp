@@ -190,7 +190,8 @@ namespace CanteenManagementApp.MVVM.Model
                 return item_amounts;
             }
             /* Insert */
-            public static async Task InsertReceiptAsync(string customerId, List<ItemOrder> item_orders, string paymentMethod, float total)
+
+            public static async Task<int> InsertReceiptAsync(string customerId, List<ItemOrder> item_orders, string paymentMethod, float total)
             {
                 using var context = new CanteenContext();
 
@@ -203,9 +204,9 @@ namespace CanteenManagementApp.MVVM.Model
                     DateTime = datetime,
                     Total = total
                 };
-                await context.Receipts.AddAsync(receipt);
+                context.Receipts.Add(receipt);
 
-                int rows = await context.SaveChangesAsync();
+                int rows = context.SaveChanges();
                 Debug.WriteLine($"Saved {rows} receipts");
 
                 int receiptId = receipt.Id;
@@ -214,6 +215,8 @@ namespace CanteenManagementApp.MVVM.Model
                 {
                     await ReceiptItemQueries.InsertReceiptItemAsync(receiptId, item_order.Item.Id, item_order.Amount);
                 }
+                return receiptId;
+                
             }
             /* Update */
 

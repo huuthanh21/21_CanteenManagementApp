@@ -27,7 +27,7 @@ namespace CanteenManagementApp.Pages
             SetCorrespondingLayout();
         }
 
-        private void SetCorrespondingLayout()
+        public void SetCorrespondingLayout()
         {
             if (CreateOrderViewModel.HasCustomer)
             {

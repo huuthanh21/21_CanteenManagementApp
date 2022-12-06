@@ -249,6 +249,7 @@
                      d:Text="40000">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}">
+                        <EventSetter Event="TextInput" Handler="TextboxInput_PreviewTextInput"/>
                         <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
                         <Setter Property="FontSize" Value="21"/>
                         <Setter Property="Background" Value="Transparent"/>
@@ -336,7 +337,7 @@
                 Width="200" Height="34"
                 Foreground="#E1251B"
                 Style="{StaticResource ButtonCustomColorCancel}"
-                Command="{Binding NavigateMainPageCommand}" Canvas.Left="186" Canvas.Top="18" HorizontalAlignment="Left"/>
+                Command="{Binding NavigateMainPageWithResetCommand}" Canvas.Left="186" Canvas.Top="18" HorizontalAlignment="Left"/>
             <Button x:Name="ButtonNavigateReceiptPage" 
                     Content="Thanh toán"
                     Background="#0033A1"

@@ -176,7 +176,7 @@
             <TextBlock Text="Mã đơn hàng"
                        Style="{StaticResource TextblockTitleSmall}" 
                        Canvas.Left="22" Canvas.Top="77" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBlock Text="HT-231202"
+            <TextBlock Text="{Binding ReceiptId}"
                        Style="{StaticResource TextblockTitleNormal}" 
                        Canvas.Left="228" Canvas.Top="77" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
@@ -243,7 +243,7 @@
                 Background="#0033A1"
                 Width="200" Height="33"
                 Margin="10 0 0 0"
-                Command="{Binding NavigateMainPageCommand}"
+                Command="{Binding NavigateMainPageWithResetCommand}"
                 Style="{StaticResource ButtonCustomColorPositive}"
                 HorizontalAlignment="Left"/>
     </Grid>

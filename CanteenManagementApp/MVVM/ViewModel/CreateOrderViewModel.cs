@@ -14,6 +14,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
     public class CreateOrderViewModel : ObservableObject
     {
         public RelayCommand NavigateMainPageCommand { get; set; }
+        public RelayCommand NavigateMainPageWithResetCommand { get; set; }
         public RelayCommand NavigatePaymentPageCommand { get; set; }
         public ICommand NavigateReceiptPageCommand { get; set; }
 
@@ -31,6 +32,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public bool PayInCash { get; set; } = true;
         public RelayCommand TogglePayInCashCommand { get; set; }
         public RelayCommand TogglePayThroughAccountCommand { get; set; }
+        public int ReceiptId { get; set; }
 
         public CreateOrderMainPage CreateOrderMainPage { get; set; }
         public CreateOrderPaymentPage CreateOrderPaymentPage { get; set; }
@@ -89,41 +91,69 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 NotifyPropertyChanged(nameof(TotalOrderCost));
             });
 
-            NavigatePaymentPageCommand = new RelayCommand(o =>
+            NavigateMainPageWithResetCommand = new RelayCommand(o =>
             {
-                CurrentPage = CreateOrderPaymentPage;
+                CurrentPage = CreateOrderMainPage;
+                TotalItemOrder.Clear();
+                Customer = null;
+                CreateOrderMainPage.SetCorrespondingLayout();
+                NotifyPropertyChanged(nameof(TotalOrderCost));
+                NotifyPropertyChanged(nameof(TotalItemOrder));
+                foreach(ItemOrder itemOrder in ListFoodItemOrder)
+                {
+                    itemOrder.Amount = 0;
+                }
+                foreach (ItemOrder itemOrder in ListInventoryItemOrder)
+                {
+                    itemOrder.Amount = 0;
+                }
             });
 
-            NavigateReceiptPageCommand = new RelayCommand<TextBox>(givenMoneyTextbox => true, givenMoneyTextbox =>
+            NavigatePaymentPageCommand = new RelayCommand(o =>
             {
-                if (PayInCash)
+                if (TotalItemOrder.Count != 0)
+                    CurrentPage = CreateOrderPaymentPage;
+                else
+                    MessageBox.Show("Bạn chưa chọn mặt hàng nào.", "Không có mặt hàng", MessageBoxButton.OK, MessageBoxImage.Information);
+            });
+
+            NavigateReceiptPageCommand = new RelayCommand<TextBox>(givenMoneyTextbox => true, async givenMoneyTextbox =>
+            {
+                if (TotalItemOrder.Count != 0)
                 {
-                    var template = givenMoneyTextbox.Template;
-                    var control = (TextBox)template.FindName("TextboxInput", givenMoneyTextbox);
-                    if (!string.IsNullOrEmpty(control.Text) && control.Text.All(c => c >= '0' && c <= '9'))
+                    if (PayInCash)
                     {
-                        if (float.Parse(control.Text) >= TotalOrderCost)
+                        var template = givenMoneyTextbox.Template;
+                        var control = (TextBox)template.FindName("TextboxInput", givenMoneyTextbox);
+                        if (!string.IsNullOrEmpty(control.Text) && control.Text.All(c => c >= '0' && c <= '9'))
                         {
-                            CurrentPage = CreateOrderReceiptPage;
-                            GivenMoney = float.Parse(control.Text);
-                            _ = DbQueries.ReceiptQueries.InsertReceiptAsync(Customer != null ? Customer.Id : "-1", TotalItemOrder.ToList(), PayInCash ? "Tiền mặt" : "Trả trước", TotalOrderCost);
+                            if (float.Parse(control.Text) >= TotalOrderCost)
+                            {
+                                CurrentPage = CreateOrderReceiptPage;
+                                GivenMoney = float.Parse(control.Text);
+                                ReceiptId = await DbQueries.ReceiptQueries.InsertReceiptAsync(HasCustomer ? Customer.Id : "-1", TotalItemOrder.ToList(), PayInCash ? "Tiền mặt" : "Trả trước", TotalOrderCost);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Số tiền nhận phải lớn hơn giá trị của đơn hàng.", "Không đủ tiền", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (Customer.Balance < TotalOrderCost)
+                        {
+                            MessageBox.Show("Khách hàng không đủ tiền trong tài khoản.", "Không đủ tiền", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                         }
                         else
                         {
-                            MessageBox.Show("Số tiền nhận phải lớn hơn giá trị của đơn hàng.", "Không đủ tiền", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                            ReceiptId = await DbQueries.ReceiptQueries.InsertReceiptAsync(HasCustomer ? Customer.Id : "-1", TotalItemOrder.ToList(), PayInCash ? "Tiền mặt" : "Trả trước", TotalOrderCost);
                         }
                     }
                 }
                 else
                 {
-                    if (Customer.Balance < TotalOrderCost)
-                    {
-                        MessageBox.Show("Khách hàng không đủ tiền trong tài khoản.", "Không đủ tiền", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                    }
-                    else
-                    {
-                        _ = DbQueries.ReceiptQueries.InsertReceiptAsync(Customer != null ? Customer.Id : "-1", TotalItemOrder.ToList(), PayInCash ? "Tiền mặt" : "Trả trước", TotalOrderCost);
-                    }
+                    MessageBox.Show("Bạn đã xóa hết mặt hàng, vui lòng trở về để chọn.", "Không có mặt hàng", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 
             });

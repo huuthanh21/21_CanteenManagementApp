@@ -464,7 +464,7 @@
             <Button x:Name="ButtonCancel" 
                     Width="180" Height="33"
                     Content="Hủy đơn"  
-                    Command="{Binding NavigateMainPageCommand}"
+                    Command="{Binding NavigateMainPageWithResetCommand}"
                     Foreground="#E1251B"
                     Style="{StaticResource ButtonCustomColorCancel}"/>
         </StackPanel>
