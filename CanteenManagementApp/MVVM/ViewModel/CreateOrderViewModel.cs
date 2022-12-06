@@ -3,8 +3,11 @@ using CanteenManagementApp.MVVM.Model;
 using CanteenManagementApp.Pages;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Controls;
+using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
@@ -12,7 +15,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
     {
         public RelayCommand NavigateMainPageCommand { get; set; }
         public RelayCommand NavigatePaymentPageCommand { get; set; }
-        public RelayCommand NavigateReceiptPageCommand { get; set; }
+        public ICommand NavigateReceiptPageCommand { get; set; }
 
         private object _currentPage;
 
@@ -42,6 +45,22 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public ObservableCollection<ItemOrder> ListInventoryItemOrder { get; set; }
         // total items selected by customer
         public ObservableCollection<ItemOrder> TotalItemOrder { get; set; }
+        public float TotalOrderCost
+        {
+            get
+            {
+                return CalculateOrderCost();
+            }
+            set { }
+        }
+
+        public float GivenMoney { get; set; } = 0;
+
+        public float ChangeOfReceipt
+        {
+            get { return GivenMoney - TotalOrderCost; }
+        }
+
 
         private readonly CollectionViewSource _inventoryItemsCollection;
         private readonly CollectionViewSource _foodItemsCollection;
@@ -54,6 +73,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public ICommand IncreaseAmountOrderCommand { get; set; }
 
         public ICommand RemoveItemOrderCommand { get; set; }
+
         //----------------
         public CreateOrderViewModel()
         {
@@ -66,6 +86,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             NavigateMainPageCommand = new RelayCommand(o =>
             {
                 CurrentPage = CreateOrderMainPage;
+                NotifyPropertyChanged(nameof(TotalOrderCost));
             });
 
             NavigatePaymentPageCommand = new RelayCommand(o =>
@@ -73,9 +94,38 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 CurrentPage = CreateOrderPaymentPage;
             });
 
-            NavigateReceiptPageCommand = new RelayCommand(o =>
+            NavigateReceiptPageCommand = new RelayCommand<TextBox>(givenMoneyTextbox => true, givenMoneyTextbox =>
             {
-                CurrentPage = CreateOrderReceiptPage;
+                if (PayInCash)
+                {
+                    var template = givenMoneyTextbox.Template;
+                    var control = (TextBox)template.FindName("TextboxInput", givenMoneyTextbox);
+                    if (!string.IsNullOrEmpty(control.Text) && control.Text.All(c => c >= '0' && c <= '9'))
+                    {
+                        if (float.Parse(control.Text) >= TotalOrderCost)
+                        {
+                            CurrentPage = CreateOrderReceiptPage;
+                            GivenMoney = float.Parse(control.Text);
+                            _ = DbQueries.ReceiptQueries.InsertReceiptAsync(Customer != null ? Customer.Id : "-1", TotalItemOrder.ToList(), PayInCash ? "Tiền mặt" : "Trả trước", TotalOrderCost);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Số tiền nhận phải lớn hơn giá trị của đơn hàng.", "Không đủ tiền", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                        }
+                    }
+                }
+                else
+                {
+                    if (Customer.Balance < TotalOrderCost)
+                    {
+                        MessageBox.Show("Khách hàng không đủ tiền trong tài khoản.", "Không đủ tiền", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                    }
+                    else
+                    {
+                        _ = DbQueries.ReceiptQueries.InsertReceiptAsync(Customer != null ? Customer.Id : "-1", TotalItemOrder.ToList(), PayInCash ? "Tiền mặt" : "Trả trước", TotalOrderCost);
+                    }
+                }
+                
             });
             TogglePayInCashCommand = new RelayCommand(o => PayInCash = true);
             TogglePayThroughAccountCommand = new RelayCommand(o => PayInCash = false);
@@ -112,6 +162,8 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     {
                         TotalItemOrder.Remove(itemOrder);
                         itemOrder.Amount = 0;
+                        TotalOrderCost = CalculateOrderCost();
+                        NotifyPropertyChanged(nameof(TotalOrderCost));
                         break;
                     }
                 }
@@ -122,6 +174,17 @@ namespace CanteenManagementApp.MVVM.ViewModel
         {
             int indexSelected = parameter.foodListView.SelectedIndex;
             ListFoodItemOrder[indexSelected].Amount++;
+        }
+
+        public float CalculateOrderCost()
+        {
+            float totalCost = 0;
+
+            foreach(ItemOrder itemOrder in TotalItemOrder)
+            {
+                totalCost += (itemOrder.Item.Price * itemOrder.Amount);
+            }
+            return totalCost;
         }
 
         public void UpdateTotalOrder()
@@ -160,6 +223,8 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     }
                 }
             }
+            TotalOrderCost = CalculateOrderCost();
+            NotifyPropertyChanged(nameof(TotalOrderCost));
         }
     }
 }

@@ -3,7 +3,6 @@ using CanteenManagementApp.MVVM.Model;
 using CanteenManagementApp.MVVM.View;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;

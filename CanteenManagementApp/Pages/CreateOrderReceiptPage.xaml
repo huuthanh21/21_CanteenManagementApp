@@ -16,6 +16,7 @@
             <converters:IsCheckedForegroundConverter x:Key="ForegroundConverter"/>
             <converters:FloatToCurrencyConverter x:Key="FloatToCurrencyConverter"/>
             <converters:PriceAndAmountToTotal x:Key="PriceAndAmountToTotal"/>
+            <converters:IntPaymentMethodToString x:Key="IntPaymentMethodToString"/>
         </ResourceDictionary>
     </Page.Resources>
     <Grid Margin="20 10 0 10">
@@ -42,7 +43,7 @@
                 Margin="0 0 23 10"
                 d:Content="20120582"
                 Style="{StaticResource ButtonCustomColorPositive}"/>
-        
+
         <TextBlock Text="Hóa đơn"
                    Grid.Row="1"
                    Style="{StaticResource TextblockTitle}"/>
@@ -162,6 +163,73 @@
               X1="600"
               VerticalAlignment="Center"
               StrokeThickness="1.38"/>
+
+        <Canvas Grid.Row="4" Grid.ColumnSpan="2">
+            <TextBlock Text="Phương thức thanh toán"
+                       Style="{StaticResource TextblockTitleSmall}" 
+                       Canvas.Left="22" Canvas.Top="43" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock d:Text="Tiền mặt"
+                       Text="{Binding Path=PayInCash, Converter={StaticResource IntPaymentMethodToString}}"
+                       Style="{StaticResource TextblockTitleNormal}" 
+                       Canvas.Left="228" Canvas.Top="43" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+            <TextBlock Text="Mã đơn hàng"
+                       Style="{StaticResource TextblockTitleSmall}" 
+                       Canvas.Left="22" Canvas.Top="77" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBlock Text="HT-231202"
+                       Style="{StaticResource TextblockTitleNormal}" 
+                       Canvas.Left="228" Canvas.Top="77" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+            <StackPanel Canvas.Left="22" Canvas.Top="112"
+                        x:Name="PanelCustomerId"
+                        Orientation="Horizontal">
+                <TextBlock Text="Mã khách hàng"
+                           Style="{StaticResource TextblockTitleSmall}"/>
+                <TextBlock d:Text="20120582"
+                           Text="{Binding Customer.Id}"
+                           Margin="95 0 0 0"
+                           Style="{StaticResource TextblockTitleNormal}"/>
+            </StackPanel>
+            
+            <TextBlock Text="Tiền nhận"
+                       Style="{StaticResource TextblockTitleSmall}" 
+                       Canvas.Left="384" Canvas.Top="43" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+            <TextBlock Text="{Binding Path=ChangeOfReceipt,
+                                Converter={StaticResource FloatToCurrencyConverter},
+                                ConverterCulture=vi-VN}"
+                       d:Text="10.000đ" 
+                       Width="113" 
+                       TextAlignment="Right"
+                       FontFamily="{DynamicResource Inter}"
+                       FontSize="21"
+                       FontWeight="Bold" 
+                       Canvas.Left="494" Canvas.Top="73" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBlock Text="Tiền thừa"
+                       Style="{StaticResource TextblockTitleSmall}" 
+                       Canvas.Left="386" Canvas.Top="77" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding Path=GivenMoney,
+                                Converter={StaticResource FloatToCurrencyConverter},
+                                ConverterCulture=vi-VN}"
+                           d:Text="50.000đ" 
+                           Width="113" 
+                           TextAlignment="Right"
+                           FontFamily="{DynamicResource Inter}"
+                           FontSize="21"
+                           FontWeight="Bold" Canvas.Left="494" Canvas.Top="39" HorizontalAlignment="Center" VerticalAlignment="Top" />
+            <TextBlock Text="Tổng cộng"
+                       Style="{StaticResource TextblockTitleSmall}" 
+                       Canvas.Left="379" Canvas.Top="112" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding Path=TotalOrderCost,
+                                Converter={StaticResource FloatToCurrencyConverter},
+                                ConverterCulture=vi-VN, Mode=TwoWay}"
+                           d:Text="40.000đ" 
+                           Width="113" 
+                           TextAlignment="Right"
+                           FontFamily="{DynamicResource Inter}"
+                           FontSize="21"
+                           FontWeight="Bold" Canvas.Left="494" Canvas.Top="108" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        </Canvas>
 
         <Button Grid.Column="0" Grid.Row="5" 
                 Content="In hóa đơn"

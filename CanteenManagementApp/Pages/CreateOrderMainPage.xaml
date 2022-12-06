@@ -16,7 +16,6 @@
     <Page.Resources>
         <ResourceDictionary>
             <converters:FloatToCurrencyConverter x:Key="FloatToCurrencyConverter"/>
-            <converters:ItemsToTotal x:Key="ItemsToTotal"/>
         </ResourceDictionary>
     </Page.Resources>
     <Grid Margin="5 0 0 5">
@@ -438,21 +437,18 @@
                   StrokeThickness="1.4"
                   Stroke="Black"/>
             <StackPanel Orientation="Horizontal"
-                        Width="200">
+                        Width="220">
                 <TextBlock Text="Tổng cộng"
-                           Margin="5 5 15    5 "
+                           Margin="0 5 0 5 "
                            VerticalAlignment="Bottom"
                            FontFamily="{DynamicResource Inter}"
                            FontSize="15"
                            FontWeight="Bold"/>
-                <TextBlock Text="{Binding TotalItemOrder,
-                                Converter={StaticResource ItemsToTotal},
-                                ConverterCulture=vi-VN,
-                                Mode=TwoWay,
-                                NotifyOnSourceUpdated=True,
-                                NotifyOnTargetUpdated=True}"
+                <TextBlock Text="{Binding Path=TotalOrderCost,
+                                Converter={StaticResource FloatToCurrencyConverter},
+                                ConverterCulture=vi-VN}"
                            d:Text="40.000đ" 
-                           Width="103" 
+                           Width="113" 
                            TextAlignment="Right"
                            FontFamily="{DynamicResource Inter}"
                            FontSize="21"

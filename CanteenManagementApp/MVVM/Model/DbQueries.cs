@@ -190,7 +190,7 @@ namespace CanteenManagementApp.MVVM.Model
                 return item_amounts;
             }
             /* Insert */
-            public static async Task InsertReceiptAsync(string customerId, List<Tuple<Item, int>> item_tuples, string paymentMethod, float total)
+            public static async Task InsertReceiptAsync(string customerId, List<ItemOrder> item_orders, string paymentMethod, float total)
             {
                 using var context = new CanteenContext();
 
@@ -210,9 +210,9 @@ namespace CanteenManagementApp.MVVM.Model
 
                 int receiptId = receipt.Id;
 
-                foreach (Tuple<Item, int> item_tuple in item_tuples)
+                foreach (ItemOrder item_order in item_orders)
                 {
-                    await ReceiptItemQueries.InsertReceiptItemAsync(receiptId, item_tuple.Item1.Id, item_tuple.Item2);
+                    await ReceiptItemQueries.InsertReceiptItemAsync(receiptId, item_order.Item.Id, item_order.Amount);
                 }
             }
             /* Update */
