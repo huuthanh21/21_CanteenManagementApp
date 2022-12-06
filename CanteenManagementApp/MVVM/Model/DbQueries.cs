@@ -6,12 +6,13 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace CanteenManagementApp.MVVM.Model
-{   
+{
     public static class DbQueries
     {
         public static class CustomerQueries
         {
             /* Query */
+
             public static Customer GetCustomerById(string customerId)
             {
                 using var context = new CanteenContext();
@@ -43,23 +44,23 @@ namespace CanteenManagementApp.MVVM.Model
             }
 
             /* Insert */
+
             public static async Task InsertCustomerAsync(string customerId, string customerName, string customerType)
             {
+                using var context = new CanteenContext();
+
+                await context.Customers.AddAsync(new Customer
                 {
-                    using var context = new CanteenContext();
+                    Id = customerId,
+                    Name = customerName,
+                    CustomerType = customerType,
+                    Balance = 0
+                });
 
-                    await context.Customers.AddAsync(new Customer
-                    {
-                        Id = customerId,
-                        Name = customerName,
-                        CustomerType = customerType,
-                        Balance = 0
-                    });
-
-                    int rows = await context.SaveChangesAsync();
-                    Debug.WriteLine($"Saved {rows} customers");
-                }
+                int rows = await context.SaveChangesAsync();
+                Debug.WriteLine($"Saved {rows} customers");
             }
+
             /* Update */
 
             /* Delete */
@@ -68,6 +69,7 @@ namespace CanteenManagementApp.MVVM.Model
         public static class ItemQueries
         {
             /* Query */
+
             public static List<Item> GetItemsByType(int itemType)
             {
                 using var context = new CanteenContext();
@@ -78,6 +80,7 @@ namespace CanteenManagementApp.MVVM.Model
 
                 return items;
             }
+
             public static Item GetItemById(int itemId)
             {
                 using var context = new CanteenContext();
@@ -88,7 +91,9 @@ namespace CanteenManagementApp.MVVM.Model
 
                 return item;
             }
+
             /* Insert */
+
             public static async Task InsertItemAsync(int itemType, string itemName, float itemPrice, string description = "", int amount = 0)
             {
                 using var context = new CanteenContext();
@@ -115,7 +120,9 @@ namespace CanteenManagementApp.MVVM.Model
                 int rows = await context.SaveChangesAsync();
                 Debug.WriteLine($"Saved {rows} items");
             }
+
             /* Update */
+
             public static void UpdateItem(Item item)
             {
                 using var context = new CanteenContext();
@@ -129,7 +136,9 @@ namespace CanteenManagementApp.MVVM.Model
                 int rows = context.SaveChanges();
                 Debug.WriteLine($"{rows} items updated");
             }
+
             /* Delete */
+
             public static void DeleteItemById(int itemId)
             {
                 using var context = new CanteenContext();
@@ -141,7 +150,7 @@ namespace CanteenManagementApp.MVVM.Model
                 Debug.WriteLine($"{rows} items deleted");
             }
         }
-            
+
         public static class MenuQueries
         {
             /* Query */
@@ -156,6 +165,7 @@ namespace CanteenManagementApp.MVVM.Model
         public static class ReceiptQueries
         {
             /* Query */
+
             public static Receipt GetReceiptById(int receiptId)
             {
                 using var context = new CanteenContext();
@@ -189,6 +199,7 @@ namespace CanteenManagementApp.MVVM.Model
                                             .ToList();
                 return item_amounts;
             }
+
             /* Insert */
 
             public static async Task<int> InsertReceiptAsync(string customerId, List<ItemOrder> item_orders, string paymentMethod, float total)
@@ -216,8 +227,8 @@ namespace CanteenManagementApp.MVVM.Model
                     await ReceiptItemQueries.InsertReceiptItemAsync(receiptId, item_order.Item.Id, item_order.Amount);
                 }
                 return receiptId;
-                
             }
+
             /* Update */
 
             /* Delete */
@@ -228,6 +239,7 @@ namespace CanteenManagementApp.MVVM.Model
             /* Query */
 
             /* Insert */
+
             public static async Task InsertReceiptItemAsync(int receiptId, int itemId, int amount)
             {
                 using var context = new CanteenContext();
@@ -242,6 +254,7 @@ namespace CanteenManagementApp.MVVM.Model
                 int rows = await context.SaveChangesAsync();
                 Debug.WriteLine($"Saved {rows} receipt_items");
             }
+
             /* Update */
 
             /* Delete */

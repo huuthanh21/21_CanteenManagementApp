@@ -222,7 +222,7 @@
                        Canvas.Left="379" Canvas.Top="112" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBlock Text="{Binding Path=TotalOrderCost,
                                 Converter={StaticResource FloatToCurrencyConverter},
-                                ConverterCulture=vi-VN, Mode=TwoWay}"
+                                ConverterCulture=vi-VN, Mode=OneWay}"
                            d:Text="40.000đ" 
                            Width="113" 
                            TextAlignment="Right"

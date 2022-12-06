@@ -18,16 +18,12 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public RelayCommand NavigatePaymentPageCommand { get; set; }
         public ICommand NavigateReceiptPageCommand { get; set; }
 
-        private object _currentPage;
-
-        public object CurrentPage
-        {
-            get { return _currentPage; }
-            set { _currentPage = value; }
-        }
+        public object CurrentPage { get; set; }
 
         public static Customer Customer { get; set; } = null;
-        public static bool HasCustomer { get => Customer != null; set { } }
+
+        public static bool HasCustomer
+        { get => Customer != null; }
 
         public bool PayInCash { get; set; } = true;
         public RelayCommand TogglePayInCashCommand { get; set; }
@@ -38,22 +34,18 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public CreateOrderPaymentPage CreateOrderPaymentPage { get; set; }
         public CreateOrderReceiptPage CreateOrderReceiptPage { get; set; }
 
-
-        //----------------
-        private readonly ObservableCollection<Item> _foodItems;
-        private readonly ObservableCollection<Item> _inventoryItems;
-
         public ObservableCollection<ItemOrder> ListFoodItemOrder { get; set; }
         public ObservableCollection<ItemOrder> ListInventoryItemOrder { get; set; }
+
         // total items selected by customer
         public ObservableCollection<ItemOrder> TotalItemOrder { get; set; }
+
         public float TotalOrderCost
         {
             get
             {
                 return CalculateOrderCost();
             }
-            set { }
         }
 
         public float GivenMoney { get; set; } = 0;
@@ -62,7 +54,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
         {
             get { return GivenMoney - TotalOrderCost; }
         }
-
 
         private readonly CollectionViewSource _inventoryItemsCollection;
         private readonly CollectionViewSource _foodItemsCollection;
@@ -99,7 +90,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 CreateOrderMainPage.SetCorrespondingLayout();
                 NotifyPropertyChanged(nameof(TotalOrderCost));
                 NotifyPropertyChanged(nameof(TotalItemOrder));
-                foreach(ItemOrder itemOrder in ListFoodItemOrder)
+                foreach (ItemOrder itemOrder in ListFoodItemOrder)
                 {
                     itemOrder.Amount = 0;
                 }
@@ -123,14 +114,15 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 {
                     if (PayInCash)
                     {
+                        // Get the TextboxInput inside the template
                         var template = givenMoneyTextbox.Template;
-                        var control = (TextBox)template.FindName("TextboxInput", givenMoneyTextbox);
-                        if (!string.IsNullOrEmpty(control.Text) && control.Text.All(c => c >= '0' && c <= '9'))
+                        var textbox = (TextBox)template.FindName("TextboxInput", givenMoneyTextbox);
+                        if (!string.IsNullOrEmpty(textbox.Text) && textbox.Text.All(c => c >= '0' && c <= '9'))
                         {
-                            if (float.Parse(control.Text) >= TotalOrderCost)
+                            if (float.Parse(textbox.Text) >= TotalOrderCost)
                             {
                                 CurrentPage = CreateOrderReceiptPage;
-                                GivenMoney = float.Parse(control.Text);
+                                GivenMoney = float.Parse(textbox.Text);
                                 ReceiptId = await DbQueries.ReceiptQueries.InsertReceiptAsync(HasCustomer ? Customer.Id : "-1", TotalItemOrder.ToList(), PayInCash ? "Tiền mặt" : "Trả trước", TotalOrderCost);
                             }
                             else
@@ -155,49 +147,48 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 {
                     MessageBox.Show("Bạn đã xóa hết mặt hàng, vui lòng trở về để chọn.", "Không có mặt hàng", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-                
             });
+
             TogglePayInCashCommand = new RelayCommand(o => PayInCash = true);
             TogglePayThroughAccountCommand = new RelayCommand(o => PayInCash = false);
 
-            _foodItems = new ObservableCollection<Item>(DbQueries.ItemQueries.GetItemsByType(0));
-            _inventoryItems = new ObservableCollection<Item>(DbQueries.ItemQueries.GetItemsByType(1));
-
-            // set up data to display
+            // Set up data to display
             ListFoodItemOrder = new ObservableCollection<ItemOrder> { };
             ListInventoryItemOrder = new ObservableCollection<ItemOrder> { };
-
-            foreach (Item item in _foodItems)
-            {
-                ListFoodItemOrder.Add(new ItemOrder() { Item = (Item)item.Clone() });
-            }
-            foreach (Item item in _inventoryItems)
-            {
-                ListInventoryItemOrder.Add(new ItemOrder() { Item = (Item)item.Clone() });
-            }
+            FillItemOrderLists();
 
             TotalItemOrder = new ObservableCollection<ItemOrder> { };
-
 
             _foodItemsCollection = new CollectionViewSource { Source = ListFoodItemOrder };
             _totalOrderItemsCollection = new CollectionViewSource { Source = TotalItemOrder };
             _inventoryItemsCollection = new CollectionViewSource { Source = ListInventoryItemOrder };
             IncreaseAmountOrderCommand = new RelayCommand<CreateOrderMainPage>((parameter) => true, (parameter) => IncreaseAmountOrder(parameter));
 
-            RemoveItemOrderCommand = new RelayCommand<int>(i => true, i =>
+            RemoveItemOrderCommand = new RelayCommand<int>(itemId => true, itemId =>
             {
                 foreach (ItemOrder itemOrder in TotalItemOrder)
                 {
-                    if (itemOrder.Item.Id == i)
+                    if (itemOrder.Item.Id == itemId)
                     {
                         TotalItemOrder.Remove(itemOrder);
                         itemOrder.Amount = 0;
-                        TotalOrderCost = CalculateOrderCost();
                         NotifyPropertyChanged(nameof(TotalOrderCost));
                         break;
                     }
                 }
             });
+        }
+
+        private void FillItemOrderLists()
+        {
+            foreach (Item item in new ObservableCollection<Item>(DbQueries.ItemQueries.GetItemsByType(0)))
+            {
+                ListFoodItemOrder.Add(new ItemOrder() { Item = (Item)item.Clone() });
+            }
+            foreach (Item item in new ObservableCollection<Item>(DbQueries.ItemQueries.GetItemsByType(1)))
+            {
+                ListInventoryItemOrder.Add(new ItemOrder() { Item = (Item)item.Clone() });
+            }
         }
 
         private void IncreaseAmountOrder(CreateOrderMainPage parameter)
@@ -206,11 +197,11 @@ namespace CanteenManagementApp.MVVM.ViewModel
             ListFoodItemOrder[indexSelected].Amount++;
         }
 
-        public float CalculateOrderCost()
+        private float CalculateOrderCost()
         {
             float totalCost = 0;
 
-            foreach(ItemOrder itemOrder in TotalItemOrder)
+            foreach (ItemOrder itemOrder in TotalItemOrder)
             {
                 totalCost += (itemOrder.Item.Price * itemOrder.Amount);
             }
@@ -253,7 +244,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     }
                 }
             }
-            TotalOrderCost = CalculateOrderCost();
             NotifyPropertyChanged(nameof(TotalOrderCost));
         }
     }

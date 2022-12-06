@@ -9,7 +9,7 @@ namespace CanteenManagementApp.Converters
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             var total = (float)values[0] * (int)values[1];
-            FloatToCurrencyConverter floatToCurrencyConverter = new FloatToCurrencyConverter();
+            FloatToCurrencyConverter floatToCurrencyConverter = new();
             return floatToCurrencyConverter.Convert(total, targetType, parameter, culture);
         }
 

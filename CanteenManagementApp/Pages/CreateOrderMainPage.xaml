@@ -446,7 +446,7 @@
                            FontWeight="Bold"/>
                 <TextBlock Text="{Binding Path=TotalOrderCost,
                                 Converter={StaticResource FloatToCurrencyConverter},
-                                ConverterCulture=vi-VN}"
+                                ConverterCulture=vi-VN, Mode=OneWay}"
                            d:Text="40.000đ" 
                            Width="113" 
                            TextAlignment="Right"

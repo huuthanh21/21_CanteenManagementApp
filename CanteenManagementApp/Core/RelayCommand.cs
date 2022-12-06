@@ -5,8 +5,8 @@ namespace CanteenManagementApp.Core
 {
     public class RelayCommand : ICommand
     {
-        private Action<object> _execute;
-        private Func<object, bool> _canExecute;
+        private readonly Action<object> _execute;
+        private readonly Func<object, bool> _canExecute;
 
         public event EventHandler CanExecuteChanged
         {
@@ -18,7 +18,7 @@ namespace CanteenManagementApp.Core
         {
             _execute = execute;
             _canExecute = canExecute;
-        }   
+        }
 
         public bool CanExecute(object parameter)
         {

@@ -8,8 +8,9 @@ namespace CanteenManagementApp.MVVM.Model
 {
     /* Principal Entity */
     /* Item one-to-many Receipt_Item */
+
     [Table("Item")]
-    public class Item: ObservableObject, ICloneable 
+    public class Item : ObservableObject, ICloneable
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

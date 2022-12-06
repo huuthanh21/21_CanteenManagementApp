@@ -3,6 +3,7 @@ using CanteenManagementApp.MVVM.Model;
 using CanteenManagementApp.MVVM.View;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -21,7 +22,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public RelayCommand CreateOrderCommand { get; set; }
         public RelayCommand PasswordStateCommand { get; set; }
 
-        public ObservableCollection<Item> recentItems;
+        private readonly ObservableCollection<Item> _recentItems;
 
         private readonly CollectionViewSource RecentItemsCollection;
 
@@ -70,8 +71,8 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 }
             });
 
-            recentItems = new ObservableCollection<Item>();
-            RecentItemsCollection = new CollectionViewSource { Source = recentItems };
+            _recentItems = new ObservableCollection<Item>();
+            RecentItemsCollection = new CollectionViewSource { Source = _recentItems };
         }
 
         public CustomerViewModel(MainViewModel mainViewModel)
@@ -80,19 +81,19 @@ namespace CanteenManagementApp.MVVM.ViewModel
             {
                 MainViewModel = mainViewModel;
             }
-            
-            FindCustomerCommand = new RelayCommand<TextBox>(tb => true, tb =>
+
+            FindCustomerCommand = new RelayCommand<TextBox>(tb => true, async tb =>
             {
                 var template = tb.Template;
                 var control = (TextBox)template.FindName("TextboxInput", tb);
                 if (!string.IsNullOrEmpty(control.Text))
                 {
                     Customer = DbQueries.CustomerQueries.GetCustomerById(control.Text);
-                    
+
                     if (Customer != null)
                     {
                         CustomerFound = true;
-                        UpdateFrequentlyBoughtItems();
+                        await UpdateFrequentlyBoughtItems();
                     }
                     else
                     {
@@ -104,7 +105,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     CustomerFound = false;
                 }
             });
-            
+
             AddCustomerCommand = new RelayCommand(o =>
             {
                 var screen = new CreateCustomer();
@@ -124,17 +125,17 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 }
             });
 
-            recentItems = new ObservableCollection<Item>();
-            RecentItemsCollection = new CollectionViewSource { Source = recentItems };
+            _recentItems = new ObservableCollection<Item>();
+            RecentItemsCollection = new CollectionViewSource { Source = _recentItems };
         }
-        
-        public async void UpdateFrequentlyBoughtItems()
+
+        private async Task UpdateFrequentlyBoughtItems()
         {
             var items = new ObservableCollection<Item>(await DbQueries.CustomerQueries.GetFrequentlyBoughtItemsByCustomerIdAsync(Customer.Id));
-            recentItems.Clear();
-            foreach(var item in items)
+            _recentItems.Clear();
+            foreach (var item in items)
             {
-                recentItems.Add(item);
+                _recentItems.Add(item);
             }
         }
     }

@@ -7,6 +7,7 @@ namespace CanteenManagementApp.MVVM.Model
 {
     /* Dependent Entity */
     /* Receipt many-to-one Customer */
+
     [Table("Receipt")]
     public class Receipt
     {
@@ -20,6 +21,7 @@ namespace CanteenManagementApp.MVVM.Model
         // Foreign Key
         [Required]
         public string CustomerId { get; set; }
+
         public Customer Customer { get; set; }
 
         [Column(TypeName = "datetime2(0)")]
