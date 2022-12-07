@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace CanteenManagementApp.MVVM.Model
 {
     /* Principal Entity */
+
     [Table("Customer")]
     public class Customer
     {
@@ -21,6 +22,5 @@ namespace CanteenManagementApp.MVVM.Model
 
         [Required]
         public float Balance { get; set; }
-
     }
 }

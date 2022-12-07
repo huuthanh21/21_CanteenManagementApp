@@ -19,7 +19,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public StorageViewModel StorageVM { get; set; }
         public ReportViewModel ReportVM { get; set; }
 
-
         private object _currentView;
 
         public object CurrentView
@@ -28,7 +27,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             set { _currentView = value; }
         }
 
-        public MainViewModel()  
+        public MainViewModel()
         {
             CreateOrderVM = new CreateOrderViewModel();
             CreateOrderWithCustomerVM = new CreateOrderViewModel();
@@ -39,22 +38,18 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
             CurrentView = CreateOrderVM;
 
-            CreateOrderViewCommand = new RelayCommand(o => 
+            CreateOrderViewCommand = new RelayCommand(o =>
             {
                 CreateOrderViewModel.Customer = null;
-                CreateOrderViewModel.HasCustomer = false;
                 CurrentView = CreateOrderVM;
-
             });
-            
-            CreateOrderViewWithCustomerCommand = new RelayCommand(o => 
+
+            CreateOrderViewWithCustomerCommand = new RelayCommand(o =>
             {
                 CreateOrderViewModel.Customer = (Customer)o;
-                CreateOrderViewModel.HasCustomer = true;
-                
+
                 CurrentView = CreateOrderWithCustomerVM;
             });
-
 
             CustomerViewCommand = new RelayCommand(o =>
             {

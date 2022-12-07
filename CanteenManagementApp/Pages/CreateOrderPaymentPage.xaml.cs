@@ -1,4 +1,5 @@
 ﻿using CanteenManagementApp.MVVM.ViewModel;
+using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
 namespace CanteenManagementApp.Pages
@@ -34,6 +35,12 @@ namespace CanteenManagementApp.Pages
         private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             SetCorrespondingLayout();
+        }
+
+        private void TextboxInput_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            Regex regex = new("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

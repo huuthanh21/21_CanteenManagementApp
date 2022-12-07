@@ -1,9 +1,7 @@
-﻿using CanteenManagementApp.MVVM.Model;
-using CanteenManagementApp.MVVM.ViewModel;
+﻿using CanteenManagementApp.MVVM.ViewModel;
 using System.Windows;
 using System;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -21,16 +19,14 @@ namespace CanteenManagementApp.Pages
             InitializeComponent();
             CreateOrderVM = viewModel;
             DataContext = CreateOrderVM;
-
         }
-
 
         private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             SetCorrespondingLayout();
         }
 
-        private void SetCorrespondingLayout()
+        public void SetCorrespondingLayout()
         {
             if (CreateOrderViewModel.HasCustomer)
             {
@@ -48,15 +44,11 @@ namespace CanteenManagementApp.Pages
             foodListView.SelectedItem = btn.DataContext;
 
             int indexSelected = foodListView.Items.IndexOf(btn.DataContext);
-            if (indexSelected != -1)
+            if (indexSelected != -1 && CreateOrderVM.ListFoodItemOrder[indexSelected].Amount > 0)
             {
-                if (CreateOrderVM._ListFoodItemOrder[indexSelected]._amount > 0)
-                {
-                    CreateOrderVM._ListFoodItemOrder[indexSelected]._amount--;
-                }
+                CreateOrderVM.ListFoodItemOrder[indexSelected].Amount--;
             }
             CreateOrderVM.UpdateTotalOrder();
-
         }
 
         private void Increase_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -66,8 +58,9 @@ namespace CanteenManagementApp.Pages
 
             int indexSelected = foodListView.Items.IndexOf(btn.DataContext);
             if (indexSelected != -1)
-                CreateOrderVM._ListFoodItemOrder[indexSelected]._amount++;
-
+            {
+                CreateOrderVM.ListFoodItemOrder[indexSelected].Amount++;
+            }
             CreateOrderVM.UpdateTotalOrder();
         }
 
@@ -77,26 +70,24 @@ namespace CanteenManagementApp.Pages
             inventoryListView.SelectedItem = btn.DataContext;
 
             int indexSelected = inventoryListView.Items.IndexOf(btn.DataContext);
-            if (indexSelected != -1)
+            if (indexSelected != -1 && CreateOrderVM.ListInventoryItemOrder[indexSelected].Amount > 0)
             {
-                if (CreateOrderVM._ListInventoryItemOrder[indexSelected]._amount > 0)
-                    CreateOrderVM._ListInventoryItemOrder[indexSelected]._amount--;
+                CreateOrderVM.ListInventoryItemOrder[indexSelected].Amount--;
             }
             CreateOrderVM.UpdateTotalOrder();
         }
 
-
         private void IncreaseInventory_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-                Button btn = (Button)e.OriginalSource;
-                inventoryListView.SelectedItem = btn.DataContext;
+            Button btn = (Button)e.OriginalSource;
+            inventoryListView.SelectedItem = btn.DataContext;
 
-                int indexSelected = inventoryListView.Items.IndexOf(btn.DataContext);
-                if (indexSelected != -1)
-                    CreateOrderVM._ListInventoryItemOrder[indexSelected]._amount++;
+            int indexSelected = inventoryListView.Items.IndexOf(btn.DataContext);
+            if (indexSelected != -1)
+                CreateOrderVM.ListInventoryItemOrder[indexSelected].Amount++;
 
-                CreateOrderVM.UpdateTotalOrder();
-         }
+            CreateOrderVM.UpdateTotalOrder();
+        }
 
         private void List_PreviewLeftMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -104,30 +95,28 @@ namespace CanteenManagementApp.Pages
 
             if (clickedOnItem != null)
             {
-                if (!clickedOnItem.IsSelected)
+                if (clickedOnItem.IsSelected)
                 {
-                    clickedOnItem.IsSelected = true;
-                    clickedOnItem.Focus();
+                    return;
                 }
+                clickedOnItem.IsSelected = true;
+                clickedOnItem.Focus();
             }
-
-
         }
 
-
-        private DependencyObject GetParentDependencyObjectFromVisualTree(DependencyObject startObject, Type type)
+        private static DependencyObject GetParentDependencyObjectFromVisualTree(DependencyObject startObject, Type type)
         {
-                //Walk the visual tree to get the parent of this control
-                DependencyObject parent = startObject;
-                while (parent != null)
-                {
-                    if (type.IsInstanceOfType(parent))
-                        break;
-                    else
-                        parent = VisualTreeHelper.GetParent(parent);
-                }
+            //Walk the visual tree to get the parent of this control
+            DependencyObject parent = startObject;
+            while (parent != null)
+            {
+                if (type.IsInstanceOfType(parent))
+                    break;
+                else
+                    parent = VisualTreeHelper.GetParent(parent);
+            }
 
-                return parent;
+            return parent;
         }
     }
 }

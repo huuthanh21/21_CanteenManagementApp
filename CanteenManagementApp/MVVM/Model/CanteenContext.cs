@@ -4,7 +4,7 @@ namespace CanteenManagementApp.MVVM.Model
 {
     public class CanteenContext : DbContext
     {
-        public DbSet<Item> Items { get; set; }  
+        public DbSet<Item> Items { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
@@ -24,7 +24,6 @@ namespace CanteenManagementApp.MVVM.Model
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer(connectionString);
         }
-        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

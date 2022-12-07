@@ -7,6 +7,7 @@ namespace CanteenManagementApp.MVVM.Model
     /* Dependent Entity */
     /* Receipt_Item many-to-one Item */
     /* Receipt_Item many-to-one Receipt */
+
     [Table("Receipt_Item")]
     [Owned]
     public class Receipt_Item
@@ -19,8 +20,5 @@ namespace CanteenManagementApp.MVVM.Model
 
         [Required]
         public int Amount { get; set; }
-
     }
-
-    
 }
