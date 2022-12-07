@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
@@ -25,7 +26,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         private readonly ObservableCollection<Item> _recentItems;
 
-        public ObservableCollection<Receipt> receipts;
+        private ObservableCollection<Receipt> _receipts;
 
         private readonly CollectionViewSource RecentItemsCollection;
         private readonly CollectionViewSource ReceiptsCollection;
@@ -33,51 +34,14 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public ICollectionView RecentItemsSourceCollection => RecentItemsCollection.View;
         public ICollectionView ReceiptsSourceCollection => ReceiptsCollection.View;
 
+        //
+        // Default constructor just for setting view's Datacontext purposes
+        //
         public CustomerViewModel()
         {
-            FindCustomerCommand = new RelayCommand<TextBox>(tb => true, tb =>
-            {
-                var template = tb.Template;
-                var control = (TextBox)template.FindName("TextboxInput", tb);
-                if (!string.IsNullOrEmpty(control.Text))
-                {
-                    Customer = DbQueries.CustomerQueries.GetCustomerById(control.Text);
-                    if (Customer != null)
-                    {
-                        CustomerFound = true;
-                    }
-                    else
-                    {
-                        CustomerFound = false;
-                    }
-                }
-                else
-                {
-                    CustomerFound = false;
-                }
-            });
-
-            AddCustomerCommand = new RelayCommand(o =>
-            {
-                var screen = new CreateCustomer();
-                screen.Show();
-            });
-
-            PasswordStateCommand = new RelayCommand(o =>
-            {
-                IsShowing = !IsShowing;
-            });
-
-            CreateOrderCommand = new RelayCommand(s =>
-            {
-                if (CustomerFound)
-                {
-                    MainViewModel.CreateOrderViewWithCustomerCommand.Execute(Customer);
-                }
-            });
-
-            setReceipts();
-            ReceiptsCollection = new CollectionViewSource { Source = receipts };
+            // Initialize collections so that view can be created without throwing null exception
+            SetDemoReceipts();
+            ReceiptsCollection = new CollectionViewSource { Source = _receipts };
 
             _recentItems = new ObservableCollection<Item>();
             RecentItemsCollection = new CollectionViewSource { Source = _recentItems };
@@ -90,13 +54,19 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 MainViewModel = mainViewModel;
             }
 
+            SetDemoReceipts();
+            ReceiptsCollection = new CollectionViewSource { Source = _receipts };
+
+            _recentItems = new ObservableCollection<Item>();
+            RecentItemsCollection = new CollectionViewSource { Source = _recentItems };
+
             FindCustomerCommand = new RelayCommand<TextBox>(tb => true, async tb =>
             {
                 var template = tb.Template;
-                var control = (TextBox)template.FindName("TextboxInput", tb);
-                if (!string.IsNullOrEmpty(control.Text))
+                var textbox = (TextBox)template.FindName("TextboxInput", tb);
+                if (!string.IsNullOrEmpty(textbox.Text))
                 {
-                    Customer = DbQueries.CustomerQueries.GetCustomerById(control.Text);
+                    Customer = DbQueries.CustomerQueries.GetCustomerById(textbox.Text);
 
                     if (Customer != null)
                     {
@@ -112,13 +82,8 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 {
                     CustomerFound = false;
                 }
-
             });
-            recentItems = new ObservableCollection<Item>();
-            RecentItemsCollection = new CollectionViewSource { Source = recentItems };
-            setReceipts();
-            ReceiptsCollection = new CollectionViewSource { Source = receipts };
-            
+
             AddCustomerCommand = new RelayCommand(o =>
             {
                 var screen = new CreateCustomer();
@@ -137,9 +102,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     MainViewModel.CreateOrderViewWithCustomerCommand.Execute(Customer);
                 }
             });
-
-            _recentItems = new ObservableCollection<Item>();
-            RecentItemsCollection = new CollectionViewSource { Source = _recentItems };
         }
 
         private async Task UpdateFrequentlyBoughtItems()
@@ -152,9 +114,9 @@ namespace CanteenManagementApp.MVVM.ViewModel
             }
         }
 
-        private void setReceipts()
+        private void SetDemoReceipts()
         {
-            receipts = new ObservableCollection<Receipt>
+            _receipts = new ObservableCollection<Receipt>
             {
                 new Receipt() {
                     Receipt_Items= new List<Receipt_Item>
@@ -223,7 +185,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     Total = 35000,
                     DateTime = new System.DateTime(2022, 11, 11),
                  },
-
             };
         }
     }
