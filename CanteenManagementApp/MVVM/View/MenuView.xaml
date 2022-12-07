@@ -69,15 +69,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="70"/>
-            <!--<RowDefinition Height="50"/>
-            <RowDefinition Height="200"/>-->
             <RowDefinition/>
         </Grid.RowDefinitions>
-
-        <!--<Grid.ColumnDefinitions>
-            <ColumnDefinition Width="430"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>-->
 
         <TextBlock Text="Thực đơn"
                    Grid.Row="1"
@@ -103,7 +96,7 @@
             <TabControl Margin="0 0 0 0" BorderBrush="Gainsboro" >
                 <TabItem Header="Hôm qua" Style="{StaticResource StabItemStyle}"
                          Width="280" >
-                    <StackPanel >
+                    <StackPanel  Margin="0 10 0 0" >
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Images/up.png" Margin="20 0 0 0" Width="15" Height="11"/>
                             <TextBlock Text="Món ăn hàng ngày"
@@ -111,16 +104,12 @@
                                        Margin="15 12 0 10"
                                        Style="{StaticResource TextblockTitleSmall}"
                                        VerticalAlignment="Center"/>
-                            <Button Margin="5 3 0 0"
-                                    Style="{StaticResource ButtonAdd}"
-                                    Command="{Binding AddItemToMenuCommand}"
-                                    CommandParameter="{Binding ElementName=ucMenu}" />
                         </StackPanel>
                     <ListView Width="630" Height="410"
                               Margin="0"
                               Padding="10 0 0 0"
                               BorderThickness="0" 
-                              ItemsSource="{Binding FoodSourceCollection}" 
+                              ItemsSource="{Binding FoodYesterdaySourceCollection}" 
                               Name="foodListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.VerticalScrollBarVisibility="Visible"
                               HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=15}" 
@@ -253,9 +242,173 @@
 
                     </StackPanel>
                 </TabItem>
-                
+
                 <TabItem Header="Hôm nay" Style="{StaticResource StabItemStyle}"
-                         Width="280" Margin="10 0 10 0"/>
+                         Width="280" Margin="10 0 10 0">
+                    <StackPanel Margin="0 10 0 0">
+                        <!--Title-->
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Images/up.png" Margin="20 0 0 0" Width="15" Height="11"/>
+                            <TextBlock Text="Món ăn hàng ngày"
+                                       Height="20"
+                                       Margin="15 12 0 10"
+                                       Style="{StaticResource TextblockTitleSmall}"
+                                       VerticalAlignment="Center"/>
+                            <Button Margin="5 3 0 0"
+                                    Style="{StaticResource ButtonAdd}"
+                                    Command="{Binding AddItemToMenuCommand}"
+                                    CommandParameter="{Binding ElementName=ucMenu}" />
+
+                            <Button x:Name="ButtonCopy" 
+                                    Style="{StaticResource ButtonCustomColorPositive}"
+                                    Background="#F5A800"
+                                    Content="Sao chép thực đơn hôm qua"
+                                    Margin="120 0 0 0"
+                                    FontSize="14"
+                                    Width="210"
+                                    Height="28"
+                                    Command="{Binding CopyMenuCommand}"
+                                    CommandParameter="{Binding ElementName=ucMenu}"/>
+                        </StackPanel>
+                        
+                        <!--ListView-->
+                        <ListView Width="630" Height="410"
+                                  Margin="0"
+                                  Padding="10 0 0 0"
+                                  BorderThickness="0" 
+                                  ItemsSource="{Binding FoodTodaySourceCollection}" 
+                                  Name="foodListViewToday" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                  ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                  HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=15}">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+
+                            <ListView.Resources>
+                                <Model:BindingProxy x:Key="Proxy" Data="{Binding}" />
+                                <ContextMenu x:Key="foodContextMenu">
+                                    <MenuItem Header="Edit" 
+                                              Command="{Binding Source={StaticResource Proxy}, Path=Data.UpdateAmountCommand}"
+                                              CommandParameter="{Binding PlacementTarget.Tag,
+                                                                         RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
+                                        <MenuItem.Icon>
+                                            <Image  Width="20" Height="16"  Source="/Images/editing.png"></Image>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Delete"
+                                              Command="{Binding Source={StaticResource Proxy}, Path=Data.DeleteItemMenuCommand}"
+                                              CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={
+                                                            RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
+                                        <MenuItem.Icon>
+                                            <Image Width="20" Height="16" Source="/Images/delete.png"></Image>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </ListView.Resources>
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border x:Name="border"
+                                            BorderBrush="#0033A1" 
+                                            BorderThickness="2"  
+                                            CornerRadius="5" >
+                                        <StackPanel Orientation="Vertical" 
+                                                 Width="100"
+                                                 Height="120" >
+
+                                            <StackPanel Orientation="Horizontal"  Width="100">
+                                                <Image Margin ="3 5 0 0 "
+                                                       MinWidth="60"
+                                                       Height="54" Width="60"
+                                                       x:Name="ImageItem"
+                                                       Source="{Binding Path=Id, Converter={StaticResource IdToImagePathConverter}}"/>
+                                                <TextBlock 
+                                                       Width="32" Height="50"
+                                                       TextWrapping="WrapWithOverflow"
+                                                       FontSize="12"
+                                                       Padding="3.5 2 0 0"
+                                                       Style="{StaticResource TextblockTitleNormal}"
+                                                       TextAlignment="Left">
+                                                   <Run Text="{Binding Amount}"/>
+                                                </TextBlock>
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal" 
+                                                        VerticalAlignment="Center"
+                                                        Margin="0 0 0 0" >
+                                                <TextBlock TextAlignment="Left"
+                                                           TextWrapping="WrapWithOverflow"
+                                                           Width="48" 
+                                                           Height="60"
+                                                           Foreground="Black" 
+                                                           FontSize="10"
+                                                           Text="{Binding Name}"
+                                                           Style="{StaticResource TextblockTitleSmall}"
+                                                           Margin="0 0 0 0"
+                                                           Padding="6 10 0 0"/>
+
+                                                <TextBlock Foreground="#0033A1" 
+                                                         HorizontalAlignment="Left"
+                                                         VerticalAlignment="Top"
+                                                         TextWrapping="WrapWithOverflow"
+                                                         Margin="0 0 0 0"
+                                                         Padding="3 10 0 0"
+                                                         FontSize="12"
+                                                         Style="{StaticResource TextblockTitleSmall}"
+                                                         Text="{Binding Price}"
+                                                         Height="60"
+                                                         Width="50"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <DataTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver"
+                                                 Value="True">
+                                            <Setter Property="BorderBrush"
+                                                    TargetName="border"
+                                                    Value="#0033A1" />
+                                            <Setter Property="BorderThickness"
+                                                    TargetName="border"
+                                                    Value="2" />
+                                        </Trigger>
+                                        <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={
+                                                      RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem }}}"
+                                                      Value="True">
+                                            <!--<Setter Property="IsChecked" Value="true" TargetName="checkBox"/>-->
+                                            <Setter Property="BorderBrush"
+                                                    TargetName="border"
+                                                    Value="#0033A1" />
+                                            <Setter Property="Cursor" Value="Hand"/>
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}" >
+                                    <!--remove green selected area-->
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                <ContentPresenter/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+
+                                    <Setter Property="ContextMenu" Value="{StaticResource foodContextMenu}" />
+                                    <Setter Property="Tag" Value="{Binding ElementName=ucMenu}" />
+                                    <Setter Property="Margin" Value="5"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                       
+                    </StackPanel>
+                    
+                </TabItem>
+                
             </TabControl>
         </Grid>
     </Grid>

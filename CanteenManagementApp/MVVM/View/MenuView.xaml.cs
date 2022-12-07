@@ -14,7 +14,7 @@ namespace CanteenManagementApp.MVVM.View
     /// 
     public partial class MenuView : UserControl
     {
-        public ObservableCollection<Item> FoodItems;
+      
         public MenuView()
         {
             InitializeComponent();
