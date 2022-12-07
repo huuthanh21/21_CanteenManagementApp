@@ -26,7 +26,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         private readonly ObservableCollection<Item> _recentItems;
 
-        private ObservableCollection<Receipt> _receipts;
+        private readonly ObservableCollection<Receipt> _receipts;
 
         private readonly CollectionViewSource RecentItemsCollection;
         private readonly CollectionViewSource ReceiptsCollection;
@@ -40,7 +40,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public CustomerViewModel()
         {
             // Initialize collections so that view can be created without throwing null exception
-            SetDemoReceipts();
+            _receipts = new ObservableCollection<Receipt>();
             ReceiptsCollection = new CollectionViewSource { Source = _receipts };
 
             _recentItems = new ObservableCollection<Item>();
@@ -54,7 +54,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 MainViewModel = mainViewModel;
             }
 
-            SetDemoReceipts();
+            _receipts = new ObservableCollection<Receipt>();
             ReceiptsCollection = new CollectionViewSource { Source = _receipts };
 
             _recentItems = new ObservableCollection<Item>();
@@ -71,6 +71,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     if (Customer != null)
                     {
                         CustomerFound = true;
+                        UpdateCustomerReceipts();
                         await UpdateFrequentlyBoughtItems();
                     }
                     else
@@ -114,78 +115,14 @@ namespace CanteenManagementApp.MVVM.ViewModel
             }
         }
 
-        private void SetDemoReceipts()
+        private void UpdateCustomerReceipts()
         {
-            _receipts = new ObservableCollection<Receipt>
+            var receipts = new ObservableCollection<Receipt>(DbQueries.ReceiptQueries.GetReceiptsByCustomerId(Customer.Id));
+            _receipts.Clear();
+            foreach (var receipt in receipts)
             {
-                new Receipt() {
-                    Receipt_Items= new List<Receipt_Item>
-                    {
-                        new Receipt_Item() {
-                            ItemId = 100000,
-                            Amount = 1 },
-                        new Receipt_Item() {
-                            ItemId = 100001,
-                            Amount = 2 }
-                    },
-                    Id = 10,
-                    Total = 35000,
-                    DateTime = new System.DateTime(2022, 11, 11),
-                 },
-                new Receipt() {
-                    Receipt_Items= new List<Receipt_Item>
-                    {
-                        new Receipt_Item() {
-                            ItemId = 110000,
-                            Amount = 1 },
-                    },
-                    Id = 21,
-                    Total = 30000,
-                    DateTime = new System.DateTime(2022, 11, 9),
-                 },
-                new Receipt() {
-                    Receipt_Items= new List<Receipt_Item>
-                    {
-                        new Receipt_Item() {
-                            ItemId = 110002,
-                            Amount = 1 },
-                        new Receipt_Item() {
-                            ItemId = 110003,
-                            Amount = 2 },
-                    },
-                    Id = 21,
-                    Total = 32000,
-                    DateTime = new System.DateTime(2022, 11, 11)
-                 },
-                new Receipt() {
-                    Receipt_Items= new List<Receipt_Item>
-                    {
-                        new Receipt_Item() {
-                            ItemId = 100000,
-                            Amount = 1 },
-                        new Receipt_Item() {
-                            ItemId = 100001,
-                            Amount = 2 }
-                    },
-                    Id = 10,
-                    Total = 35000,
-                    DateTime = new System.DateTime(2022, 11, 11),
-                 },
-                new Receipt() {
-                    Receipt_Items= new List<Receipt_Item>
-                    {
-                        new Receipt_Item() {
-                            ItemId = 100000,
-                            Amount = 1 },
-                        new Receipt_Item() {
-                            ItemId = 100001,
-                            Amount = 2 }
-                    },
-                    Id = 10,
-                    Total = 35000,
-                    DateTime = new System.DateTime(2022, 11, 11),
-                 },
-            };
+                _receipts.Add(receipt);
+            }
         }
     }
 }

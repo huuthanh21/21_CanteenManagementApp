@@ -182,22 +182,22 @@ namespace CanteenManagementApp.MVVM.Model
                 using var context = new CanteenContext();
 
                 var receipts = context.Receipts
-                                        .Where(r => r.Customer.Id == customerId);
+                                        .Where(r => r.Customer.Id == customerId)
+                                        .ToList();
 
-                return (List<Receipt>)receipts;
+                return receipts;
             }
 
-            // Returns: List of Tuple(Item, BoughtAmount)
-            public static List<Tuple<Item, int>> GetReceiptDetailsByReceipt(Receipt receipt)
+            public static List<ItemOrder> GetReceiptDetailsByReceipt(Receipt receipt)
             {
                 using var context = new CanteenContext();
 
-                var item_amounts = context.Receipt_Items
+                var itemOrders = context.Receipt_Items
                                             .Join(context.Items, ri => ri.ItemId, i => i.Id, (ri, i) => new { ri, i })
                                             .Where(rii => rii.ri.ReceiptId.Equals(receipt.Id))
-                                            .Select(rii => new Tuple<Item, int>(rii.i, rii.ri.Amount))
+                                            .Select(rii => new ItemOrder { Item = rii.i, Amount = rii.ri.Amount })
                                             .ToList();
-                return item_amounts;
+                return itemOrders;
             }
 
             /* Insert */
