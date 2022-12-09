@@ -11,6 +11,13 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Data;
+using System.Text;
+using System.IO;
+using Microsoft.Win32;
+using System.Windows.Media.Imaging;
+using System.Data.Common;
+using System.Diagnostics;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
@@ -23,20 +30,22 @@ namespace CanteenManagementApp.MVVM.ViewModel
         private readonly CollectionViewSource InventoryItemsCollection;
         private readonly CollectionViewSource FoodItemsCollection;
         //public ICollectionView StorageSourceCollection => StorageItemsCollection.View;
-        private string imageFileName = "";
+        public string _imageFileName = "";
 
         public ICollectionView FoodSourceCollection => FoodItemsCollection.View;
         public ICollectionView InventorySourceCollection => InventoryItemsCollection.View;
-        public ICommand EditItemCommand { get; set; } // chỉnh sửa món ăn
+        public ICommand EditFoodItemCommand { get; set; } // chỉnh sửa món ăn
         public ICommand DeleteCommand { get; set; } // xóa món ăn
         public ICommand EditInventoryCommand { get; set; } // chỉnh sửa hàng tồn
         public ICommand DeleteInventoryCommand { get; set; } // xóa hàng tồn
-        public ICommand AddItemCommand { get; set; } // thêm hàng
-        public ICommand AddItemInventoryCommand { get; set; } // thêm hàng
-
-
+        public ICommand AddFoodItemCommand { get; set; } // thêm món ăn hàng ngày
+        public ICommand AddItemInventoryCommand { get; set; } // thêm hàng tồn
+        public ICommand OKAddFoodItemCommand { get; set; } // Thêm món ăn hàng ngày oke
+        public ICommand OKAddInventoryItemCommand { get; set; } // Thêm hàng tồn oke
+        public ICommand SaveEditFoodItemCommand { get; set; } // Lưu món ăn hàng ngày
+        public ICommand SaveEditInventoryItemCommand { get; set; } // Lưu hàng tồn
         // Thêm hàng:
-        //public ICommand SelectImageCommand { get; set; } //chọn ảnh
+        public ICommand SelectImageCommand { get; set; } //chọn ảnh
         //public ICommand ButtonAddCommand { get; set; } 
         public StorageViewModel()
         {
@@ -47,46 +56,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
             {
                 _allItems.Add(item);
             }
-
-            /*_allItems = new ObservableCollection<Item>
-            {
-                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Món ức gà chiên mắm cay có màu sắc hấp dẫn, vị mặn mặn chua chua của nước sốt giúp thịt gà tăng thêm hương vị và kích thích vị giác người ăn. vị đậm đà của mùi nước mắm quyện vào thịt, và vị bùi bùi của tỏi, cay nồng của ớt sừng. Món này ăn kèm cơm nóng, hoặc bánh mì tùy thích.\r\n\r\n\r\n", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
-                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 13, Price = 12000,  ImagePath = "/Images/b4.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 14, Price = 12000,  ImagePath = "/Images/b5.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 15, Price = 12000,  ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Ngon", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
-                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 13, Price = 12000,  ImagePath = "/Images/b4.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 14, Price = 12000,  ImagePath = "/Images/b5.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 15, Price = 12000,  ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Ngon", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
-                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 13, Price = 12000,  ImagePath = "/Images/b4.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 14, Price = 12000,  ImagePath = "/Images/b5.jpg" },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 15, Price = 12000,  ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Ngon", Id = 10, Price = 12000, ImagePath = "/Images/b1.jpg" },
-                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000,  ImagePath = "/Images/b2.jpg" },
-                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000 ,  ImagePath = "/Images/b3.jpg"},
-                new Item() { Type = 1, Name = "Cocacola", Amount = 10, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/coca.jpg" },
-                new Item() { Type = 1, Name = "Pepsi", Amount = 100, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/pepsi.png" },
-                new Item() { Type = 1, Name = "Sprite", Amount = 520, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" },
-                new Item() { Type = 1, Name = "Snack", Amount = 420, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/snack.png" },
-                new Item() { Type = 1, Name = "7-Up", Amount = 440, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/7up.jpg" },
-                new Item() { Type = 1, Name = "Bò húc", Amount = 521, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/bohuc.png" },
-                new Item() { Type = 1, Name = "Cocacola", Amount = 1000, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/coca.jpg" },
-                new Item() { Type = 1, Name = "Pepsi", Amount = 104, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/pepsi.png" },
-                new Item() { Type = 1, Name = "Sprite", Amount = 1120, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" },
-                new Item() { Type = 1, Name = "Snack", Amount = 140, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/snack.png" },
-                new Item() { Type = 1, Name = "7-Up", Amount = 150, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/7up.jpg" },
-                new Item() { Type = 1, Name = "Bò húc", Amount = 250, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/bohuc.png" },
-                new Item() { Type = 1, Name = "Cocacola", Amount = 110, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/coca.jpg" },
-                new Item() { Type = 1, Name = "Pepsi", Amount = 1240, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/pepsi.png" },
-                new Item() { Type = 1, Name = "Sprite", Amount = 160, Description = "Ngon", Id = 13, Price = 10000,  ImagePath = "/Images/sprite.jpg" },
-            };*/
             _foodItems = new ObservableCollection<Item> { };
             _inventoryItems = new ObservableCollection<Item> { };
             foreach (var item in _allItems)
@@ -104,33 +73,61 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
             FoodItemsCollection = new CollectionViewSource { Source = _foodItems };
             InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
-
-            FoodItemsCollection = new CollectionViewSource { Source = _foodItems };
-            InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
-
-            EditItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => EditItem(parameter));
-            DeleteCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => DeleteItem(parameter));
+            EditFoodItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => EditFoodItem(parameter));
+            DeleteCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => DeleteFoodItem(parameter));
             EditInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => EditInventoryItem(parameter));
             DeleteInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => DeleteInventoryItem(parameter));
-            AddItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => addItem(parameter));
-
-
-            AddItemInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => addItemInventory(parameter));
-            //SelectImageCommand = new RelayCommand<AddItem>((parameter) => true, (parameter) => ChooseImage(parameter));
+            AddFoodItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => AddFoodItem(parameter));
+            AddItemInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => AddInventoryItem(parameter));
+            SelectImageCommand = new RelayCommand<AddFoodItem>((parameter) => true, (parameter) => ChooseImage(parameter));
             //ButtonAddCommand = new RelayCommand<AddItem>((parameter) => true, (parameter) => ButtonAddClick(parameter));
+            OKAddFoodItemCommand = new RelayCommand<AddFoodItem>((parameter) => true, (parameter) => OKAddFoodItem(parameter));
+            OKAddInventoryItemCommand = new RelayCommand<AddInventoryItem>((parameter) => true, (parameter) => OKAddInventoryItem(parameter));
+            SaveEditFoodItemCommand = new RelayCommand<EditFoodItem>((parameter) => true, (parameter) => SaveEditFoodItem(parameter));
+            SaveEditInventoryItemCommand = new RelayCommand<EditInventoryItem>((parameter) => true, (parameter) => SaveEditInventoryItem(parameter));
         }
 
-        private void addItemInventory(StorageView parameter)
+      
+
+        public void OKAddInventoryItem(AddInventoryItem parameter)
         {
-            var screen = new AddItem(1);
+            parameter.DialogResult = true;
+        }
+
+        public void OKAddFoodItem(AddFoodItem parameter)
+        {
+            parameter.DialogResult = true;
+        }
+
+        public async void AddInventoryItem(StorageView parameter)
+        {
+            var screen = new AddInventoryItem();
             if (screen.ShowDialog() == true)
             {
-                if (screen.NewItem.Id != 0 || screen.NewItem.Name != "" || screen.NewItem.Price != 0
-                    || screen.NewItem.Description != "" || screen.NewItem.ImagePath != "")
+                var name_template = screen.nameTextBox.Template;
+                var control_name = (TextBox)name_template.FindName("TextboxInput", screen.nameTextBox);
+                string name = control_name.Text;
+                var description_template = screen.describeTextBox.Template;
+                var control_description = (TextBox)description_template.FindName("TextboxInput", screen.describeTextBox);
+                string description = control_description.Text;
+                var price_template = screen.priceTextBox.Template;
+                var control_price = (TextBox)price_template.FindName("TextboxInput", screen.priceTextBox);
+                string price = control_price.Text;
+                var amount_template = screen.amountTextBox.Template;
+                var control_amount = (TextBox)amount_template.FindName("TextboxInput", screen.amountTextBox);
+                string amount= control_amount.Text;
+                Item NewItem = new Item()
                 {
-                    _inventoryItems.Add(screen.NewItem.Clone() as Item);
-                }
+                    Name = name,
+                    Price = float.Parse(price),
+                    Description = description,
+                    Amount = int.Parse(amount),
+                    Type = 1
+                };
 
+                await DbQueries.ItemQueries.InsertItemAsync(NewItem);
+                _inventoryItems.Add(NewItem);
+                //CopyFileToAppFolder(NewItem.Id.ToString(), _imageFileName);
             }
             else
             {
@@ -140,73 +137,99 @@ namespace CanteenManagementApp.MVVM.ViewModel
             screen.Close();
         }
 
-        //private void ButtonAddClick(AddItem parameter)
-        //{
-        //    parameter.DialogResult = true;
-        //    string id = parameter.IdTextBox.Text;
-        //    string name = parameter.IdTextBox.Text;
-        //    string description = parameter.descriptionTextBox.Text;
-        //    string price = parameter.priceTextBox.Text;
-        //    Item newItem = new()
-        //    {
-        //        Id = int.Parse(id),
-        //        Name = name,
-        //        Price = double.Parse(price),
-        //        Description = description,
-        //        Amount = 0,
-        //        ImagePath = imageFileName,
-        //        Type = 0
+        public void AddFoodItem(StorageView parameter)
+        {
+            var screen = new AddFoodItem();
+            screen.ShowDialog();
+            if (screen.DialogResult == true)
+            {
+                var name_template = screen.nameTextBox.Template;
+                var control_name = (TextBox)name_template.FindName("TextboxInput", screen.nameTextBox);
+                string name = control_name.Text;
+                var description_template = screen.describeTextBox.Template;
+                var control_description = (TextBox)description_template.FindName("TextboxInput", screen.describeTextBox);
+                string description = control_description.Text;
+                var price_template = screen.priceTextBox.Template;
+                var control_price = (TextBox)price_template.FindName("TextboxInput", screen.priceTextBox);
+                string price = control_price.Text;
+                Item NewItem = new Item()
+                {
+                    Name = name,
+                    Price = float.Parse(price),
+                    Description = description,
+                    Amount = 0,
+                    Type = 0
+                };
 
-        //    };
-        //    _foodItems.Add(newItem);
-        //}
+                //await DbQueries.ItemQueries.InsertItemAsync(NewItem);
+                _foodItems.Add(NewItem);
+                CopyFileToAppFolder(NewItem.Id.ToString(), _imageFileName);
+            }
+            else
+            {
 
-        //private void ChooseImage(AddItem parameter)
+
+            }
+            screen.Close();
+        }
+
+        public void CopyFileToAppFolder(string id, string sourceFileName)
+        {
+            var appdataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var appFolder = "21CanteenManager";
+
+            var appPath = Path.Combine(appdataPath, appFolder);
+            StringBuilder stringBuilder = new();
+            stringBuilder.Append(id);
+            stringBuilder.Append(".jpg");
+
+            var filePath = Path.Combine(appPath, stringBuilder.ToString());
+
+            File.Copy(sourceFileName, filePath);
+        }
+
+        public void ChooseImage(AddFoodItem parameter)
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.Title = "Chọn ảnh";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" + "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" + "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == true)
+            {
+                _imageFileName = op.FileName;
+                ImageBrush imageBrush = new ImageBrush();
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.UriSource = new Uri(_imageFileName);
+                bitmap.EndInit();
+                imageBrush.ImageSource = bitmap;
+                parameter.grdSelectImg.Background = imageBrush;
+                parameter.imageEmpty.Visibility = Visibility.Hidden;
+            }
+            MessageBox.Show(_imageFileName);
+        }
+
+
+
+        //private void SelectImage_Click(object sender, RoutedEventArgs e)
         //{
         //    OpenFileDialog op = new OpenFileDialog();
         //    op.Title = "Chọn ảnh";
         //    op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" + "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" + "Portable Network Graphic (*.png)|*.png";
         //    if (op.ShowDialog() == true)
         //    {
-        //        imageFileName = op.FileName;
+        //        _imageFileName = op.FileName;
         //        ImageBrush imageBrush = new ImageBrush();
         //        BitmapImage bitmap = new BitmapImage();
         //        bitmap.BeginInit();
         //        bitmap.CacheOption = BitmapCacheOption.OnLoad;
-        //        bitmap.UriSource = new Uri(imageFileName);
+        //        bitmap.UriSource = new Uri(_imageFileName);
         //        bitmap.EndInit();
         //        imageBrush.ImageSource = bitmap;
         //        parameter.grdSelectImg.Background = imageBrush;
+        //        parameter.imageEmpty.Visibility = Visibility.Hidden;
         //    }
         //}
-
-        private void addItem(StorageView parameter)
-        {
-            var screen = new AddItem(0);
-            //screen.Show();
-            //if (screen.ShowDialog() == true)
-            //{
-            //    if (screen.NewBook.Name != "" || screen.NewBook.PublishedYear != "" || screen.NewBook.Author != "")
-            //    {
-            //        _allItems.Add(screen.NewBook.Clone() as Book);
-            //    }
-            //}
-            if (screen.ShowDialog() == true)
-            {
-                if(screen.NewItem.Id != 0 || screen.NewItem.Name != "" || screen.NewItem.Price != 0 
-                    || screen.NewItem.Description != "" || screen.NewItem.ImagePath != "")
-                {
-                    _foodItems.Add(screen.NewItem.Clone() as Item);
-                }
-                
-            }
-            else
-            {
-
-
-            }
-            screen.Close();
-        }
 
         private void DeleteInventoryItem(StorageView parameter)
         {
@@ -214,31 +237,66 @@ namespace CanteenManagementApp.MVVM.ViewModel
             _inventoryItems.RemoveAt(i);
         }
 
+        private void SaveEditInventoryItem(EditInventoryItem parameter)
+        {
+            parameter.DialogResult = true;
+        }
+         
         private void EditInventoryItem(StorageView parameter)
         {
             var itemSelected = parameter.inventoryListView.SelectedItem as Item;
-            var screen = new EditItem(itemSelected);
-            //screen.Show();
+            var screen = new EditInventoryItem(itemSelected);
+            screen.IdTextBox.Text = itemSelected.Id.ToString();
+            screen.nameTextBox.Text = itemSelected.Name;
+            screen.priceTextBox.Text = itemSelected.Price.ToString();
+            screen.describeTextBox.Text = itemSelected.Description;
+            screen.amountTextBox.Text = itemSelected.Amount.ToString();
             if (screen.ShowDialog() == true)
             {
-                _inventoryItems[parameter.inventoryListView.SelectedIndex] = screen.EditedItem;
+                Item NewItem = new Item()
+                {
+                    Id = itemSelected.Id,
+                    Name = screen.nameTextBox.Text,
+                    Price = float.Parse(screen.priceTextBox.Text),
+                    Description = screen.describeTextBox.Text,
+                    Amount = int.Parse(screen.amountTextBox.Text),
+                    Type = 1
+                };
+                DbQueries.ItemQueries.UpdateItem(int.Parse(screen.IdTextBox.Text), screen.nameTextBox.Text, float.Parse(screen.priceTextBox.Text), screen.describeTextBox.Text, int.Parse(screen.amountTextBox.Text));
+                _inventoryItems[parameter.inventoryListView.SelectedIndex] = NewItem;
             }
-            else
-            {
-
-
-            }
-            screen.Close();
+             else
+             {
+             }
+        screen.Close();
         }
 
-        private void EditItem(StorageView parameter)
+        private void SaveEditFoodItem(EditFoodItem parameter)
+        {
+            parameter.DialogResult = true;
+        }
+
+        private void EditFoodItem(StorageView parameter)
         {
             var itemSelected = parameter.foodListView.SelectedItem as Item;
-            var screen = new EditItem(itemSelected);
-            //screen.Show();
+            var screen = new EditFoodItem(itemSelected);
+            screen.IdTextBox.Text = itemSelected.Id.ToString();
+            screen.nameTextBox.Text = itemSelected.Name;
+            screen.priceTextBox.Text = itemSelected.Price.ToString();
+            screen.describeTextBox.Text = itemSelected.Description;
             if (screen.ShowDialog() == true)
             {
-               _foodItems[parameter.foodListView.SelectedIndex] = screen.EditedItem;
+                Item NewItem = new Item()
+                {
+                    Id = int.Parse(screen.IdTextBox.Text),
+                    Name = screen.nameTextBox.Text,
+                    Price = float.Parse(screen.priceTextBox.Text),
+                    Description = screen.describeTextBox.Text,
+                    Amount = 0,
+                    Type = 0
+                };
+                DbQueries.ItemQueries.UpdateItem(int.Parse(screen.IdTextBox.Text), screen.nameTextBox.Text, float.Parse(screen.priceTextBox.Text), screen.describeTextBox.Text,itemSelected.Amount);
+                _foodItems[parameter.foodListView.SelectedIndex] = NewItem;
             }
             else
             {
@@ -248,7 +306,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             screen.Close();
         }
 
-        private void DeleteItem(StorageView parameter)
+        private void DeleteFoodItem(StorageView parameter)
         {
             int i = parameter.foodListView.SelectedIndex;
             _foodItems.RemoveAt(i);

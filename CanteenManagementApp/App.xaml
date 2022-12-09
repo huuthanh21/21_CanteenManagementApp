@@ -57,6 +57,7 @@
                 <ResourceDictionary Source="Theme/TotalItemOrder.xaml"/>
                 <ResourceDictionary Source="Theme/AddCustomerButton.xaml"/>
                 <ResourceDictionary Source="Theme/TabItem.xaml"/>
+                <ResourceDictionary Source="Theme/CustomTextBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
            

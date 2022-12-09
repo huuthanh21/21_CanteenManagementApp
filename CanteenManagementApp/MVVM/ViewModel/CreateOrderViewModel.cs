@@ -124,31 +124,31 @@ namespace CanteenManagementApp.MVVM.ViewModel
             TotalOrderItemsCollection = new CollectionViewSource { Source = _TotalItemOrder };
             InventoryItemsCollection = new CollectionViewSource { Source = _ListInventoryItemOrder };
 
-            IncreaseAmountOrderCommand = new RelayCommand<CreateOrderMainPage>((parameter) => true, (parameter) => IncreaseAmountOrder(parameter));
+            //    IncreaseAmountOrderCommand = new RelayCommand<CreateOrderMainPage>((parameter) => true, (parameter) => IncreaseAmountOrder(parameter));
         }
 
-        private void IncreaseAmountOrder(CreateOrderMainPage parameter)
-        {
-            var screen = new AddItem(0);
-            //int indexSelected = parameter.foodListView.SelectedIndex;
-            //_ListFoodItemOrder[indexSelected]._amount++;
-            if (screen.ShowDialog() == true)
-            {
-                if (screen.NewItem.Id != 0 || screen.NewItem.Name != "" || screen.NewItem.Price != 0
-                    || screen.NewItem.Description != "" || screen.NewItem.ImagePath != "")
-                {
-                    _foodItems.Add(screen.NewItem.Clone() as Item);
-                }
+        //private void IncreaseAmountOrder(CreateOrderMainPage parameter)
+        //{
+        //    var screen = new AddItem();
+        //    //int indexSelected = parameter.foodListView.SelectedIndex;
+        //    //_ListFoodItemOrder[indexSelected]._amount++;
+        //    if (screen.ShowDialog() == true)
+        //    {
+        //        if (screen.NewItem.Id != 0 || screen.NewItem.Name != "" || screen.NewItem.Price != 0
+        //            || screen.NewItem.Description != "" || screen.NewItem.ImagePath != "")
+        //        {
+        //            _foodItems.Add(screen.NewItem.Clone() as Item);
+        //        }
 
-            }
-            else
-            {
+        //    }
+        //    else
+        //    {
 
 
-            }
-            screen.Close();
+        //    }
+        //    screen.Close();
 
-        }
+        //}
 
         public void UpdateTotalOrder()
         {
