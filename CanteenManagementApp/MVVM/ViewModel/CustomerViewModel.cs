@@ -1,14 +1,13 @@
 ﻿using CanteenManagementApp.Core;
 using CanteenManagementApp.MVVM.Model;
 using CanteenManagementApp.MVVM.View;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
@@ -23,6 +22,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public ICommand AddCustomerCommand { get; set; }
         public RelayCommand CreateOrderCommand { get; set; }
         public RelayCommand PasswordStateCommand { get; set; }
+        public RelayCommand TopUpCommand { get; set; }
 
         private readonly ObservableCollection<Item> _recentItems;
 
@@ -101,6 +101,22 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 if (CustomerFound)
                 {
                     MainViewModel.CreateOrderViewWithCustomerCommand.Execute(Customer);
+                }
+            });
+
+            TopUpCommand = new RelayCommand(o =>
+            {
+                if (CustomerFound)
+                {
+                    var screen = new TopUpDialog(this);
+                    screen.ShowDialog();
+                    int amount;
+                    if (screen.DialogResult == true)
+                    {
+                        amount = screen.TopUpAmount;
+                        screen.Close();
+                        MainViewModel.CreateOrderViewWithTopUp.Execute(new Tuple<Customer, int>(Customer, amount));
+                    }
                 }
             });
         }

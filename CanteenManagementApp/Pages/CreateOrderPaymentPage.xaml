@@ -188,7 +188,7 @@
                            Style="{StaticResource TextblockTitleSmall}"
                            Canvas.Top="5" />
                 <RadioButton x:Name="ButtonPayInCash"
-                             IsChecked="{Binding PayInCash}"
+                             IsChecked="{Binding PayInCash, Mode=OneWay}"
                              d:IsChecked="True"
                              Command="{Binding TogglePayInCashCommand}"
                              Style="{StaticResource ButtonPaymentMethod}"
@@ -205,6 +205,7 @@
                 </RadioButton>
                 <RadioButton x:Name="ButtonPayThroughAccount"
                              IsChecked="False"
+                             IsEnabled="{Binding NoTopUp, Mode=OneWay}"
                              Command="{Binding TogglePayThroughAccountCommand}"
                              Style="{StaticResource ButtonPaymentMethod}"
                              Canvas.Left="153" Canvas.Top="38"

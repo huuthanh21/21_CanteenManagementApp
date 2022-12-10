@@ -113,11 +113,12 @@
                             Command="{Binding PasswordStateCommand}" />
                 </StackPanel>
                 <Button Content="Nạp tiền"
-                            Background="#E1251B"
-                            Width="100"
-                            HorizontalAlignment="Right"
-                            Grid.Column="1"
-                            Style="{StaticResource ButtonCustomColorPositive}"></Button>
+                        Background="#E1251B"
+                        Width="100"
+                        Command="{Binding TopUpCommand}"
+                        HorizontalAlignment="Right"
+                        Grid.Column="1"
+                        Style="{StaticResource ButtonCustomColorPositive}"></Button>
             </Grid>
             <TextBlock Text="Mặt hàng thường xuyên mua"
                        FontSize="16"

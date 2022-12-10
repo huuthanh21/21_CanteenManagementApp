@@ -34,7 +34,8 @@ namespace CanteenManagementApp.Pages
             }
             else
             {
-                CustomerId.Visibility = System.Windows.Visibility.Collapsed;
+                CustomerId.Visibility = Visibility.Collapsed;
+                ButtonTopUp.Visibility = Visibility.Collapsed;
             }
         }
 
