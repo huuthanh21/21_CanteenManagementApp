@@ -50,7 +50,7 @@
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Width" Value="148"/>
-                <Setter Property="Height" Value="98"/>
+                <Setter Property="Height" Value="93"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type RadioButton}">

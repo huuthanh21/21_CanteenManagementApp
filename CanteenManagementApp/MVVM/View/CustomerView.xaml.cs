@@ -8,9 +8,10 @@ namespace CanteenManagementApp.MVVM.View
     /// </summary>
     public partial class CustomerView : UserControl
     {
-        CustomerViewModel CustomerViewModel { get; set; } = new CustomerViewModel(null);
+        private CustomerViewModel CustomerViewModel { get; set; } = new CustomerViewModel(null);
+
         public CustomerView()
-        {   
+        {
             InitializeComponent();
 
             DataContext = CustomerViewModel;

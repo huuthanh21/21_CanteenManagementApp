@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using CanteenManagementApp.MVVM.Model;
-using System.Windows.Controls;
 
 namespace CanteenManagementApp.MVVM.View
 {

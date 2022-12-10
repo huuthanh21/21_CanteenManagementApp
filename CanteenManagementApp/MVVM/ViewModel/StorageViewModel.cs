@@ -137,7 +137,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             screen.Close();
         }
 
-        public void AddFoodItem(StorageView parameter)
+        public async void AddFoodItem(StorageView parameter)
         {
             var screen = new AddFoodItem();
             screen.ShowDialog();
@@ -161,9 +161,9 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     Type = 0
                 };
 
-                //await DbQueries.ItemQueries.InsertItemAsync(NewItem);
+                await DbQueries.ItemQueries.InsertItemAsync(NewItem);
                 _foodItems.Add(NewItem);
-                CopyFileToAppFolder(NewItem.Id.ToString(), _imageFileName);
+                //CopyFileToAppFolder(NewItem.Id.ToString(), _imageFileName);
             }
             else
             {

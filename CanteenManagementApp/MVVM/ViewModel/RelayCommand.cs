@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
-    class RelayCommand<T> : ICommand
+    internal class RelayCommand<T> : ICommand
     {
         private readonly Predicate<T> _canExecute;
         private readonly Action<T> _execute;

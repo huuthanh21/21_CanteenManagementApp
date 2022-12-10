@@ -3,10 +3,12 @@ using CanteenManagementApp.MVVM.Model;
 using CanteenManagementApp.MVVM.View;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
@@ -22,57 +24,27 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public RelayCommand CreateOrderCommand { get; set; }
         public RelayCommand PasswordStateCommand { get; set; }
 
-        public ObservableCollection<Item> recentItems;
+        private readonly ObservableCollection<Item> _recentItems;
+
+        private readonly ObservableCollection<Receipt> _receipts;
 
         private readonly CollectionViewSource RecentItemsCollection;
+        private readonly CollectionViewSource ReceiptsCollection;
 
         public ICollectionView RecentItemsSourceCollection => RecentItemsCollection.View;
+        public ICollectionView ReceiptsSourceCollection => ReceiptsCollection.View;
 
+        //
+        // Default constructor just for setting view's Datacontext purposes
+        //
         public CustomerViewModel()
         {
-            FindCustomerCommand = new RelayCommand<TextBox>(tb => true, tb =>
-            {
-                var template = tb.Template;
-                var control = (TextBox)template.FindName("TextboxInput", tb);
-                if (!string.IsNullOrEmpty(control.Text))
-                {
-                    Customer = DbQueries.CustomerQueries.GetCustomerById(control.Text);
-                    if (Customer != null)
-                    {
-                        CustomerFound = true;
-                    }
-                    else
-                    {
-                        CustomerFound = false;
-                    }
-                }
-                else
-                {
-                    CustomerFound = false;
-                }
-            });
+            // Initialize collections so that view can be created without throwing null exception
+            _receipts = new ObservableCollection<Receipt>();
+            ReceiptsCollection = new CollectionViewSource { Source = _receipts };
 
-            AddCustomerCommand = new RelayCommand(o =>
-            {
-                var screen = new CreateCustomer();
-                screen.Show();
-            });
-
-            PasswordStateCommand = new RelayCommand(o =>
-            {
-                IsShowing = !IsShowing;
-            });
-
-            CreateOrderCommand = new RelayCommand(s =>
-            {
-                if (CustomerFound)
-                {
-                    MainViewModel.CreateOrderViewWithCustomerCommand.Execute(Customer);
-                }
-            });
-
-            recentItems = new ObservableCollection<Item>();
-            RecentItemsCollection = new CollectionViewSource { Source = recentItems };
+            _recentItems = new ObservableCollection<Item>();
+            RecentItemsCollection = new CollectionViewSource { Source = _recentItems };
         }
 
         public CustomerViewModel(MainViewModel mainViewModel)
@@ -81,19 +53,26 @@ namespace CanteenManagementApp.MVVM.ViewModel
             {
                 MainViewModel = mainViewModel;
             }
-            
-            FindCustomerCommand = new RelayCommand<TextBox>(tb => true, tb =>
+
+            _receipts = new ObservableCollection<Receipt>();
+            ReceiptsCollection = new CollectionViewSource { Source = _receipts };
+
+            _recentItems = new ObservableCollection<Item>();
+            RecentItemsCollection = new CollectionViewSource { Source = _recentItems };
+
+            FindCustomerCommand = new RelayCommand<TextBox>(tb => true, async tb =>
             {
                 var template = tb.Template;
-                var control = (TextBox)template.FindName("TextboxInput", tb);
-                if (!string.IsNullOrEmpty(control.Text))
+                var textbox = (TextBox)template.FindName("TextboxInput", tb);
+                if (!string.IsNullOrEmpty(textbox.Text))
                 {
-                    Customer = DbQueries.CustomerQueries.GetCustomerById(control.Text);
-                    
+                    Customer = DbQueries.CustomerQueries.GetCustomerById(textbox.Text);
+
                     if (Customer != null)
                     {
                         CustomerFound = true;
-                        UpdateFrequentlyBoughtItems();
+                        UpdateCustomerReceipts();
+                        await UpdateFrequentlyBoughtItems();
                     }
                     else
                     {
@@ -105,7 +84,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     CustomerFound = false;
                 }
             });
-            
+
             AddCustomerCommand = new RelayCommand(o =>
             {
                 var screen = new CreateCustomer();
@@ -124,18 +103,25 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     MainViewModel.CreateOrderViewWithCustomerCommand.Execute(Customer);
                 }
             });
-
-            recentItems = new ObservableCollection<Item>();
-            RecentItemsCollection = new CollectionViewSource { Source = recentItems };
         }
-        
-        public async void UpdateFrequentlyBoughtItems()
+
+        private async Task UpdateFrequentlyBoughtItems()
         {
             var items = new ObservableCollection<Item>(await DbQueries.CustomerQueries.GetFrequentlyBoughtItemsByCustomerIdAsync(Customer.Id));
-            recentItems.Clear();
-            foreach(var item in items)
+            _recentItems.Clear();
+            foreach (var item in items)
             {
-                recentItems.Add(item);
+                _recentItems.Add(item);
+            }
+        }
+
+        private void UpdateCustomerReceipts()
+        {
+            var receipts = new ObservableCollection<Receipt>(DbQueries.ReceiptQueries.GetReceiptsByCustomerId(Customer.Id));
+            _receipts.Clear();
+            foreach (var receipt in receipts)
+            {
+                _receipts.Add(receipt);
             }
         }
     }

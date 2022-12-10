@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using System.Windows;
 
 namespace CanteenManagementApp.MVVM.Model
-{   
+{
     public static class DbQueries
     {
         public static class CustomerQueries
         {
             /* Query */
+
             public static Customer GetCustomerById(string customerId)
             {
                 using var context = new CanteenContext();
@@ -44,23 +45,23 @@ namespace CanteenManagementApp.MVVM.Model
             }
 
             /* Insert */
+
             public static async Task InsertCustomerAsync(string customerId, string customerName, string customerType)
             {
+                using var context = new CanteenContext();
+
+                await context.Customers.AddAsync(new Customer
                 {
-                    using var context = new CanteenContext();
+                    Id = customerId,
+                    Name = customerName,
+                    CustomerType = customerType,
+                    Balance = 0
+                });
 
-                    await context.Customers.AddAsync(new Customer
-                    {
-                        Id = customerId,
-                        Name = customerName,
-                        CustomerType = customerType,
-                        Balance = 0
-                    });
-
-                    int rows = await context.SaveChangesAsync();
-                    Debug.WriteLine($"Saved {rows} customers");
-                }
+                int rows = await context.SaveChangesAsync();
+                Debug.WriteLine($"Saved {rows} customers");
             }
+
             /* Update */
 
             /* Delete */
@@ -69,6 +70,7 @@ namespace CanteenManagementApp.MVVM.Model
         public static class ItemQueries
         {
             /* Query */
+
             public static List<Item> GetItemsByType(int itemType)
             {
                 using var context = new CanteenContext();
@@ -79,6 +81,7 @@ namespace CanteenManagementApp.MVVM.Model
 
                 return items;
             }
+
             public static Item GetItemById(int itemId)
             {
                 using var context = new CanteenContext();
@@ -89,7 +92,9 @@ namespace CanteenManagementApp.MVVM.Model
 
                 return item;
             }
+
             /* Insert */
+
             public static async Task InsertItemAsync(int itemType, string itemName, float itemPrice, string description = "", int amount = 0)
             {
                 using var context = new CanteenContext();
@@ -116,7 +121,9 @@ namespace CanteenManagementApp.MVVM.Model
                 int rows = await context.SaveChangesAsync();
                 Debug.WriteLine($"Saved {rows} items");
             }
+
             /* Update */
+
             public static void UpdateItem(Item item)
             {
                 using var context = new CanteenContext();
@@ -145,6 +152,7 @@ namespace CanteenManagementApp.MVVM.Model
                 Debug.WriteLine($"{rows} items updated");
             }
             /* Delete */
+
             public static void DeleteItemById(int itemId)
             {
                 using var context = new CanteenContext();
@@ -156,7 +164,7 @@ namespace CanteenManagementApp.MVVM.Model
                 Debug.WriteLine($"{rows} items deleted");
             }
         }
-            
+
         public static class MenuQueries
         {
             /* Query */
@@ -171,6 +179,7 @@ namespace CanteenManagementApp.MVVM.Model
         public static class ReceiptQueries
         {
             /* Query */
+
             public static Receipt GetReceiptById(int receiptId)
             {
                 using var context = new CanteenContext();
@@ -187,25 +196,27 @@ namespace CanteenManagementApp.MVVM.Model
                 using var context = new CanteenContext();
 
                 var receipts = context.Receipts
-                                        .Where(r => r.Customer.Id == customerId);
+                                        .Where(r => r.Customer.Id == customerId)
+                                        .ToList();
 
-                return (List<Receipt>)receipts;
+                return receipts;
             }
 
-            // Returns: List of Tuple(Item, BoughtAmount)
-            public static List<Tuple<Item, int>> GetReceiptDetailsByReceipt(Receipt receipt)
+            public static List<ItemOrder> GetReceiptDetailsByReceipt(Receipt receipt)
             {
                 using var context = new CanteenContext();
 
-                var item_amounts = context.Receipt_Items
+                var itemOrders = context.Receipt_Items
                                             .Join(context.Items, ri => ri.ItemId, i => i.Id, (ri, i) => new { ri, i })
                                             .Where(rii => rii.ri.ReceiptId.Equals(receipt.Id))
-                                            .Select(rii => new Tuple<Item, int>(rii.i, rii.ri.Amount))
+                                            .Select(rii => new ItemOrder { Item = rii.i, Amount = rii.ri.Amount })
                                             .ToList();
-                return item_amounts;
+                return itemOrders;
             }
+
             /* Insert */
-            public static async Task InsertReceiptAsync(string customerId, List<Tuple<Item, int>> item_tuples, string paymentMethod, float total)
+
+            public static async Task<int> InsertReceiptAsync(string customerId, List<ItemOrder> item_orders, string paymentMethod, float total)
             {
                 using var context = new CanteenContext();
 
@@ -218,18 +229,20 @@ namespace CanteenManagementApp.MVVM.Model
                     DateTime = datetime,
                     Total = total
                 };
-                await context.Receipts.AddAsync(receipt);
+                context.Receipts.Add(receipt);
 
-                int rows = await context.SaveChangesAsync();
+                int rows = context.SaveChanges();
                 Debug.WriteLine($"Saved {rows} receipts");
 
                 int receiptId = receipt.Id;
 
-                foreach (Tuple<Item, int> item_tuple in item_tuples)
+                foreach (ItemOrder item_order in item_orders)
                 {
-                    await ReceiptItemQueries.InsertReceiptItemAsync(receiptId, item_tuple.Item1.Id, item_tuple.Item2);
+                    await ReceiptItemQueries.InsertReceiptItemAsync(receiptId, item_order.Item.Id, item_order.Amount);
                 }
+                return receiptId;
             }
+
             /* Update */
 
             /* Delete */
@@ -240,6 +253,7 @@ namespace CanteenManagementApp.MVVM.Model
             /* Query */
 
             /* Insert */
+
             public static async Task InsertReceiptItemAsync(int receiptId, int itemId, int amount)
             {
                 using var context = new CanteenContext();
@@ -254,6 +268,7 @@ namespace CanteenManagementApp.MVVM.Model
                 int rows = await context.SaveChangesAsync();
                 Debug.WriteLine($"Saved {rows} receipt_items");
             }
+
             /* Update */
 
             /* Delete */
