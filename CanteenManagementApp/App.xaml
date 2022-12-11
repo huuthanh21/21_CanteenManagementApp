@@ -1,0 +1,67 @@
+﻿<Application x:Class="CanteenManagementApp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:CanteenManagementApp"
+             xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
+             xmlns:view="clr-namespace:CanteenManagementApp.MVVM.View"
+             xmlns:Converter="clr-namespace:CanteenManagementApp.Converters"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <Converter:IdToImagePathConverter x:Key="IdToImagePathConverter"/>
+
+            <DataTemplate DataType="{x:Type viewModel:CreateOrderViewModel}">
+                <view:CreateOrderView/>         
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:CustomerViewModel}">
+                <view:CustomerView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:MenuViewModel}">
+                <view:MenuView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:StorageViewModel}">
+                <view:StorageView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:ReportViewModel}">
+                <view:ReportView/>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModel:DailyReportModel}">
+                <view:DailyReport/>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModel:MonthlyReportModel}">
+                <view:MonthlyReport/>
+            </DataTemplate>
+
+            <FontFamily x:Key="Inter">pack://application:,,,/Fonts/#Inter</FontFamily>
+            <FontFamily x:Key="MDL2">pack://application:,,,/Fonts/#Segoe MDL2 Assets</FontFamily>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme/MenuButtonTheme.xaml"/>
+                <ResourceDictionary Source="Theme/ViewTitleTheme.xaml"/>
+                <ResourceDictionary Source="Theme/TextboxSearchBar.xaml"/>
+                <ResourceDictionary Source="Theme/ButtonCustomColorPositive.xaml"/>
+                <ResourceDictionary Source="Theme/ScrollBar.xaml"/>
+                <ResourceDictionary Source="Theme/ReportButton.xaml"/>
+                <ResourceDictionary Source="Theme/ReportItem.xaml"/>
+                <ResourceDictionary Source="Theme/ButtonCustomColorCancel.xaml"/>
+                <ResourceDictionary Source="Theme/ButtonBack.xaml"/>
+                <ResourceDictionary Source="Theme/ButtonAdd.xaml"/>
+                <ResourceDictionary Source="Theme/ButtonPaymentMethod.xaml"/>
+                <ResourceDictionary Source="Theme/DatePicker.xaml"/>
+                <ResourceDictionary Source="Theme/TotalItemOrder.xaml"/>
+                <ResourceDictionary Source="Theme/AddCustomerButton.xaml"/>
+                <ResourceDictionary Source="Theme/TabItem.xaml"/>
+                <ResourceDictionary Source="Theme/CustomTextBox.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+           
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
