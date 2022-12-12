@@ -9,12 +9,15 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Threading;
+using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
     public class MenuViewModel : ObservableObject
     {
-        public ObservableCollection<Item> FoodItemsYesterday;
+        public static ObservableCollection<Item> FoodItemsYesterday;
         public ObservableCollection<Item> FoodItemsToday;
         private readonly CollectionViewSource FoodItemsYesterdayCollection;
         private readonly CollectionViewSource FoodItemsTodayCollection;
@@ -61,6 +64,12 @@ namespace CanteenManagementApp.MVVM.ViewModel
             UpdateAmountCommand = new RelayCommand<MenuView>((parameter) => true, (parameter) => UpdateAmount(parameter));
             OkUpdateAmount = new RelayCommand<UpdateAmountMenu>((parameter) => true, (parameter) => OkUpdate(parameter));
             CancelUpdateAmount = new RelayCommand<UpdateAmountMenu>((parameter) => true, (parameter) => CancelUpdate(parameter));
+
+
+            //
+            //InvokeSthing(2000);
+            //SetDataTimer(5000);
+            SetupData();
         }
 
         private void CancelUpdate(UpdateAmountMenu parameter)
@@ -73,7 +82,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             parameter.DialogResult = true;
         }
 
-        private void UpdateAmount(MenuView parameter)
+        private  void UpdateAmount(MenuView parameter)
         {
             int index = parameter.foodListViewToday.SelectedIndex;
             if (index != -1)
@@ -110,7 +119,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             }
         }
 
-        private void CopyMenu(MenuView parameter)
+        private  void CopyMenu(MenuView parameter)
         {
             FoodItemsToday.Clear();
             foreach (Item item in FoodItemsYesterday)
@@ -119,7 +128,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             }
         }
 
-        private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
+        private static childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
             {
@@ -138,41 +147,41 @@ namespace CanteenManagementApp.MVVM.ViewModel
             return null;
         }
 
-        private static void AddItemToMenu(MenuView parameter)
+        private void AddItemToMenu(MenuView parameter)
         {
             //FNL
-            //var screen = new AddItemToMenu();
-            //screen.ShowDialog();
-            //if (screen.DialogResult == true)
-            //{
-            //    var selectedItems = screen.foodListView.SelectedItems;
-            //    foreach (var item in selectedItems)
-            //    {
-            //        ListViewItem myListViewItem = (ListViewItem)(screen.foodListView.ItemContainerGenerator.ContainerFromItem(item));
-            //        // Getting the ContentPresenter of myListViewItem
-            //        ContentPresenter myContentPresenter = FindVisualChild<ContentPresenter>(myListViewItem);
+            var screen = new AddItemToMenu();
+            screen.ShowDialog();
+            if (screen.DialogResult == true)
+            {
+                var selectedItems = screen.foodListView.SelectedItems;
+                foreach (var item in selectedItems)
+                {
+                    ListViewItem myListViewItem = (ListViewItem)(screen.foodListView.ItemContainerGenerator.ContainerFromItem(item));
+                    // Getting the ContentPresenter of myListViewItem
+                    ContentPresenter myContentPresenter = FindVisualChild<ContentPresenter>(myListViewItem);
 
-            //        // Finding textBox from the DataTemplate that is set on that ContentPresenter
-            //        DataTemplate myDataTemplate = myContentPresenter.ContentTemplate;
-            //        //TextBlock myTextBlock = (TextBlock)myDataTemplate.FindName("textBlock", myContentPresenter);
-            //        TextBox textBox = (TextBox)myDataTemplate.FindName("textBox", myContentPresenter);
-            //        Item itemTemp = (Item)item;
-            //        itemTemp.Amount = int.Parse(textBox.Text);
-            //        //Test:
-            //        //MessageBox.Show("The selected item: Name: " + itemTemp.Name + " Amount: " + itemTemp.Amount);
-            //        this.FoodItemsToday.Add(itemTemp);
-            //    }
-            //}
+                    // Finding textBox from the DataTemplate that is set on that ContentPresenter
+                    DataTemplate myDataTemplate = myContentPresenter.ContentTemplate;
+                    //TextBlock myTextBlock = (TextBlock)myDataTemplate.FindName("textBlock", myContentPresenter);
+                    TextBox textBox = (TextBox)myDataTemplate.FindName("textBox", myContentPresenter);
+                    Item itemTemp = (Item)item;
+                    itemTemp.Amount = int.Parse(textBox.Text);
+                    //Test:
+                    //MessageBox.Show("The selected item: Name: " + itemTemp.Name + " Amount: " + itemTemp.Amount);
+                    FoodItemsToday.Add(itemTemp);
+                }
+            }
 
             //Test time:
             /* DateTime today = DateTime.Today;*/
-            DateTime today = DateTime.Now;
-            MessageBox.Show("Now is " + today);
-            DateTime yesterday = GetYesterday();
-            DateTime tomorrow = GetTomorrow();
-            MessageBox.Show("Yesterday is " + yesterday + "\nToday is " + tomorrow);
-            TimeSpan interval = tomorrow.Subtract(today);
-            MessageBox.Show("From today to tomorrow is: " + interval);
+            //DateTime today = DateTime.Now;
+            //MessageBox.Show("Now is " + today);
+            //DateTime yesterday = GetYesterday();
+            //DateTime tomorrow = GetTomorrow();
+            //MessageBox.Show("Yesterday is " + yesterday + "\nToday is " + tomorrow);
+            //TimeSpan interval = tomorrow.Subtract(today);
+            //MessageBox.Show("From today to tomorrow is: " + interval.Hours * 60 + interval.Minutes * 60 + interval.Seconds + " s");
             //*60 + interval.Minutes * 60 + interval.Seconds + " s"
 
         }
@@ -192,12 +201,79 @@ namespace CanteenManagementApp.MVVM.ViewModel
             return today.AddDays(1);
         }
 
-        public static void ResetAmount(ObservableCollection<Item> items)
+        public void ResetAmount(ObservableCollection<Item> items)
         {
             foreach(Item item in items)
             {
                 item.Amount = 0;
             }
+        }
+
+        public static void InvokeSthing(int sleepTime)
+        {
+            // command block goes here!
+            DateTime today = DateTime.Now;
+            MessageBox.Show("Now is " + today);
+            Thread.Sleep(sleepTime);
+            today = DateTime.Now;
+            MessageBox.Show("Now is " + today);
+        }
+
+        private  Timer aTimer;
+        public  void SetDataTimer(int milliSeconds)
+        {
+            aTimer = new System.Timers.Timer();
+            aTimer.Interval =  milliSeconds;
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += OnTimedEvent;
+
+            // Have the timer fire repeated events (true is the default)
+            aTimer.AutoReset = false;
+
+            // Start the timer
+            aTimer.Enabled = true;
+
+            //MessageBox.Show("Press the Enter key to exit the program at any time... ");
+            //Console.WriteLine("Press the Enter key to exit the program at any time... ");
+            //Console.ReadLine();
+        }
+        static int Count { get; set; } = 0;
+
+        private  void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            ResetAmount(FoodItemsToday);
+            MessageBox.Show("The Elapsed event was raised at " + e.SignalTime.ToString() + " count: "+ Count.ToString());
+            Count++;
+            //if (Count == 2 || Count > 5)
+            //{
+            //    aTimer.Stop();
+            //    aTimer.AutoReset = false;
+            //    aTimer.Enabled=false;
+            //    aTimer.EndInit();
+            //}
+            SetupData();
+        }
+
+        public void SetupData()
+        {
+            // 
+            //Test time:
+            /* DateTime today = DateTime.Today;*/
+            //DateTime today = DateTime.Now;
+            //MessageBox.Show("Now is " + today);
+            //DateTime yesterday = GetYesterday();
+            //DateTime tomorrow = GetTomorrow();
+            //MessageBox.Show("Yesterday is " + yesterday + "\nToday is " + tomorrow);
+            //TimeSpan interval = tomorrow.Subtract(today);
+            //MessageBox.Show("From today to tomorrow is: " + interval.Hours * 60 + interval.Minutes * 60 + interval.Seconds + " s");
+            //*60 + interval.Minutes * 60 + interval.Seconds + " s"
+            //SetDataTimer(interval);  
+            if (Count == 0)
+            {
+                SetDataTimer(5000);
+            }
+            
+            
         }
 
     }

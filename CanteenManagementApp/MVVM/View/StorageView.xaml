@@ -82,7 +82,7 @@
                     
                     <Model:BindingProxy x:Key="Proxy" Data="{Binding}" />
                     <ContextMenu x:Key="foodContextMenu">
-                        <MenuItem Header="Edit" 
+                        <MenuItem Header="Chi tiết" 
                                   Command="{Binding Source={StaticResource Proxy}, Path=Data.EditFoodItemCommand}"
                                   CommandParameter="{Binding PlacementTarget.Tag,
                                                              RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
@@ -91,7 +91,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
 
-                        <MenuItem Header="Delete"
+                        <MenuItem Header="Xóa"
                                   Command="{Binding Source={StaticResource Proxy}, Path=Data.DeleteCommand}"
                                   CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={
                                                 RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
@@ -112,6 +112,11 @@
                                 BorderThickness="2"  
                                 CornerRadius="5"
                                  >
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Color="Transparent" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Border.Background>
                             <StackPanel Orientation="Vertical" 
                                         Width="104"
                                         Height="120" >
@@ -276,8 +281,12 @@
                         <Border x:Name="border"
                                 BorderBrush="Gray" 
                                 BorderThickness="2"  
-                                CornerRadius="5"
-                                 >
+                                CornerRadius="5" >
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Color="Transparent" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Border.Background>
                             <StackPanel Orientation="Vertical" 
                                         Width="104"
                                         Height="120"
