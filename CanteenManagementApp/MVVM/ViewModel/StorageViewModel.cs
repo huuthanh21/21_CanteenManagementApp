@@ -30,7 +30,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         private readonly CollectionViewSource InventoryItemsCollection;
         private readonly CollectionViewSource FoodItemsCollection;
         //public ICollectionView StorageSourceCollection => StorageItemsCollection.View;
-        public string _imageFileName = "";
+        public static string _imageFileName = "";
 
         public ICollectionView FoodSourceCollection => FoodItemsCollection.View;
         public ICollectionView InventorySourceCollection => InventoryItemsCollection.View;
@@ -45,7 +45,8 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public ICommand SaveEditFoodItemCommand { get; set; } // Lưu món ăn hàng ngày
         public ICommand SaveEditInventoryItemCommand { get; set; } // Lưu hàng tồn
         // Thêm hàng:
-        public ICommand SelectImageCommand { get; set; } //chọn ảnh
+        public ICommand SelectImageFoodItemCommand { get; set; } //chọn ảnh bên Food Item
+        public ICommand SelectImageInventoryItemCommand { get; set; } // chọn ảnh bên Inventory Item
         //public ICommand ButtonAddCommand { get; set; } 
         public StorageViewModel()
         {
@@ -79,15 +80,14 @@ namespace CanteenManagementApp.MVVM.ViewModel
             DeleteInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => DeleteInventoryItem(parameter));
             AddFoodItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => AddFoodItem(parameter));
             AddItemInventoryCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => AddInventoryItem(parameter));
-            SelectImageCommand = new RelayCommand<AddFoodItem>((parameter) => true, (parameter) => ChooseImage(parameter));
+            SelectImageFoodItemCommand = new RelayCommand<AddFoodItem>((parameter) => true, (parameter) => ChooseImageFoodItem(parameter));
+            SelectImageInventoryItemCommand = new RelayCommand<AddInventoryItem>((parameter) => true, (parameter) => ChooseImageInventoryItem(parameter));
             //ButtonAddCommand = new RelayCommand<AddItem>((parameter) => true, (parameter) => ButtonAddClick(parameter));
             OKAddFoodItemCommand = new RelayCommand<AddFoodItem>((parameter) => true, (parameter) => OKAddFoodItem(parameter));
             OKAddInventoryItemCommand = new RelayCommand<AddInventoryItem>((parameter) => true, (parameter) => OKAddInventoryItem(parameter));
             SaveEditFoodItemCommand = new RelayCommand<EditFoodItem>((parameter) => true, (parameter) => SaveEditFoodItem(parameter));
             SaveEditInventoryItemCommand = new RelayCommand<EditInventoryItem>((parameter) => true, (parameter) => SaveEditInventoryItem(parameter));
         }
-
-      
 
         public void OKAddInventoryItem(AddInventoryItem parameter)
         {
@@ -127,7 +127,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
                 await DbQueries.ItemQueries.InsertItemAsync(NewItem);
                 _inventoryItems.Add(NewItem);
-                //CopyFileToAppFolder(NewItem.Id.ToString(), _imageFileName);
+                CopyFileToAppFolder(NewItem.Id.ToString(), _imageFileName);
             }
             else
             {
@@ -163,7 +163,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
                 await DbQueries.ItemQueries.InsertItemAsync(NewItem);
                 _foodItems.Add(NewItem);
-                //CopyFileToAppFolder(NewItem.Id.ToString(), _imageFileName);
+                CopyFileToAppFolder(NewItem.Id.ToString(), _imageFileName);
             }
             else
             {
@@ -173,7 +173,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             screen.Close();
         }
 
-        public void CopyFileToAppFolder(string id, string sourceFileName)
+        public static void CopyFileToAppFolder(string id, string sourceFileName)
         {
             var appdataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var appFolder = "21CanteenManager";
@@ -187,8 +187,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
             File.Copy(sourceFileName, filePath);
         }
-
-        public void ChooseImage(AddFoodItem parameter)
+        public void ChooseImageInventoryItem(AddInventoryItem parameter)
         {
             OpenFileDialog op = new OpenFileDialog();
             op.Title = "Chọn ảnh";
@@ -206,7 +205,26 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 parameter.grdSelectImg.Background = imageBrush;
                 parameter.imageEmpty.Visibility = Visibility.Hidden;
             }
-            MessageBox.Show(_imageFileName);
+        }
+
+        public void ChooseImageFoodItem(AddFoodItem parameter)
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.Title = "Chọn ảnh";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" + "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" + "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == true)
+            {
+                _imageFileName = op.FileName;
+                ImageBrush imageBrush = new ImageBrush();
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.UriSource = new Uri(_imageFileName);
+                bitmap.EndInit();
+                imageBrush.ImageSource = bitmap;
+                parameter.grdSelectImg.Background = imageBrush;
+                parameter.imageEmpty.Visibility = Visibility.Hidden;
+            }
         }
 
 

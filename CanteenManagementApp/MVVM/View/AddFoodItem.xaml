@@ -91,7 +91,7 @@
                 ToolTip="Chọn ảnh từ thiết bị" 
                 HorizontalAlignment="Left" 
                 Padding="0" Canvas.Left="361" Canvas.Top="194" VerticalAlignment="Top" RenderTransformOrigin="0.553,0.813"
-                Command="{Binding SelectImageCommand}"
+                Command="{Binding SelectImageFoodItemCommand}"
                 CommandParameter="{Binding ElementName=wdAddFoodItem}"/>
         <Button HorizontalAlignment="Left"
                 Width="95" Height="31"

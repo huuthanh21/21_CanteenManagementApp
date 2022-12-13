@@ -16,10 +16,12 @@ namespace CanteenManagementApp
         public MainWindow()
         {
             InitializeComponent();
+
             // Implementation on app's first run
-            _ = ImplementFirstRun();
+            // _ = ImplementFirstRun();
             // Write your testing code in this method
-            _ = QueryTest();
+            //_ = QueryTest();
+
         }
 
         private static async Task ImplementFirstRun()
@@ -51,10 +53,11 @@ namespace CanteenManagementApp
         public static async Task CreateDatabase()
         {
             Debug.WriteLine("Vao create ne");
-            await DropDatabase();
+            /*await DropDatabase();*/
 
             using var dbContext = new CanteenContext();
             String databasename = dbContext.Database.GetDbConnection().Database;
+
             Debug.WriteLine("Create ne");
             bool result = await dbContext.Database.EnsureCreatedAsync();
             Debug.WriteLine(result ? "created successfully" : "already created");

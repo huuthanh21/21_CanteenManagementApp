@@ -283,9 +283,11 @@
                                         Height="120"
                                         >
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Margin ="10 5 0 5 "
-                                       Width="60" Height="65"
-                                       Source="{Binding ImagePath}"/>
+                                    <Image Margin ="0 5 0 0 "
+                                       MinWidth="80"
+                                       Width="60" Height="54"
+                                       x:Name="ImageItem"
+                                       Source="{Binding Path=Id, Converter={StaticResource IdToImagePathConverter}}"/>
                                     <TextBlock Width="38" Height="60" VerticalAlignment="Top" 
                                                Margin="5 6 0 0"
                                                FontSize="9.23"
