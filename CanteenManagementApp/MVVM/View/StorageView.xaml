@@ -59,7 +59,7 @@
                           VerticalAlignment="Center"/>
                 <Button Margin="5 5 0 0"
                         Style="{StaticResource ButtonAdd}"
-                        Command="{Binding AddItemCommand}"
+                        Command="{Binding AddFoodItemCommand}"
                         CommandParameter="{Binding ElementName=ucStorage}"  />
             </StackPanel>
 
@@ -79,10 +79,11 @@
                 </ListView.ItemsPanel>
 
                 <ListView.Resources>
+                    
                     <Model:BindingProxy x:Key="Proxy" Data="{Binding}" />
                     <ContextMenu x:Key="foodContextMenu">
                         <MenuItem Header="Edit" 
-                                  Command="{Binding Source={StaticResource Proxy}, Path=Data.EditItemCommand}"
+                                  Command="{Binding Source={StaticResource Proxy}, Path=Data.EditFoodItemCommand}"
                                   CommandParameter="{Binding PlacementTarget.Tag,
                                                              RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
                             <MenuItem.Icon>
@@ -117,7 +118,9 @@
                                 <Image Margin ="0 5 0 0 "
                                        MinWidth="80"
                                        Width="60" Height="54"
-                                       Source="{Binding ImagePath}"/>
+                                       x:Name="ImageItem"
+                                       Source="{Binding Path=Id, Converter={StaticResource IdToImagePathConverter}}"/>
+                                
                                 <StackPanel Orientation="Horizontal" 
                                             VerticalAlignment="Center"
                                         Margin="0 0 0 0" >
@@ -220,7 +223,7 @@
                         Style="{StaticResource ButtonAdd}"/>
             </StackPanel>
             <!--ListView-->
-            <ListView Width="620" Height="190" Margin="0" BorderThickness="0" ItemsSource="{Binding InventorySourceCollection}" Name="inventoryListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}" >
+            <ListView Width="620" Height="190" Margin="0" BorderThickness="0" ItemsSource="{Binding InventorySourceCollection}" Name="inventoryListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
@@ -235,8 +238,7 @@
                         <MenuItem Header="Edit" 
                                   Command="{Binding Source={StaticResource Proxy}, Path=Data.EditInventoryCommand}"
                                   CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={
-                                                RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"
-                                  >
+                                                RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
                             <MenuItem.Icon>
                                 <Image  Width="20" Height="16"  Source="/Images/editing.png"></Image>
                             </MenuItem.Icon>
@@ -281,11 +283,15 @@
                                         Height="120"
                                         >
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Margin ="10 5 0 5 "
-                                       Width="60" Height="65"
-                                       Source="{Binding ImagePath}"/>
-                                    <TextBlock Width="38" Height="60" VerticalAlignment="Top" Margin="6 6 0 0"
+                                    <Image Margin ="0 5 0 0 "
+                                       MinWidth="80"
+                                       Width="60" Height="54"
+                                       x:Name="ImageItem"
+                                       Source="{Binding Path=Id, Converter={StaticResource IdToImagePathConverter}}"/>
+                                    <TextBlock Width="38" Height="60" VerticalAlignment="Top" 
+                                               Margin="5 6 0 0"
                                                FontSize="9.23"
+                                               TextWrapping="WrapWithOverflow"
                                                Style="{StaticResource TextblockTitleSmall}"
                                                Text="{Binding Amount}"/>
                                 </StackPanel>

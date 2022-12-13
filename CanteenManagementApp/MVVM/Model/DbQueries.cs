@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CanteenManagementApp.MVVM.Model
 {
@@ -136,7 +137,20 @@ namespace CanteenManagementApp.MVVM.Model
                 int rows = context.SaveChanges();
                 Debug.WriteLine($"{rows} items updated");
             }
-
+            public static void UpdateItem(int id,string name,float price,string description,int amount)
+            {
+                using var context = new CanteenContext();
+                var oldItem = context.Items
+                               .Where(i => i.Id == id)
+                               .FirstOrDefault();
+                oldItem.Id = id;
+                oldItem.Name = name;
+                oldItem.Price = price;
+                oldItem.Description = description;
+                oldItem.Amount = amount;
+                int rows = context.SaveChanges();
+                Debug.WriteLine($"{rows} items updated");
+            }
             /* Delete */
 
             public static void DeleteItemById(int itemId)
