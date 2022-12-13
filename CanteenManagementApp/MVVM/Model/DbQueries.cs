@@ -64,6 +64,32 @@ namespace CanteenManagementApp.MVVM.Model
 
             /* Update */
 
+            public static async Task TopUpCustomerBalance(Customer customer, float amount)
+            {
+                using var context = new CanteenContext();
+
+                customer.Balance += amount;
+
+                context.Customers.Update(customer);
+
+                int rows = await context.SaveChangesAsync();
+
+                Debug.WriteLine($"{rows} rows in Customer updated");
+            }
+
+            public static async Task UpdateCustomerBalanceOnPurchase(Customer customer, float orderCost)
+            {
+                using var context = new CanteenContext();
+
+                customer.Balance -= orderCost;
+
+                context.Customers.Update(customer);
+
+                int rows = await context.SaveChangesAsync();
+
+                Debug.WriteLine($"{rows} rows in Customer updated");
+            }
+
             /* Delete */
         }
 
@@ -115,12 +141,31 @@ namespace CanteenManagementApp.MVVM.Model
             public static async Task InsertItemAsync(Item item)
             {
                 using var context = new CanteenContext();
-
                 await context.Items.AddAsync(item);
 
                 int rows = await context.SaveChangesAsync();
                 Debug.WriteLine($"Saved {rows} items");
             }
+            /*public static async Task InsertItemAsync(Item item, bool identityInsert = false)
+            {
+                using var context = new CanteenContext();
+                using var transaction = context.Database.BeginTransaction();
+                await context.Items.AddAsync(item);
+
+                int rows;
+                if (identityInsert)
+                {
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Item ON;");
+                    rows = await context.SaveChangesAsync();
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Item OFF;");
+                    transaction.Commit();
+                }
+                else
+                {
+                    rows = await context.SaveChangesAsync();
+                }
+                Debug.WriteLine($"Saved {rows} items");
+            }*/
 
             /* Update */
 
