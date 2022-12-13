@@ -127,7 +127,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
                 await DbQueries.ItemQueries.InsertItemAsync(NewItem);
                 _inventoryItems.Add(NewItem);
-                CopyFileToAppFolder(NewItem.Id.ToString(), _imageFileName);
+                /*CopyFileToAppFolder(NewItem.Id.ToString(), _imageFileName);*/
             }
             else
             {
@@ -187,7 +187,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
             File.Copy(sourceFileName, filePath);
         }
-        public void ChooseImageInventoryItem(AddInventoryItem parameter)
+        public static void ChooseImageInventoryItem(AddInventoryItem parameter)
         {
             OpenFileDialog op = new OpenFileDialog();
             op.Title = "Chọn ảnh";
@@ -207,7 +207,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             }
         }
 
-        public void ChooseImageFoodItem(AddFoodItem parameter)
+        public static void ChooseImageFoodItem(AddFoodItem parameter)
         {
             OpenFileDialog op = new OpenFileDialog();
             op.Title = "Chọn ảnh";
@@ -329,9 +329,5 @@ namespace CanteenManagementApp.MVVM.ViewModel
             int i = parameter.foodListView.SelectedIndex;
             _foodItems.RemoveAt(i);
         }
-
-       
-
-       
     }
 }

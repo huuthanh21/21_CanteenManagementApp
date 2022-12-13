@@ -1,5 +1,6 @@
 ﻿using CanteenManagementApp.Core;
 using CanteenManagementApp.MVVM.Model;
+using System;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
@@ -7,6 +8,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
     {
         public RelayCommand CreateOrderViewCommand { get; set; }
         public RelayCommand CreateOrderViewWithCustomerCommand { get; set; }
+        public RelayCommand CreateOrderViewWithTopUp { get; set; }
         public RelayCommand CustomerViewCommand { get; set; }
         public RelayCommand MenuViewCommand { get; set; }
         public RelayCommand StorageViewCommand { get; set; }
@@ -19,13 +21,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public StorageViewModel StorageVM { get; set; }
         public ReportViewModel ReportVM { get; set; }
 
-        private object _currentView;
-
-        public object CurrentView
-        {
-            get { return _currentView; }
-            set { _currentView = value; }
-        }
+        public object CurrentView { get; set; }
 
         public MainViewModel()
         {
@@ -47,7 +43,16 @@ namespace CanteenManagementApp.MVVM.ViewModel
             CreateOrderViewWithCustomerCommand = new RelayCommand(o =>
             {
                 CreateOrderViewModel.Customer = (Customer)o;
+                CreateOrderViewModel.TopUpAmount = 0;
 
+                CurrentView = CreateOrderWithCustomerVM;
+            });
+
+            // parameter: Tuple<Customer, int>
+            CreateOrderViewWithTopUp = new RelayCommand(tuple =>
+            {
+                CreateOrderViewModel.Customer = (tuple as Tuple<Customer, int>).Item1;
+                CreateOrderViewModel.TopUpAmount = (tuple as Tuple<Customer, int>).Item2;
                 CurrentView = CreateOrderWithCustomerVM;
             });
 
