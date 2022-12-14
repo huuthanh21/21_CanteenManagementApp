@@ -4,9 +4,12 @@
              xmlns:local="clr-namespace:CanteenManagementApp"
              xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
              xmlns:view="clr-namespace:CanteenManagementApp.MVVM.View"
+             xmlns:Converter="clr-namespace:CanteenManagementApp.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <Converter:IdToImagePathConverter x:Key="IdToImagePathConverter"/>
+
             <DataTemplate DataType="{x:Type viewModel:CreateOrderViewModel}">
                 <view:CreateOrderView/>         
             </DataTemplate>
@@ -53,10 +56,11 @@
                 <ResourceDictionary Source="Theme/DatePicker.xaml"/>
                 <ResourceDictionary Source="Theme/TotalItemOrder.xaml"/>
                 <ResourceDictionary Source="Theme/AddCustomerButton.xaml"/>
+                <ResourceDictionary Source="Theme/TabItem.xaml"/>
+                <ResourceDictionary Source="Theme/CustomTextBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            
-
+           
 
         </ResourceDictionary>
     </Application.Resources>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CanteenManagementApp.MVVM.Model
 {
@@ -157,6 +158,26 @@ namespace CanteenManagementApp.MVVM.Model
                 }
                 Debug.WriteLine($"Saved {rows} items");
             }
+            /*public static async Task InsertItemAsync(Item item, bool identityInsert = false)
+            {
+                using var context = new CanteenContext();
+                using var transaction = context.Database.BeginTransaction();
+                await context.Items.AddAsync(item);
+
+                int rows;
+                if (identityInsert)
+                {
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Item ON;");
+                    rows = await context.SaveChangesAsync();
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Item OFF;");
+                    transaction.Commit();
+                }
+                else
+                {
+                    rows = await context.SaveChangesAsync();
+                }
+                Debug.WriteLine($"Saved {rows} items");
+            }*/
 
             /* Update */
 
@@ -173,7 +194,20 @@ namespace CanteenManagementApp.MVVM.Model
                 int rows = context.SaveChanges();
                 Debug.WriteLine($"{rows} items updated");
             }
-
+            public static void UpdateItem(int id,string name,float price,string description,int amount)
+            {
+                using var context = new CanteenContext();
+                var oldItem = context.Items
+                               .Where(i => i.Id == id)
+                               .FirstOrDefault();
+                oldItem.Id = id;
+                oldItem.Name = name;
+                oldItem.Price = price;
+                oldItem.Description = description;
+                oldItem.Amount = amount;
+                int rows = context.SaveChanges();
+                Debug.WriteLine($"{rows} items updated");
+            }
             /* Delete */
 
             public static void DeleteItemById(int itemId)

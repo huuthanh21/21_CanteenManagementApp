@@ -1,0 +1,45 @@
+﻿<Window x:Class="CanteenManagementApp.MVVM.View.UpdateAmountMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CanteenManagementApp.MVVM.View"
+        xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
+        mc:Ignorable="d"
+        x:Name="wdUpdateAmountMenu"
+        Title="Cập nhật số lượng" MinHeight="200" MinWidth="260" Height="230" Width="260">
+    <Window.DataContext>
+        <viewModel:MenuViewModel/>
+    </Window.DataContext>
+    
+    <Grid>
+        <StackPanel>
+            <Image Source="/Images/logo.png" Width="50" Height="50" RenderOptions.BitmapScalingMode="HighQuality"/>
+            <StackPanel Orientation="Horizontal"  Margin="66.39 5 0 7">
+                <TextBlock Text="Món: " Style="{StaticResource TextblockTitleSmall}"
+                           FontSize ="15" FontWeight="Bold" TextElement.FontFamily="{DynamicResource Inter}" />
+                <TextBlock x:Name="nameItem" TextWrapping="WrapWithOverflow"  Margin="5 1 0 0" MinWidth="90"  Style="{StaticResource TextblockTitleSmall}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="33 5 0 0">
+                <TextBlock Text="Số lượng: " Style="{StaticResource TextblockTitleSmall}"
+                           FontSize ="15" FontWeight="Bold" TextElement.FontFamily="{DynamicResource Inter}" />
+                <TextBox x:Name="textBoxAmount" Width="90" Margin="5 1 0 0" Padding="1"/>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Center" Margin="0 20 0 0" Orientation="Horizontal">
+                <Button x:Name="buttonCancel" Style="{StaticResource ButtonCustomColorCancel}" Width="65" Height="29"
+                        Foreground="#E1251B" Margin="0 0 20 0"
+                        Content="Hủy" FontSize="11"
+                        Command="{Binding CancelUpdateAmount}"
+                        CommandParameter="{Binding ElementName=wdUpdateAmountMenu}"/>
+               
+                <Button x:Name="buttonOk" Style="{StaticResource ButtonCustomColorPositive}" Width="65" Height="29"
+                        Background="#0033A1"
+                        Content="Xác nhận" FontSize="11"
+                        Command="{Binding OkUpdateAmount}"
+                        CommandParameter="{Binding ElementName=wdUpdateAmountMenu}"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

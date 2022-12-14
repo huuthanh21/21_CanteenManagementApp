@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
+using System.Text;
 
 namespace CanteenManagementApp.MVVM.Model
 {
@@ -36,7 +38,8 @@ namespace CanteenManagementApp.MVVM.Model
         public List<Receipt_Item> Receipt_Items { get; set; }
 
         [NotMapped] // Không thêm cột này vào CSDL
-        public string ImagePath { get; set; }
+        public string ImagePath { get; set; } 
+
 
         public object Clone()
         {

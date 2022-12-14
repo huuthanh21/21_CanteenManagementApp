@@ -20,6 +20,7 @@
     <None Remove="Images\b5.jpg" />
     <None Remove="Images\backicon.png" />
     <None Remove="Images\bohuc.png" />
+    <None Remove="Images\check_select.png" />
     <None Remove="Images\coca.jpg" />
     <None Remove="Images\dailyreport.png" />
     <None Remove="Images\delete.png" />
@@ -47,6 +48,9 @@
   <ItemGroup>
     <Resource Include="Fonts\Inter-VariableFont_slnt,wght.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\check_select.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\edit_blue_icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

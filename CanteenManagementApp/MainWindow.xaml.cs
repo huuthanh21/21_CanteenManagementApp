@@ -16,10 +16,11 @@ namespace CanteenManagementApp
         public MainWindow()
         {
             InitializeComponent();
+
             // Implementation on app's first run
-            _ = ImplementFirstRun();
+            // _ = ImplementFirstRun();
             // Write your testing code in this method
-            _ = QueryTest();
+            //_ = QueryTest();
         }
 
         private static async Task ImplementFirstRun()
@@ -28,21 +29,6 @@ namespace CanteenManagementApp
             if (DbQueries.CustomerQueries.GetCustomerById("-1") == null)
             {
                 await DbQueries.CustomerQueries.InsertCustomerAsync("-1", "Không có tài khoản", "Trống");
-            }
-
-            // Add Top-up item
-            if (DbQueries.ItemQueries.GetItemById(100) == null)
-            {
-                Item top_up = new()
-                {
-                    Id = 100,
-                    Type = 1,
-                    Amount = 0,
-                    Description = "Nạp tiền vào tài khoản khách hàng",
-                    Price = 10000,
-                    Name = "Nạp tiền"
-                };
-                await DbQueries.ItemQueries.InsertItemAsync(top_up, true);
             }
         }
 
@@ -67,9 +53,11 @@ namespace CanteenManagementApp
         public static async Task CreateDatabase()
         {
             Debug.WriteLine("Vao create ne");
-            await DropDatabase();
+            /*await DropDatabase();*/
 
             using var dbContext = new CanteenContext();
+            String databasename = dbContext.Database.GetDbConnection().Database;
+
             Debug.WriteLine("Create ne");
             bool result = await dbContext.Database.EnsureCreatedAsync();
             Debug.WriteLine(result ? "created successfully" : "already created");
