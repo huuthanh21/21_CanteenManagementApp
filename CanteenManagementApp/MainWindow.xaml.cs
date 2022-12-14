@@ -18,7 +18,7 @@ namespace CanteenManagementApp
             InitializeComponent();
 
             // Implementation on app's first run
-            // _ = ImplementFirstRun();
+            _ = ImplementFirstRun();
             // Write your testing code in this method
             //_ = QueryTest();
         }
