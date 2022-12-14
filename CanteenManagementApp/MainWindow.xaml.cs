@@ -5,6 +5,7 @@ using System.Windows.Input;
 using CanteenManagementApp.MVVM.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.IO;
 
 namespace CanteenManagementApp
 {
@@ -30,6 +31,43 @@ namespace CanteenManagementApp
             {
                 await DbQueries.CustomerQueries.InsertCustomerAsync("-1", "Không có tài khoản", "Trống");
             }
+
+            SetupFolder();
+        }
+
+        private static void SetupFolder()
+        {
+            var appdataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var appFolder = "21CanteenManager";
+            var appPath = Path.Combine(appdataPath, appFolder);
+            if (!File.Exists(appPath))
+            {
+                CreateFolder(appPath);
+            }
+
+            var folder = AppDomain.CurrentDomain.BaseDirectory;
+            var imagesFolder = $"{folder}Images";
+            var pathEmptyImages = $"{imagesFolder}\\empty_image.jpg";
+
+            var defaultImageName = "default.jpg";
+            var defaultImagePath = Path.Combine(appPath, defaultImageName);
+            if (!File.Exists(defaultImagePath))
+            {
+                File.Copy(pathEmptyImages, defaultImagePath);
+            }
+
+        }
+
+        public static void CreateFolder(string strPath)
+        {
+            try
+            {
+                if (Directory.Exists(strPath) == false)
+                {
+                    Directory.CreateDirectory(strPath);
+                }
+            }
+            catch { }
         }
 
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
