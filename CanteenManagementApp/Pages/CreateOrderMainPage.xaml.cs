@@ -4,6 +4,7 @@ using System;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using CanteenManagementApp.MVVM.Model;
 
 namespace CanteenManagementApp.Pages
 {
@@ -44,7 +45,7 @@ namespace CanteenManagementApp.Pages
             Button btn = (Button)e.OriginalSource;
             foodListView.SelectedItem = btn.DataContext;
 
-            int indexSelected = foodListView.Items.IndexOf(btn.DataContext);
+            int indexSelected = CreateOrderVM.ListFoodItemOrder.IndexOf(foodListView.SelectedItem as ItemOrder);
             if (indexSelected != -1 && CreateOrderVM.ListFoodItemOrder[indexSelected].Amount > 0)
             {
                 CreateOrderVM.ListFoodItemOrder[indexSelected].Amount--;
@@ -57,7 +58,7 @@ namespace CanteenManagementApp.Pages
             Button btn = (Button)e.OriginalSource;
             foodListView.SelectedItem = btn.DataContext;
 
-            int indexSelected = foodListView.Items.IndexOf(btn.DataContext);
+            int indexSelected = CreateOrderVM.ListFoodItemOrder.IndexOf(foodListView.SelectedItem as ItemOrder);
             if (indexSelected != -1)
             {
                 CreateOrderVM.ListFoodItemOrder[indexSelected].Amount++;
@@ -70,7 +71,7 @@ namespace CanteenManagementApp.Pages
             Button btn = (Button)e.OriginalSource;
             inventoryListView.SelectedItem = btn.DataContext;
 
-            int indexSelected = inventoryListView.Items.IndexOf(btn.DataContext);
+            int indexSelected = CreateOrderVM.ListInventoryItemOrder.IndexOf(inventoryListView.SelectedItem as ItemOrder);
             if (indexSelected != -1 && CreateOrderVM.ListInventoryItemOrder[indexSelected].Amount > 0)
             {
                 CreateOrderVM.ListInventoryItemOrder[indexSelected].Amount--;
@@ -83,10 +84,11 @@ namespace CanteenManagementApp.Pages
             Button btn = (Button)e.OriginalSource;
             inventoryListView.SelectedItem = btn.DataContext;
 
-            int indexSelected = inventoryListView.Items.IndexOf(btn.DataContext);
+            int indexSelected = CreateOrderVM.ListInventoryItemOrder.IndexOf(inventoryListView.SelectedItem as ItemOrder);
             if (indexSelected != -1)
+            {
                 CreateOrderVM.ListInventoryItemOrder[indexSelected].Amount++;
-
+            }
             CreateOrderVM.UpdateTotalOrder();
         }
 
