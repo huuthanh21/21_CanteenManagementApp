@@ -9,12 +9,15 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Timers;
+using System.Threading;
+using Timer = System.Timers.Timer;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
     public class MenuViewModel : ObservableObject
     {
-        public ObservableCollection<Item> FoodItemsYesterday;
+        public static ObservableCollection<Item> FoodItemsYesterday;
         public ObservableCollection<Item> FoodItemsToday;
         private readonly CollectionViewSource FoodItemsYesterdayCollection;
         private readonly CollectionViewSource FoodItemsTodayCollection;
@@ -23,7 +26,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public string Keyword { get; set; } = "Fuck";
         public ICommand AddItemToMenuCommand { get; set; }
         public ICommand DeleteItemMenuCommand { get; set; }
-       
+
         public ICommand CopyMenuCommand { get; set; }
 
         // Update amount item:
@@ -61,6 +64,12 @@ namespace CanteenManagementApp.MVVM.ViewModel
             UpdateAmountCommand = new RelayCommand<MenuView>((parameter) => true, (parameter) => UpdateAmount(parameter));
             OkUpdateAmount = new RelayCommand<UpdateAmountMenu>((parameter) => true, (parameter) => OkUpdate(parameter));
             CancelUpdateAmount = new RelayCommand<UpdateAmountMenu>((parameter) => true, (parameter) => CancelUpdate(parameter));
+
+
+            //
+            //InvokeSthing(2000);
+            //SetDataTimer(5000);
+            SetupData();
         }
 
         private void CancelUpdate(UpdateAmountMenu parameter)
@@ -82,7 +91,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 screen.textBoxAmount.Text = FoodItemsToday[index].Amount.ToString();
                 screen.nameItem.Text = FoodItemsToday[index].Name.ToString();
                 //screen.ShowDialog();
-                if(screen.ShowDialog() == true)
+                if (screen.ShowDialog() == true)
                 {
                     FoodItemsToday[index].Amount = int.Parse(screen.textBoxAmount.Text);
                 }
@@ -90,7 +99,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 {
                     screen.Close();
                 }
-               
+
             }
         }
 
@@ -98,9 +107,9 @@ namespace CanteenManagementApp.MVVM.ViewModel
         {
             //MessageBox.Show("DeleteItemMenu");
             int index = parameter.foodListViewToday.SelectedIndex;
-            if(index != -1)
+            if (index != -1)
             {
-                var result = MessageBox.Show($"Bạn muốn xóa mặt hàng {FoodItemsToday[index].Name}",
+                var result = MessageBox.Show($"Bạn muốn xóa mặt hàng {FoodItemsToday[index].Name} khỏi menu",
               "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
@@ -119,7 +128,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             }
         }
 
-        private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
+        private static childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
             {
@@ -160,15 +169,20 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     itemTemp.Amount = int.Parse(textBox.Text);
                     //Test:
                     //MessageBox.Show("The selected item: Name: " + itemTemp.Name + " Amount: " + itemTemp.Amount);
-                    this.FoodItemsToday.Add(itemTemp);
+                    FoodItemsToday.Add(itemTemp);
                 }
             }
 
             //Test time:
-            //MessageBox.Show("Today is " + DateTime.Today);
+            /* DateTime today = DateTime.Today;*/
+            //DateTime today = DateTime.Now;
+            //MessageBox.Show("Now is " + today);
             //DateTime yesterday = GetYesterday();
-            //MessageBox.Show("Yesterday is " + yesterday);
-
+            //DateTime tomorrow = GetTomorrow();
+            //MessageBox.Show("Yesterday is " + yesterday + "\nToday is " + tomorrow);
+            //TimeSpan interval = tomorrow.Subtract(today);
+            //MessageBox.Show("From today to tomorrow is: " + interval.Hours * 60 + interval.Minutes * 60 + interval.Seconds + " s");
+            //*60 + interval.Minutes * 60 + interval.Seconds + " s"
 
         }
         public static DateTime GetYesterday()
@@ -179,13 +193,87 @@ namespace CanteenManagementApp.MVVM.ViewModel
             // Trừ đi một ngày.
             return today.AddDays(-1);
         }
-
-        public static void ResetAmount(ObservableCollection<Item> items)
+        public static DateTime GetTomorrow()
         {
-            foreach(Item item in items)
+            // Ngày hôm nay.
+            DateTime today = DateTime.Today;
+
+            return today.AddDays(1);
+        }
+
+        public void ResetAmount(ObservableCollection<Item> items)
+        {
+            foreach (Item item in items)
             {
                 item.Amount = 0;
             }
+        }
+
+        public static void InvokeSthing(int sleepTime)
+        {
+            // command block goes here!
+            DateTime today = DateTime.Now;
+            MessageBox.Show("Now is " + today);
+            Thread.Sleep(sleepTime);
+            today = DateTime.Now;
+            MessageBox.Show("Now is " + today);
+        }
+
+        private Timer aTimer;
+        public void SetDataTimer(int milliSeconds)
+        {
+            aTimer = new System.Timers.Timer();
+            aTimer.Interval = milliSeconds;
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += OnTimedEvent;
+
+            // Have the timer fire repeated events (true is the default)
+            aTimer.AutoReset = false;
+
+            // Start the timer
+            aTimer.Enabled = true;
+
+            //MessageBox.Show("Press the Enter key to exit the program at any time... ");
+            //Console.WriteLine("Press the Enter key to exit the program at any time... ");
+            //Console.ReadLine();
+        }
+        static int Count { get; set; } = 0;
+
+        private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            ResetAmount(FoodItemsToday);
+            MessageBox.Show("The Elapsed event was raised at " + e.SignalTime.ToString() + " count: " + Count.ToString());
+            Count++;
+            //if (Count == 2 || Count > 5)
+            //{
+            //    aTimer.Stop();
+            //    aTimer.AutoReset = false;
+            //    aTimer.Enabled=false;
+            //    aTimer.EndInit();
+            //}
+            SetupData();
+        }
+
+        public void SetupData()
+        {
+            // 
+            //Test time:
+            /* DateTime today = DateTime.Today;*/
+            //DateTime today = DateTime.Now;
+            //MessageBox.Show("Now is " + today);
+            //DateTime yesterday = GetYesterday();
+            //DateTime tomorrow = GetTomorrow();
+            //MessageBox.Show("Yesterday is " + yesterday + "\nToday is " + tomorrow);
+            //TimeSpan interval = tomorrow.Subtract(today);
+            //MessageBox.Show("From today to tomorrow is: " + interval.Hours * 60 + interval.Minutes * 60 + interval.Seconds + " s");
+            //*60 + interval.Minutes * 60 + interval.Seconds + " s"
+            //SetDataTimer(interval);  
+            if (Count == 0)
+            {
+                SetDataTimer(5000);
+            }
+
+
         }
 
     }
