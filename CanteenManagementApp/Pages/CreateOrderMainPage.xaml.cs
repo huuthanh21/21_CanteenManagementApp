@@ -85,10 +85,11 @@ namespace CanteenManagementApp.Pages
             inventoryListView.SelectedItem = btn.DataContext;
 
             int indexSelected = CreateOrderVM.ListInventoryItemOrder.IndexOf(inventoryListView.SelectedItem as ItemOrder);
-            if (indexSelected != -1)
-            {
+            if (indexSelected != -1 && CreateOrderVM.ListInventoryItemOrder[indexSelected].Amount < CreateOrderVM.ListInventoryItemOrder[indexSelected].Item.Amount)
                 CreateOrderVM.ListInventoryItemOrder[indexSelected].Amount++;
-            }
+            else
+                MessageBox.Show("Vượt quá số lượng trong kho.", "Vượt quá số lượng", MessageBoxButton.OK, MessageBoxImage.Information);
+
             CreateOrderVM.UpdateTotalOrder();
         }
 
