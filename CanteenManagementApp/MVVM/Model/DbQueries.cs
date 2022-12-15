@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace CanteenManagementApp.MVVM.Model
 {
@@ -105,6 +105,11 @@ namespace CanteenManagementApp.MVVM.Model
                                 .Where(i => i.Type == itemType)
                                 .ToList();
 
+                if (itemType == 1)
+                {
+                    items.RemoveAll(item => item.Id == 100);
+                }
+
                 return items;
             }
 
@@ -158,26 +163,6 @@ namespace CanteenManagementApp.MVVM.Model
                 }
                 Debug.WriteLine($"Saved {rows} items");
             }
-            /*public static async Task InsertItemAsync(Item item, bool identityInsert = false)
-            {
-                using var context = new CanteenContext();
-                using var transaction = context.Database.BeginTransaction();
-                await context.Items.AddAsync(item);
-
-                int rows;
-                if (identityInsert)
-                {
-                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Item ON;");
-                    rows = await context.SaveChangesAsync();
-                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Item OFF;");
-                    transaction.Commit();
-                }
-                else
-                {
-                    rows = await context.SaveChangesAsync();
-                }
-                Debug.WriteLine($"Saved {rows} items");
-            }*/
 
             /* Update */
 
@@ -194,20 +179,27 @@ namespace CanteenManagementApp.MVVM.Model
                 int rows = context.SaveChanges();
                 Debug.WriteLine($"{rows} items updated");
             }
-            public static void UpdateItem(int id,string name,float price,string description,int amount)
+
+            public static void UpdateItem(int id, string name, float price, string description, int amount)
             {
                 using var context = new CanteenContext();
                 var oldItem = context.Items
                                .Where(i => i.Id == id)
                                .FirstOrDefault();
-                oldItem.Id = id;
-                oldItem.Name = name;
-                oldItem.Price = price;
-                oldItem.Description = description;
-                oldItem.Amount = amount;
+
+                if (oldItem is not null)
+                {
+                    oldItem.Id = id;
+                    oldItem.Name = name;
+                    oldItem.Price = price;
+                    oldItem.Description = description;
+                    oldItem.Amount = amount;
+                }
+
                 int rows = context.SaveChanges();
                 Debug.WriteLine($"{rows} items updated");
             }
+
             /* Delete */
 
             public static void DeleteItemById(int itemId)
@@ -226,11 +218,69 @@ namespace CanteenManagementApp.MVVM.Model
         {
             /* Query */
 
+            public static List<Item> GetYesterdayMenuItems()
+            {
+                using var context = new CanteenContext();
+
+                DateTime yesterday = DateTime.Today.AddDays(-1);
+                var items = context.Menus
+                                    .Where(m => m.Date.Date == yesterday.Date)
+                                    .Select(m => m.Item)
+                                    .ToList();
+                return items;
+            }
+
+            public static List<Item> GetTodayMenuItems()
+            {
+                using var context = new CanteenContext();
+
+                var items = context.Menus
+                                    .Where(m => m.Date.Date == DateTime.Today.Date)
+                                    .Select(m => m.Item)
+                                    .ToList();
+                return items;
+            }
+
             /* Insert */
+
+            public static async Task InsertMenuItems(IEnumerable<Item> items)
+            {
+                using var context = new CanteenContext();
+
+                DateTime today = DateTime.Today.Date;
+
+                int rowsAffected = 0;
+                foreach (var id in items.Select(i => i.Id))
+                {
+                    rowsAffected += await context.Database.
+                        ExecuteSqlRawAsync("IF NOT EXISTS (SELECT * FROM MENU" +
+                                            $" WHERE Date='{today:yyyy-MM-dd}' AND ItemId={id})" +
+                                            " BEGIN " +
+                                                " INSERT INTO MENU" +
+                                                $" VALUES ('{today:yyyy-MM-dd}', {id}) " +
+                                            " END");
+                }
+
+                Debug.WriteLine($"{rowsAffected} inserted in Menu");
+            }
 
             /* Update */
 
             /* Delete */
+
+            public static void DeleteMenuItem(Item item)
+            {
+                using var context = new CanteenContext();
+
+                var today = DateTime.Today.Date;
+                var menuItem = context.Menus
+                                .Where(m => m.Date == today && m.Item.Id == item.Id)
+                                .FirstOrDefault();
+                context.Menus.Remove(menuItem);
+
+                int rows = context.SaveChanges();
+                Debug.WriteLine($"{rows} deleted in menu");
+            }
         }
 
         public static class ReceiptQueries

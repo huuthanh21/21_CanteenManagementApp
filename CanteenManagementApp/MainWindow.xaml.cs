@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using System.Windows;
-using System;
 using System.Windows.Input;
 using CanteenManagementApp.MVVM.Model;
 using Microsoft.EntityFrameworkCore;

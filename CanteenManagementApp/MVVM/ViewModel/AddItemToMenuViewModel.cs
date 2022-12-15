@@ -1,19 +1,10 @@
 ﻿using CanteenManagementApp.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CanteenManagementApp.MVVM.Model;
 using CanteenManagementApp.MVVM.View;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Reflection.Metadata;
-using System.Windows.Controls;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {

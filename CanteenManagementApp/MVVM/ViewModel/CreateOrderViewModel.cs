@@ -341,10 +341,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
             }
             foreach (Item item in new ObservableCollection<Item>(DbQueries.ItemQueries.GetItemsByType(1)))
             {
-                if (item.Id == 100)
-                {
-                    continue;
-                }
                 ListInventoryItemOrder.Add(new ItemOrder() { Item = (Item)item.Clone() });
             }
         }
