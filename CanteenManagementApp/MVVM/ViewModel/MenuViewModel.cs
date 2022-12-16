@@ -10,6 +10,8 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
@@ -22,10 +24,10 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public ICollectionView FoodYesterdaySourceCollection => FoodItemsYesterdayCollection.View;
         public ICollectionView FoodTodaySourceCollection => FoodItemsTodayCollection.View;
         public string Keyword { get; set; } = "Fuck";
-        public ICommand AddItemToMenuCommand { get; set; }
+        public RelayCommand AddItemToMenuCommand { get; set; }
         public ICommand DeleteItemMenuCommand { get; set; }
 
-        public ICommand CopyMenuCommand { get; set; }
+        public RelayCommand CopyMenuCommand { get; set; }
 
         // Update amount item:
         public ICommand UpdateAmountCommand { get; set; }
@@ -41,11 +43,11 @@ namespace CanteenManagementApp.MVVM.ViewModel
             // Source data:
             FoodItemsYesterdayCollection = new CollectionViewSource { Source = _foodItemsYesterday };
             FoodItemsTodayCollection = new CollectionViewSource { Source = _foodItemsToday };
-            _ = ResetAmount(_foodItemsYesterday);
+            _ = ResetAmount(_foodItemsYesterday.Except(_foodItemsToday, new ItemComparer()));
 
             // Command:
-            AddItemToMenuCommand = new RelayCommand<MenuView>((parameter) => true, (parameter) => AddItemToMenu(parameter));
-            CopyMenuCommand = new RelayCommand<MenuView>((parameter) => true, async (parameter) => await CopyMenu(parameter));
+            AddItemToMenuCommand = new RelayCommand(async o => await AddItemToMenu());
+            CopyMenuCommand = new RelayCommand(async o => await CopyMenu());
             DeleteItemMenuCommand = new RelayCommand<MenuView>((parameter) => true, (parameter) => DeleteItemMenu(parameter));
             UpdateAmountCommand = new RelayCommand<MenuView>((parameter) => true, async (parameter) => await UpdateAmount(parameter));
             OkUpdateAmount = new RelayCommand<UpdateAmountMenu>((parameter) => true, (parameter) => OkUpdate(parameter));
@@ -96,15 +98,12 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     _foodItemsToday.RemoveAt(index);
                 }
 
-                // Update database (bug)
-                //DbQueries.MenuQueries.DeleteMenuItem(item);
-
-                //  unprofessional :V
-                _ = DbQueries.MenuQueries.InsertMenuItems(_foodItemsToday);
+                // Update database
+                DbQueries.MenuQueries.DeleteMenuItem(item);
             }
         }
 
-        private async Task CopyMenu(MenuView parameter)
+        private async Task CopyMenu()
         {
             // Update UI
             _foodItemsToday.Clear();
@@ -138,7 +137,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             return null;
         }
 
-        private void AddItemToMenu(MenuView parameter)
+        private async Task AddItemToMenu()
         {
             //FNL
             var screen = new AddItemToMenu();
@@ -155,13 +154,12 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     // Finding textBox from the DataTemplate that is set on that ContentPresenter
                     DataTemplate myDataTemplate = myContentPresenter.ContentTemplate;
                     TextBox textBox = (TextBox)myDataTemplate.FindName("textBox", myContentPresenter);
-                    Item itemTemp = (Item)item;
-                    itemTemp.Amount = int.Parse(textBox.Text);
-                    _foodItemsToday.Add(itemTemp);
+                    Item newItem = (Item)item;
+                    newItem.Amount = int.Parse(textBox.Text);
+                    _foodItemsToday.Add(newItem);
+                    await DbQueries.MenuQueries.InsertMenuItem(newItem);
                 }
-
             }
-            _ = DbQueries.MenuQueries.InsertMenuItems(_foodItemsToday);
         }
 
         public static DateTime GetYesterday()
@@ -173,13 +171,16 @@ namespace CanteenManagementApp.MVVM.ViewModel
             return today.AddDays(-1);
         }
 
-        public static async Task ResetAmount(ObservableCollection<Item> items)
+        public static async Task ResetAmount(IEnumerable<Item> items)
         {
+            // Check if items is empty
+            if (!items.Any()) return;
+
             foreach (Item item in items)
             {
                 item.Amount = 0;
             }
-            await DbQueries.MenuQueries.UpdateAmountMenuItems(items);
+            await DbQueries.MenuQueries.ResetAmountMenuItems(items);
         }
     }
 }

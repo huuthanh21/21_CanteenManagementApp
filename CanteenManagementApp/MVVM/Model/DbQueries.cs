@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -166,17 +167,21 @@ namespace CanteenManagementApp.MVVM.Model
 
             /* Update */
 
-            public static void UpdateItem(Item item)
+            public static async Task UpdateItem(Item item)
             {
                 using var context = new CanteenContext();
 
                 Item oldItem = GetItemById(item.Id);
-                oldItem.Name = item.Name;
-                oldItem.Price = item.Price;
-                oldItem.Description = item.Description;
-                oldItem.Amount = item.Amount;
+                context.Items.Update(oldItem);
+                if (oldItem is not null)
+                {
+                    oldItem.Name = item.Name;
+                    oldItem.Price = item.Price;
+                    oldItem.Description = item.Description;
+                    oldItem.Amount = item.Amount;
+                }
 
-                int rows = context.SaveChanges();
+                int rows = await context.SaveChangesAsync();
                 Debug.WriteLine($"{rows} items updated");
             }
 
@@ -197,6 +202,22 @@ namespace CanteenManagementApp.MVVM.Model
                 }
 
                 int rows = context.SaveChanges();
+                Debug.WriteLine($"{rows} items updated");
+            }
+
+            public static async Task UpdateItemAmountOnPurchase(IEnumerable<ItemOrder> itemOrders)
+            {
+                using var context = new CanteenContext();
+
+                foreach (var itemOrder in itemOrders)
+                {
+                    if (itemOrder.Item.Id == 100) continue;
+
+                    itemOrder.Item.Amount -= itemOrder.Amount;
+                    await UpdateItem(itemOrder.Item);
+                }
+
+                int rows = await context.SaveChangesAsync();
                 Debug.WriteLine($"{rows} items updated");
             }
 
@@ -243,6 +264,48 @@ namespace CanteenManagementApp.MVVM.Model
 
             /* Insert */
 
+            public static async Task InsertMenuItem(Item item)
+            {
+                using var context = new CanteenContext();
+
+                DateTime today = DateTime.Today.Date;
+
+                int rowsAffected = await context.Database.
+                    ExecuteSqlRawAsync("IF NOT EXISTS (SELECT * FROM MENU" +
+                                        $" WHERE Date='{today:yyyy-MM-dd}' AND ItemId={item.Id})" +
+                                        " BEGIN " +
+                                            " INSERT INTO MENU" +
+                                            $" VALUES ('{today:yyyy-MM-dd}', {item.Id}) " +
+                                        " END");
+                if (item.Amount != 0)
+                {
+                    await UpdateAmountMenuItem(item, item.Amount);
+                }
+
+                Debug.WriteLine($"{rowsAffected} inserted in Menu");
+            }
+
+            public static async Task InsertMenuItems(params Item[] items)
+            {
+                using var context = new CanteenContext();
+
+                DateTime today = DateTime.Today.Date;
+
+                int rowsAffected = 0;
+                foreach (var id in items.Select(i => i.Id))
+                {
+                    rowsAffected += await context.Database.
+                        ExecuteSqlRawAsync("IF NOT EXISTS (SELECT * FROM MENU" +
+                                            $" WHERE Date='{today:yyyy-MM-dd}' AND ItemId={id})" +
+                                            " BEGIN " +
+                                                " INSERT INTO MENU" +
+                                                $" VALUES ('{today:yyyy-MM-dd}', {id}) " +
+                                            " END");
+                }
+
+                Debug.WriteLine($"{rowsAffected} inserted in Menu");
+            }
+
             public static async Task InsertMenuItems(IEnumerable<Item> items)
             {
                 using var context = new CanteenContext();
@@ -276,7 +339,7 @@ namespace CanteenManagementApp.MVVM.Model
                 Debug.WriteLine($"{rows} updated in items");
             }
 
-            public static async Task UpdateAmountMenuItems(IEnumerable<Item> items)
+            public static async Task ResetAmountMenuItems(IEnumerable<Item> items)
             {
                 using var context = new CanteenContext();
                 foreach (var item in items)
@@ -289,7 +352,7 @@ namespace CanteenManagementApp.MVVM.Model
                 Debug.WriteLine($"{rows} updated in items");
             }
 
-            public static async Task UpdateAmountMenuItems(params Item[] items)
+            public static async Task ResetAmountMenuItems(params Item[] items)
             {
                 using var context = new CanteenContext();
                 foreach (var item in items)
@@ -309,12 +372,10 @@ namespace CanteenManagementApp.MVVM.Model
                 using var context = new CanteenContext();
 
                 var today = DateTime.Today.Date;
-                var menuItem = context.Menus
-                                .Where(m => m.Date == today && m.Item.Id == item.Id)
-                                .FirstOrDefault();
-                context.Menus.Remove(menuItem);
 
-                int rows = context.SaveChanges();
+                int rows = context.Database.ExecuteSqlRaw("DELETE FROM Menu" +
+                                                $" WHERE Date='{today:yyyy-MM-dd}' AND ItemId={item.Id}");
+
                 Debug.WriteLine($"{rows} deleted in menu");
             }
         }

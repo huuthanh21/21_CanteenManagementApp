@@ -141,6 +141,11 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     {
                         await HandlePaymentThroughAccount();
                     }
+
+                    CurrentPage = CreateOrderReceiptPage;
+
+                    // Update storage database
+                    await DbQueries.ItemQueries.UpdateItemAmountOnPurchase(TotalItemOrder);
                 }
                 else
                 {
@@ -219,12 +224,12 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         public bool ItemFilter(object itemOrder)
         {
+            bool exists = (itemOrder as ItemOrder).Item.Amount > 0;
             if (string.IsNullOrEmpty(TextSearchBar as string))
             {
-                return true;
+                return exists;
             }
-
-            return (itemOrder as ItemOrder).Item.Name.Contains(TextSearchBar as string, StringComparison.OrdinalIgnoreCase);
+            return (itemOrder as ItemOrder).Item.Name.Contains(TextSearchBar as string, StringComparison.OrdinalIgnoreCase) && exists;
         }
 
         private void RefreshItemViewSource(object sender, EventArgs e)
@@ -283,7 +288,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             else
             {
                 ReceiptId = await DbQueries.ReceiptQueries.InsertReceiptAsync(HasCustomer ? Customer.Id : "-1", TotalItemOrder.ToList(), PayInCash ? "Tiền mặt" : "Trả trước", TotalOrderCost);
-                /* TODO: Update customer's balance */
+                await DbQueries.CustomerQueries.UpdateCustomerBalanceOnPurchase(Customer, TotalOrderCost);
             }
         }
 
