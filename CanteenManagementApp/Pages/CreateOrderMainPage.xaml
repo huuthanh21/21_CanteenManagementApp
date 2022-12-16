@@ -80,13 +80,18 @@
                                 BorderBrush="Gray"
                                 BorderThickness="2"
                                 CornerRadius="5">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Color="Transparent" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Border.Background>
                             <StackPanel Orientation="Vertical"
                                         Width="95"
                                         Height="120">
                                 <Image Margin ="0 5 0 0 "
                                        MinWidth="80"
                                        Width="60" Height="54"
-                                       Source="{Binding Item.ImagePath}" />
+                                       Source="{Binding Path=Item.Id, Converter={StaticResource IdToImagePathConverter}}" />
                                 <StackPanel Orientation="Horizontal"
                                             VerticalAlignment="Center"
                                         Margin="0 0 0 0">
@@ -210,13 +215,18 @@
                                 BorderBrush="Gray"
                                 BorderThickness="2"
                                 CornerRadius="5">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Color="Transparent" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Border.Background>
                             <StackPanel Orientation="Vertical"
                                         Width="95"
                                         Height="120">
                                 <Image Margin ="0 5 0 0 "
                                        MinWidth="80"
                                        Width="60" Height="54"
-                                       Source="{Binding Item.ImagePath}" />
+                                       Source="{Binding Path=Item.Id, Converter={StaticResource IdToImagePathConverter}}" />
                                 <StackPanel Orientation="Horizontal"
                                             VerticalAlignment="Center"
                                         Margin="0 0 0 0">

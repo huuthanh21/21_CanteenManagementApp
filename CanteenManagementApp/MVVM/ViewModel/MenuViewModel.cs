@@ -96,8 +96,11 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     _foodItemsToday.RemoveAt(index);
                 }
 
-                // Update database
-                DbQueries.MenuQueries.DeleteMenuItem(item);
+                // Update database (bug)
+                //DbQueries.MenuQueries.DeleteMenuItem(item);
+
+                //  unprofessional :V
+                _ = DbQueries.MenuQueries.InsertMenuItems(_foodItemsToday);
             }
         }
 
@@ -156,7 +159,9 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     itemTemp.Amount = int.Parse(textBox.Text);
                     _foodItemsToday.Add(itemTemp);
                 }
+
             }
+            _ = DbQueries.MenuQueries.InsertMenuItems(_foodItemsToday);
         }
 
         public static DateTime GetYesterday()
