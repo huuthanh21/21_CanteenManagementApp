@@ -74,7 +74,12 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 screen.nameItem.Text = _foodItemsToday[index].Name.ToString();
                 if (screen.ShowDialog() == true)
                 {
-                    int amount = int.Parse(screen.textBoxAmount.Text);
+                    // template
+                    var amount_template = screen.textBoxAmount.Template;
+                    var control_amount = (TextBox)amount_template.FindName("TextboxInput", screen.textBoxAmount);
+
+                    //int amount = int.Parse(screen.textBoxAmount.Text);
+                    int amount = int.Parse(control_amount.Text);
                     _foodItemsToday[index].Amount = amount;
                     await DbQueries.MenuQueries.UpdateAmountMenuItem(_foodItemsToday[index], amount);
                 }
@@ -154,10 +159,21 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     // Finding textBox from the DataTemplate that is set on that ContentPresenter
                     DataTemplate myDataTemplate = myContentPresenter.ContentTemplate;
                     TextBox textBox = (TextBox)myDataTemplate.FindName("textBox", myContentPresenter);
+                    // template
+                    var amount_template = textBox.Template;
+                    var control_amount = (TextBox)amount_template.FindName("TextboxInput", textBox);
+                    string amount = control_amount.Text;
+                    
+                    //end template
+
+
                     Item newItem = (Item)item;
-                    newItem.Amount = int.Parse(textBox.Text);
+                    //newItem.Amount = int.Parse(textBox.Text);
+                    newItem.Amount = int.Parse(amount);
                     _foodItemsToday.Add(newItem);
                     await DbQueries.MenuQueries.InsertMenuItem(newItem);
+
+                    
                 }
             }
         }
