@@ -266,6 +266,42 @@ namespace CanteenManagementApp.MVVM.Model
 
             /* Update */
 
+            public static async Task UpdateAmountMenuItem(Item item, int amount)
+            {
+                using var context = new CanteenContext();
+                item.Amount = amount;
+                context.Items.Update(item);
+
+                int rows = await context.SaveChangesAsync();
+                Debug.WriteLine($"{rows} updated in items");
+            }
+
+            public static async Task UpdateAmountMenuItems(IEnumerable<Item> items)
+            {
+                using var context = new CanteenContext();
+                foreach (var item in items)
+                {
+                    item.Amount = 0;
+                }
+                context.Items.UpdateRange(items);
+
+                int rows = await context.SaveChangesAsync();
+                Debug.WriteLine($"{rows} updated in items");
+            }
+
+            public static async Task UpdateAmountMenuItems(params Item[] items)
+            {
+                using var context = new CanteenContext();
+                foreach (var item in items)
+                {
+                    item.Amount = 0;
+                }
+                context.Items.UpdateRange(items);
+
+                int rows = await context.SaveChangesAsync();
+                Debug.WriteLine($"{rows} updated in items");
+            }
+
             /* Delete */
 
             public static void DeleteMenuItem(Item item)

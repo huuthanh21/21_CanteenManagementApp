@@ -41,13 +41,13 @@ namespace CanteenManagementApp.MVVM.ViewModel
             // Source data:
             FoodItemsYesterdayCollection = new CollectionViewSource { Source = _foodItemsYesterday };
             FoodItemsTodayCollection = new CollectionViewSource { Source = _foodItemsToday };
-            ResetAmount(_foodItemsYesterday);
+            _ = ResetAmount(_foodItemsYesterday);
 
             // Command:
             AddItemToMenuCommand = new RelayCommand<MenuView>((parameter) => true, (parameter) => AddItemToMenu(parameter));
             CopyMenuCommand = new RelayCommand<MenuView>((parameter) => true, async (parameter) => await CopyMenu(parameter));
             DeleteItemMenuCommand = new RelayCommand<MenuView>((parameter) => true, (parameter) => DeleteItemMenu(parameter));
-            UpdateAmountCommand = new RelayCommand<MenuView>((parameter) => true, (parameter) => UpdateAmount(parameter));
+            UpdateAmountCommand = new RelayCommand<MenuView>((parameter) => true, async (parameter) => await UpdateAmount(parameter));
             OkUpdateAmount = new RelayCommand<UpdateAmountMenu>((parameter) => true, (parameter) => OkUpdate(parameter));
             CancelUpdateAmount = new RelayCommand<UpdateAmountMenu>((parameter) => true, (parameter) => CancelUpdate(parameter));
         }
@@ -62,7 +62,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             parameter.DialogResult = true;
         }
 
-        private void UpdateAmount(MenuView parameter)
+        private async Task UpdateAmount(MenuView parameter)
         {
             int index = parameter.foodListViewToday.SelectedIndex;
             if (index != -1)
@@ -72,15 +72,15 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 screen.nameItem.Text = _foodItemsToday[index].Name.ToString();
                 if (screen.ShowDialog() == true)
                 {
-                    _foodItemsToday[index].Amount = int.Parse(screen.textBoxAmount.Text);
+                    int amount = int.Parse(screen.textBoxAmount.Text);
+                    _foodItemsToday[index].Amount = amount;
+                    await DbQueries.MenuQueries.UpdateAmountMenuItem(_foodItemsToday[index], amount);
                 }
                 else
                 {
                     screen.Close();
                 }
             }
-
-            /* TODO: Update amount in database */
         }
 
         private void DeleteItemMenu(MenuView parameter)
@@ -154,7 +154,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     TextBox textBox = (TextBox)myDataTemplate.FindName("textBox", myContentPresenter);
                     Item itemTemp = (Item)item;
                     itemTemp.Amount = int.Parse(textBox.Text);
-                    this._foodItemsToday.Add(itemTemp);
+                    _foodItemsToday.Add(itemTemp);
                 }
             }
         }
@@ -168,12 +168,13 @@ namespace CanteenManagementApp.MVVM.ViewModel
             return today.AddDays(-1);
         }
 
-        public static void ResetAmount(ObservableCollection<Item> items)
+        public static async Task ResetAmount(ObservableCollection<Item> items)
         {
             foreach (Item item in items)
             {
                 item.Amount = 0;
             }
+            await DbQueries.MenuQueries.UpdateAmountMenuItems(items);
         }
     }
 }
