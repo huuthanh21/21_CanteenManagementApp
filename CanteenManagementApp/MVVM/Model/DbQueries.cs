@@ -215,7 +215,22 @@ namespace CanteenManagementApp.MVVM.Model
             /* Query */
 
             /* Insert */
+            public static async Task InsertMenuItemAsync(Item fooditem)
+            {
+                using var context = new CanteenContext();
 
+                var datetime = DateTime.Now;
+
+                Menu menu = new()
+                {
+                    Date = datetime,
+                    Item = fooditem
+                };
+                await context.Menus.AddAsync(menu);
+
+                int rows = await context.SaveChangesAsync();
+                Debug.WriteLine($"Saved {rows} menu");
+            }
             /* Update */
 
             /* Delete */

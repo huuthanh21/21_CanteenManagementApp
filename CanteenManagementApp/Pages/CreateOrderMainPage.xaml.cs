@@ -119,5 +119,6 @@ namespace CanteenManagementApp.Pages
 
             return parent;
         }
+
     }
 }

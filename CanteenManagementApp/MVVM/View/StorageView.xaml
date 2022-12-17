@@ -92,7 +92,7 @@
                         </MenuItem>
 
                         <MenuItem Header="Delete"
-                                  Command="{Binding Source={StaticResource Proxy}, Path=Data.DeleteCommand}"
+                                  Command="{Binding Source={StaticResource Proxy}, Path=Data.DeleteFoodItemCommand}"
                                   CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={
                                                 RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
                             <MenuItem.Icon>
@@ -218,7 +218,7 @@
                    Style="{StaticResource TextblockTitleSmall}"
                           VerticalAlignment="Center"/>
                 <Button Margin="5 0 0 0"
-                        Command="{Binding  AddItemInventoryCommand}"
+                        Command="{Binding  AddInventoryItemCommand}"
                         CommandParameter="{Binding ElementName=ucStorage}"
                         Style="{StaticResource ButtonAdd}"/>
             </StackPanel>
@@ -236,7 +236,7 @@
 
                     <ContextMenu x:Key="foodContextMenu">
                         <MenuItem Header="Edit" 
-                                  Command="{Binding Source={StaticResource Proxy}, Path=Data.EditInventoryCommand}"
+                                  Command="{Binding Source={StaticResource Proxy}, Path=Data.EditInventoryItemCommand}"
                                   CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={
                                                 RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
                             <MenuItem.Icon>
@@ -245,7 +245,7 @@
                         </MenuItem>
 
                         <MenuItem Header="Delete"
-                                  Command="{Binding Source={StaticResource Proxy}, Path=Data.DeleteInventoryCommand}"
+                                  Command="{Binding Source={StaticResource Proxy}, Path=Data.DeleteInventoryItemCommand}"
                                   CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={
                                                 RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
                             <MenuItem.Icon>
