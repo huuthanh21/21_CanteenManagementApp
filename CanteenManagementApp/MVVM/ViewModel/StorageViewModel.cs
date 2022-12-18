@@ -29,8 +29,8 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public ObservableCollection<Item> _tempfoodItems;
         public ObservableCollection<Item> _inventoryItems;
         //private CollectionViewSource StorageItemsCollection;
-        private readonly CollectionViewSource InventoryItemsCollection;
-        private readonly CollectionViewSource FoodItemsCollection;
+        private CollectionViewSource InventoryItemsCollection;
+        private CollectionViewSource FoodItemsCollection;
         //public ICollectionView StorageSourceCollection => StorageItemsCollection.View;
         public static string _imageFileName = "C:\\Users\\ADMIN\\Desktop\\Học tập\\Năm 3\\Học kì 1\\T4 (6-9) Nhập môn công nghệ phần mềm\\Test\\CanteenManagementApp\\Images\\empty_image.jpg";
 
@@ -52,6 +52,36 @@ namespace CanteenManagementApp.MVVM.ViewModel
         //public ICommand ButtonAddCommand { get; set; } 
         // Sửa ảnh
         public ICommand EditImageFoodItemCommand { get; set; } // Sửa ảnh bên Food Item
+        public ICommand EditImageInventoryItemCommand { get; set; } // Sửa ảnh bên Inventory Item
+        private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                if (child != null && child is childItem)
+                {
+                    return (childItem)child;
+                }
+                else
+                {
+                    childItem childOfChild = FindVisualChild<childItem>(child);
+                    if (childOfChild != null)
+                        return childOfChild;
+                }
+            }
+            return null;
+        }
+
+        private static BitmapImage GetBitmap(string filePath)
+        {
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.UriSource = new Uri(filePath);
+            bitmap.EndInit();
+            return bitmap;
+        }
+
         public StorageViewModel()
         {
             /*_allItems = new ObservableCollection<Item> { };
@@ -91,6 +121,28 @@ namespace CanteenManagementApp.MVVM.ViewModel
             SaveEditFoodItemCommand = new RelayCommand<EditFoodItem>((parameter) => true, (parameter) => SaveEditFoodItem(parameter));
             SaveEditInventoryItemCommand = new RelayCommand<EditInventoryItem>((parameter) => true, (parameter) => SaveEditInventoryItem(parameter));
             EditImageFoodItemCommand = new RelayCommand<EditFoodItem>((parameter) => true, (parameter) => EditImageFoodItem(parameter));
+            EditImageInventoryItemCommand = new RelayCommand<EditInventoryItem>((parameter) => true, (parameter) => EditImageInventoryItem(parameter));
+        }
+
+        private void EditImageInventoryItem(EditInventoryItem parameter)
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.Title = "Chọn ảnh";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" + "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" + "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == true)
+            {
+                _imageFileName = op.FileName;
+                ImageBrush imageBrush = new ImageBrush();
+                BitmapImage bitmap = GetBitmap(_imageFileName);
+               /* BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.UriSource = new Uri(_imageFileName);
+                bitmap.EndInit();*/
+                imageBrush.ImageSource = bitmap;
+                parameter.grdSelectImg.Background = imageBrush;
+                parameter.imageEmpty.Visibility = Visibility.Hidden;
+            }
         }
 
         private void EditImageFoodItem(EditFoodItem parameter)
@@ -102,11 +154,12 @@ namespace CanteenManagementApp.MVVM.ViewModel
             {
                 _imageFileName = op.FileName;
                 ImageBrush imageBrush = new ImageBrush();
-                BitmapImage bitmap = new BitmapImage();
+                BitmapImage bitmap = GetBitmap(_imageFileName);
+                /*BitmapImage bitmap = new BitmapImage();
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.UriSource = new Uri(_imageFileName);
-                bitmap.EndInit();
+                bitmap.EndInit();*/
                 imageBrush.ImageSource = bitmap;
                 parameter.grdSelectImg.Background = imageBrush;
                 parameter.imageEmpty.Visibility = Visibility.Hidden;
@@ -251,11 +304,12 @@ namespace CanteenManagementApp.MVVM.ViewModel
             {
                 _imageFileName = op.FileName;
                 ImageBrush imageBrush = new ImageBrush();
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.UriSource = new Uri(_imageFileName);
-                bitmap.EndInit();
+                BitmapImage bitmap = GetBitmap(_imageFileName);
+                /*  BitmapImage bitmap = new BitmapImage();
+                  bitmap.BeginInit();
+                  bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                  bitmap.UriSource = new Uri(_imageFileName);
+                  bitmap.EndInit();*/
                 imageBrush.ImageSource = bitmap;
                 parameter.grdSelectImg.Background = imageBrush;
                 parameter.imageEmpty.Visibility = Visibility.Hidden;
@@ -271,11 +325,12 @@ namespace CanteenManagementApp.MVVM.ViewModel
             {
                 _imageFileName = op.FileName;
                 ImageBrush imageBrush = new ImageBrush();
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.UriSource = new Uri(_imageFileName);
-                bitmap.EndInit();
+                BitmapImage bitmap = GetBitmap(_imageFileName);
+                /* BitmapImage bitmap = new BitmapImage();
+                 bitmap.BeginInit();
+                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                 bitmap.UriSource = new Uri(_imageFileName);
+                 bitmap.EndInit();*/
                 imageBrush.ImageSource = bitmap;
                 parameter.grdSelectImg.Background = imageBrush;
                 parameter.imageEmpty.Visibility = Visibility.Hidden;
@@ -304,8 +359,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
         //    }
         //}
 
-       
-
         private void SaveEditInventoryItem(EditInventoryItem parameter)
         {
             parameter.DialogResult = true;
@@ -320,6 +373,23 @@ namespace CanteenManagementApp.MVVM.ViewModel
             screen.priceTextBox.Text = itemSelected.Price.ToString();
             screen.describeTextBox.Text = itemSelected.Description;
             screen.amountTextBox.Text = itemSelected.Amount.ToString();
+
+            ImageBrush imageBrush = new ImageBrush();
+            BitmapImage bitmap = GetBitmap(GetFilePath(itemSelected.Id.ToString()));
+            imageBrush.ImageSource = bitmap;
+            screen.grdSelectImg.Background = imageBrush;
+            screen.imageEmpty.Visibility = Visibility.Hidden;
+
+            // Set temp image
+            //parameter.foodListView.ItemsSource = null;
+            ListViewItem myListViewItem = (ListViewItem)(parameter.inventoryListView.ItemContainerGenerator.ContainerFromItem(itemSelected));
+            // Getting the ContentPresenter of myListViewItem
+            ContentPresenter myContentPresenter = FindVisualChild<ContentPresenter>(myListViewItem);
+            // Finding image from the DataTemplate that is set on that ContentPresenter
+            DataTemplate myDataTemplate = myContentPresenter.ContentTemplate;
+            Image image = (Image)myDataTemplate.FindName("ImageItem", myContentPresenter);
+            image.Source = bitmap;
+
             if (screen.ShowDialog() == true)
             {
                 Item NewItem = new Item()
@@ -333,6 +403,9 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 };
                 DbQueries.ItemQueries.UpdateItem(int.Parse(screen.IdTextBox.Text), screen.nameTextBox.Text, float.Parse(screen.priceTextBox.Text), screen.describeTextBox.Text, int.Parse(screen.amountTextBox.Text));
                 _inventoryItems[parameter.inventoryListView.SelectedIndex] = NewItem;
+                CopyFileToAppFolder(NewItem.Id.ToString(), _imageFileName);
+                InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
+                parameter.inventoryListView.ItemsSource = InventorySourceCollection;
             }
              else
              {
@@ -354,16 +427,25 @@ namespace CanteenManagementApp.MVVM.ViewModel
             screen.nameTextBox.Text = itemSelected.Name;
             screen.priceTextBox.Text = itemSelected.Price.ToString();
             screen.describeTextBox.Text = itemSelected.Description;
-            parameter.foodListView.ItemsSource = null;
+
+
             ImageBrush imageBrush = new ImageBrush();
-            BitmapImage bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.CacheOption = BitmapCacheOption.OnLoad;
-            bitmap.UriSource = new Uri(GetFilePath(itemSelected.Id.ToString()));
-            bitmap.EndInit();
+            BitmapImage bitmap = GetBitmap(GetFilePath(itemSelected.Id.ToString()));
             imageBrush.ImageSource = bitmap;
             screen.grdSelectImg.Background = imageBrush;
             screen.imageEmpty.Visibility = Visibility.Hidden;
+
+            // Set temp image
+            //parameter.foodListView.ItemsSource = null;
+            ListViewItem myListViewItem = (ListViewItem)(parameter.foodListView.ItemContainerGenerator.ContainerFromItem(itemSelected));
+            // Getting the ContentPresenter of myListViewItem
+            ContentPresenter myContentPresenter = FindVisualChild<ContentPresenter>(myListViewItem);
+            // Finding image from the DataTemplate that is set on that ContentPresenter
+            DataTemplate myDataTemplate = myContentPresenter.ContentTemplate;
+            Image image = (Image)myDataTemplate.FindName("ImageItem", myContentPresenter);
+            image.Source = bitmap;
+
+
             if (screen.ShowDialog() == true)
             {
                 Item NewItem = new Item()
@@ -375,18 +457,19 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     Amount = 0,
                     Type = 0
                 };
-                DbQueries.ItemQueries.UpdateItem(int.Parse(screen.IdTextBox.Text), screen.nameTextBox.Text, float.Parse(screen.priceTextBox.Text), screen.describeTextBox.Text,itemSelected.Amount);
+                DbQueries.ItemQueries.UpdateItem(int.Parse(screen.IdTextBox.Text), screen.nameTextBox.Text, float.Parse(screen.priceTextBox.Text), screen.describeTextBox.Text, itemSelected.Amount);
                 _foodItems[itemSelectedidx] = NewItem;
                 CopyFileToAppFolder(NewItem.Id.ToString(), _imageFileName);
+                FoodItemsCollection = new CollectionViewSource { Source = _foodItems };
                 parameter.foodListView.ItemsSource = FoodSourceCollection;
             }
             else
             {
-                parameter.foodListView.ItemsSource = FoodSourceCollection;
             }
-            
+
             screen.Close();
         }
+
         private void DeleteInventoryItem(StorageView parameter)
         {
             int i = parameter.inventoryListView.SelectedIndex;

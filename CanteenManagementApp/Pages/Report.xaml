@@ -40,7 +40,7 @@
                 Background="#0033A1"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Content="Báo cáo ngày"
+                Content="Báo cáo tháng"
                 FontSize="32"
                 Click="MonthlyReport_Click"
                 Tag="/Images/monthlyreport.png"
