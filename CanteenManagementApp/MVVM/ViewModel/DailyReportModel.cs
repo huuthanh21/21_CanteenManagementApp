@@ -18,8 +18,8 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public int Month { get; set; }
         public int Year { get; set; }
 
-        private readonly CollectionViewSource ReportItemsCollectionSource;
-        public ICollectionView ReportItemsCollection => ReportItemsCollectionSource.View;
+        private readonly CollectionViewSource _reportItemsCollectionSource;
+        public ICollectionView ReportItemsCollection => _reportItemsCollectionSource.View;
 
         public RelayCommand DateChangedCommand { get; set; }
 
@@ -35,7 +35,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 new ReportItem() { Name = "Tổng món ăn hàng ngày bán được", Value = "0"},
                 new ReportItem() { Name = "Tổng doanh thu món ăn hàng ngày", Value = "0"}
             };
-            ReportItemsCollectionSource = new CollectionViewSource { Source = _dailyListItems };
+            _reportItemsCollectionSource = new CollectionViewSource { Source = _dailyListItems };
 
             DateChangedCommand = new RelayCommand(async o =>
             {

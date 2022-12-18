@@ -32,11 +32,6 @@ namespace CanteenManagementApp.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((parameter as string) == "Tổng hàng tồn kho bán được" || (parameter as string) == "Tổng món ăn hàng ngày bán được")
-            {
-                return value;
-            }
-
             decimal dec;
             string currency;
             try

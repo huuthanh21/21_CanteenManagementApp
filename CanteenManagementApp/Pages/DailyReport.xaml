@@ -15,14 +15,13 @@
     <Page.Resources>
         <ResourceDictionary>
             <converters:StringToIntConverter x:Key="StringToIntConverter" />
-            <converters:FloatToCurrencyConverter x:Key="FloatToCurrency" />
             <Style TargetType="TextBlock" x:Key="TextBlockReportPage">
-                <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                <Setter Property="FontFamily" Value="{DynamicResource Inter}"></Setter>
-                <Setter Property="FontSize" Value="12.5"></Setter>
-                <Setter Property="FontWeight" Value="SemiBold"></Setter>
-                <Setter Property="Padding" Value="10"></Setter>
-                <Setter Property="Background" Value="Transparent"></Setter>
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="FontFamily" Value="{DynamicResource Inter}" />
+                <Setter Property="FontSize" Value="12.5" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="Background" Value="Transparent" />
             </Style>
         </ResourceDictionary>
     </Page.Resources>

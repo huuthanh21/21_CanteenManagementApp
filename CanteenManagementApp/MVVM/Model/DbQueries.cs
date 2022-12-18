@@ -418,13 +418,30 @@ namespace CanteenManagementApp.MVVM.Model
                 return itemOrders;
             }
 
+            // Get daily revenue (Top-up excluded)
             public static async Task<float> GetDayRevenueAsync(DateOnly date)
             {
                 using var context = new CanteenContext();
 
-                float revenue = await context.Receipts
-                                    .Where(r => r.DateTime.Day == date.Day && r.DateTime.Month == date.Month && r.DateTime.Year == date.Year)
-                                    .SumAsync(r => r.Total);
+                float revenue = await context.Receipts.Where(r => r.DateTime.Day == date.Day && r.DateTime.Month == date.Month && r.DateTime.Year == date.Year)
+                                    .Join(context.Receipt_Items, r => r.Id, ri => ri.ReceiptId, (r, ri) => new { r.Id, ri.ItemId, ri.Amount })
+                                    .Where(rii => rii.ItemId != 100)
+                                    .Join(context.Items, rii => rii.ItemId, i => i.Id, (rii, i) => new { rii.Amount, i.Price })
+                                    .SumAsync(riit => riit.Amount * riit.Price);
+
+                return revenue;
+            }
+
+            // Get monthly revenue (Top-up excluded)
+            public static async Task<float> GetMonthRevenueAsync(DateOnly date)
+            {
+                using var context = new CanteenContext();
+
+                float revenue = await context.Receipts.Where(r => r.DateTime.Month == date.Month && r.DateTime.Year == date.Year)
+                                    .Join(context.Receipt_Items, r => r.Id, ri => ri.ReceiptId, (r, ri) => new { r.Id, ri.ItemId, ri.Amount })
+                                    .Where(rii => rii.ItemId != 100)
+                                    .Join(context.Items, rii => rii.ItemId, i => i.Id, (rii, i) => new { rii.Amount, i.Price })
+                                    .SumAsync(riit => riit.Amount * riit.Price);
 
                 return revenue;
             }
@@ -437,9 +454,41 @@ namespace CanteenManagementApp.MVVM.Model
                 var sales = await context.Receipts
                                         .Where(r => r.DateTime.Day == date.Day && r.DateTime.Month == date.Month && r.DateTime.Year == date.Year)
                                         .Join(context.Receipt_Items, r => r.Id, ri => ri.ReceiptId, (r, ri) => new { ri.ItemId, ri.Amount })
-                                        .Join(context.Items, ri => ri.ItemId, i => i.Id, (ri, i) => new { i.Type, ri.Amount, i.Price })
-                                        .Where(rii => rii.Type == itemType)
-                                        .GroupBy(i => i.Type)
+                                        .Where(rri => rri.ItemId != 100)
+                                        .Join(context.Items, rri => rri.ItemId, i => i.Id, (rri, i) => new { i.Type, rri.Amount, i.Price })
+                                        .Where(rrii => rrii.Type == itemType)
+                                        .GroupBy(rrii => rrii.Type)
+                                        .Select(itemGroup => new
+                                        {
+                                            Type = itemGroup.Key,
+                                            SalesAmount = itemGroup.Sum(i => i.Amount),
+                                            Revenue = itemGroup.Sum(i => i.Price * i.Amount)
+                                        })
+                                        .Select(i => new Tuple<int, float>(
+                                                i.SalesAmount,
+                                                i.Revenue
+                                            ))
+                                        .FirstOrDefaultAsync();
+                if (sales is null)
+                {
+                    return new Tuple<int, float>(0, 0);
+                }
+
+                return sales;
+            }
+
+            // Returns 2 records with the structure of (Type, SalesAmount, Revenue)
+            public static async Task<Tuple<int, float>> GetItemSalesByMonthAsync(DateOnly date, int itemType)
+            {
+                using var context = new CanteenContext();
+
+                var sales = await context.Receipts
+                                        .Where(r => r.DateTime.Month == date.Month && r.DateTime.Year == date.Year)
+                                        .Join(context.Receipt_Items, r => r.Id, ri => ri.ReceiptId, (r, ri) => new { ri.ItemId, ri.Amount })
+                                        .Where(rri => rri.ItemId != 100)
+                                        .Join(context.Items, rri => rri.ItemId, i => i.Id, (rri, i) => new { i.Type, rri.Amount, i.Price })
+                                        .Where(rrii => rrii.Type == itemType)
+                                        .GroupBy(rrii => rrii.Type)
                                         .Select(itemGroup => new
                                         {
                                             Type = itemGroup.Key,
