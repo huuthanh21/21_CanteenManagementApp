@@ -100,11 +100,13 @@ namespace CanteenManagementApp.MVVM.ViewModel
                                                 "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
+                    _foodItemsToday[index].Amount = 0;
                     _foodItemsToday.RemoveAt(index);
                 }
 
                 // Update database
                 DbQueries.MenuQueries.DeleteMenuItem(item);
+                _ = DbQueries.ItemQueries.UpdateItem(item);
             }
         }
 
