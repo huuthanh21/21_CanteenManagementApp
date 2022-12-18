@@ -34,7 +34,9 @@
                      HorizontalAlignment="Left"
                      Text="Nhập món cần tìm"
                      Style="{StaticResource TextboxSearchBar}"
-                     Margin="15 0 20 0" />
+                     Tag="{Binding TextSearchBar, Mode=OneWayToSource, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="15 0 20 0" 
+                     />
             <Button Grid.Column="2" Grid.Row="2"
                 HorizontalAlignment="Left"
                 Width="95" Height="31"

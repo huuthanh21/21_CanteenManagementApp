@@ -78,8 +78,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
                  }
              }*/
 
-            }
-
             FoodItemsCollection = new CollectionViewSource { Source = _foodItems };
             InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
             EditFoodItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => EditFoodItem(parameter));
@@ -275,7 +273,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 var control_price = (TextBox)price_template.FindName("TextboxInput", screen.priceTextBox);
                 string price = control_price.Text;
 
-                Item newItem = new()
+                Item NewItem = new()
                 {
                     Name = name,
                     Price = float.Parse(price),
