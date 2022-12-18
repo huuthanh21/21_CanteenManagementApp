@@ -55,9 +55,9 @@
     <Resource Include="Images\edit_blue_icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\empty_image.jpg">
+    <Content Include="Images\empty_image.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
     <Resource Include="Fonts\segmdl2.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

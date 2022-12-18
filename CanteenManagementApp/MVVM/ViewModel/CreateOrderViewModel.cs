@@ -10,12 +10,28 @@ using System.Windows.Input;
 using System.Windows;
 using CanteenManagementApp.MVVM.View;
 using System.Threading.Tasks;
+using System;
+using PropertyChanged;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
     public class CreateOrderViewModel : ObservableObject
     {
         private const int TOP_UP_ITEM_ID = 100;
+        private object _textSearchBar;
+
+        private readonly EventHandler TextSearchBarChanged;
+
+        public object TextSearchBar
+        {
+            get { return _textSearchBar; }
+            set
+            {
+                _textSearchBar = value;
+                OnTextSearchBarChanged(EventArgs.Empty);
+            }
+        }
+
         public RelayCommand NavigateMainPageCommand { get; set; }
         public RelayCommand NavigateMainPageWithResetCommand { get; set; }
         public RelayCommand NavigatePaymentPageCommand { get; set; }
@@ -177,8 +193,10 @@ namespace CanteenManagementApp.MVVM.ViewModel
             }
 
             _foodItemsCollection = new CollectionViewSource { Source = ListFoodItemOrder };
-            _totalOrderItemsCollection = new CollectionViewSource { Source = TotalItemOrder };
+            FoodSourceCollection.Filter = ItemFilter;
             _inventoryItemsCollection = new CollectionViewSource { Source = ListInventoryItemOrder };
+            InventorySourceCollection.Filter = ItemFilter;
+            _totalOrderItemsCollection = new CollectionViewSource { Source = TotalItemOrder };
             IncreaseAmountOrderCommand = new RelayCommand<CreateOrderMainPage>((parameter) => true, (parameter) => IncreaseAmountOrder(parameter));
 
             RemoveItemOrderCommand = new RelayCommand<int>(itemId => true, itemId =>
@@ -195,6 +213,30 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     }
                 }
             });
+
+            TextSearchBarChanged += RefreshItemViewSource;
+        }
+
+        public bool ItemFilter(object itemOrder)
+        {
+            if (string.IsNullOrEmpty(TextSearchBar as string))
+            {
+                return true;
+            }
+
+            return (itemOrder as ItemOrder).Item.Name.Contains(TextSearchBar as string, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private void RefreshItemViewSource(object sender, EventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(FoodSourceCollection).Refresh();
+            CollectionViewSource.GetDefaultView(InventorySourceCollection).Refresh();
+        }
+
+        [SuppressPropertyChangedWarnings]
+        public void OnTextSearchBarChanged(EventArgs e)
+        {
+            TextSearchBarChanged?.Invoke(this, e);
         }
 
         public void AddTopUpItem(int amount)
@@ -299,6 +341,10 @@ namespace CanteenManagementApp.MVVM.ViewModel
             }
             foreach (Item item in new ObservableCollection<Item>(DbQueries.ItemQueries.GetItemsByType(1)))
             {
+                if (item.Id == 100)
+                {
+                    continue;
+                }
                 ListInventoryItemOrder.Add(new ItemOrder() { Item = (Item)item.Clone() });
             }
         }

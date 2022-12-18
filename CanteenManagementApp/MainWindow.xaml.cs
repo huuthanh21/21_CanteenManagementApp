@@ -5,6 +5,7 @@ using System.Windows.Input;
 using CanteenManagementApp.MVVM.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.IO;
 
 namespace CanteenManagementApp
 {
@@ -18,9 +19,9 @@ namespace CanteenManagementApp
             InitializeComponent();
 
             // Implementation on app's first run
-            // _ = ImplementFirstRun();
+            _ = ImplementFirstRun();
             // Write your testing code in this method
-            //_ = QueryTest();
+            _ = QueryTest();
         }
 
         private static async Task ImplementFirstRun()
@@ -31,20 +32,42 @@ namespace CanteenManagementApp
                 await DbQueries.CustomerQueries.InsertCustomerAsync("-1", "Không có tài khoản", "Trống");
             }
 
-            // Add Top-up item
-            if (DbQueries.ItemQueries.GetItemById(100) == null)
+            SetupFolder();
+        }
+
+        private static void SetupFolder()
+        {
+            var appdataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var appFolder = "21CanteenManager";
+            var appPath = Path.Combine(appdataPath, appFolder);
+            if (!File.Exists(appPath))
             {
-                Item top_up = new()
-                {
-                    Id = 100,
-                    Type = 1,
-                    Amount = 0,
-                    Description = "Nạp tiền vào tài khoản khách hàng",
-                    Price = 10000,
-                    Name = "Nạp tiền"
-                };
-               /* await DbQueries.ItemQueries.InsertItemAsync(top_up, true);*/
+                CreateFolder(appPath);
             }
+
+            var folder = AppDomain.CurrentDomain.BaseDirectory;
+            var imagesFolder = $"{folder}Images";
+            var pathEmptyImages = $"{imagesFolder}\\empty_image.jpg";
+
+            var defaultImageName = "default.jpg";
+            var defaultImagePath = Path.Combine(appPath, defaultImageName);
+            if (!File.Exists(defaultImagePath))
+            {
+                File.Copy(pathEmptyImages, defaultImagePath);
+            }
+
+        }
+
+        public static void CreateFolder(string strPath)
+        {
+            try
+            {
+                if (Directory.Exists(strPath) == false)
+                {
+                    Directory.CreateDirectory(strPath);
+                }
+            }
+            catch { }
         }
 
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -68,10 +91,9 @@ namespace CanteenManagementApp
         public static async Task CreateDatabase()
         {
             Debug.WriteLine("Vao create ne");
-            /*await DropDatabase();*/
+            await DropDatabase();
 
             using var dbContext = new CanteenContext();
-            String databasename = dbContext.Database.GetDbConnection().Database;
 
             Debug.WriteLine("Create ne");
             bool result = await dbContext.Database.EnsureCreatedAsync();
@@ -82,7 +104,7 @@ namespace CanteenManagementApp
         {
             Debug.WriteLine("Vao drop ne");
             using var context = new CanteenContext();
-            String databasename = context.Database.GetDbConnection().Database;
+            string databasename = context.Database.GetDbConnection().Database;
 
             Debug.WriteLine("Drop ne");
             bool deleted = await context.Database.EnsureDeletedAsync();

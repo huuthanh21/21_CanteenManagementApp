@@ -138,12 +138,24 @@ namespace CanteenManagementApp.MVVM.Model
                 Debug.WriteLine($"Saved {rows} items");
             }
 
-            public static async Task InsertItemAsync(Item item)
+            public static async Task InsertItemAsync(Item item, bool identityInsert = false)
             {
                 using var context = new CanteenContext();
+                using var transaction = context.Database.BeginTransaction();
                 await context.Items.AddAsync(item);
 
-                int rows = await context.SaveChangesAsync();
+                int rows;
+                if (identityInsert)
+                {
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Item ON;");
+                    rows = await context.SaveChangesAsync();
+                    context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Item OFF;");
+                    transaction.Commit();
+                }
+                else
+                {
+                    rows = await context.SaveChangesAsync();
+                }
                 Debug.WriteLine($"Saved {rows} items");
             }
             /*public static async Task InsertItemAsync(Item item, bool identityInsert = false)
