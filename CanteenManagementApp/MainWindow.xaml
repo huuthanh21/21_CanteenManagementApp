@@ -6,7 +6,8 @@
         xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
         xmlns:local="clr-namespace:CanteenManagementApp"
         mc:Ignorable="d"
-        Title="21 Canteen Manager" 
+        WindowStartupLocation="CenterScreen"
+        Title="21 Canteen Manager"
         Height="660" Width="860"
         MouseDown="Window_MouseDown"
         ResizeMode="NoResize"
@@ -14,7 +15,7 @@
         Background="Transparent"
         AllowsTransparency="True">
     <Window.DataContext>
-        <viewModel:MainViewModel/>
+        <viewModel:MainViewModel />
     </Window.DataContext>
     <Window.Resources>
         <Style TargetType="Image">
@@ -31,58 +32,58 @@
             CornerRadius="8">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="180"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="180" />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
-                <RowDefinition/>
+                <RowDefinition Height="100" />
+                <RowDefinition />
             </Grid.RowDefinitions>
 
             <Image Source="Images/logo.png"
-                   Width="70"/>
+                   Width="70" />
 
             <StackPanel Grid.Row="1"
                         Margin="10 50 0 0">
-                <RadioButton x:Name="NavigateButtonCreateOrder" 
+                <RadioButton x:Name="NavigateButtonCreateOrder"
                              Content="Tạo đơn hàng"
                              Height="43"
                              FontSize="15"
                              Tag="/Images/icon_create_order.png"
                              Style="{StaticResource MenuButtonTheme}"
                              IsChecked="True"
-                             Command="{Binding CreateOrderViewCommand}"/>
-                <RadioButton x:Name="NavigateButtonCustomer" 
+                             Command="{Binding CreateOrderViewCommand}" />
+                <RadioButton x:Name="NavigateButtonCustomer"
                              Content="Khách hàng"
                              Height="43"
                              FontSize="15"
                              Tag="/Images/icon_customer.png"
                              Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding CustomerViewCommand}"/>
+                             Command="{Binding CustomerViewCommand}" />
                 <RadioButton x:Name="NavigateButtonMenu"
                              Content="Thực đơn"
                              Height="43"
                              FontSize="15"
                              Tag="/Images/icon_menu.png"
                              Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding MenuViewCommand}"/>
+                             Command="{Binding MenuViewCommand}" />
                 <RadioButton x:Name="NavigateButtonStorage"
                              Content="Kho hàng"
                              Height="43"
                              FontSize="15"
                              Tag="/Images/icon_storage.png"
                              Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding StorageViewCommand}"/>
+                             Command="{Binding StorageViewCommand}" />
                 <RadioButton x:Name="NavigateButtonReport"
                              Content="Báo cáo"
                              Height="43"
                              FontSize="15"
                              Tag="/Images/icon_report.png"
                              Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding ReportViewCommand}"/>
+                             Command="{Binding ReportViewCommand}" />
             </StackPanel>
-            <Border Grid.Column="1" 
+            <Border Grid.Column="1"
                     Grid.RowSpan="2"
                     CornerRadius="0 8 8 0"
                     Background="#F8F8F8"
@@ -90,14 +91,14 @@
                 <StackPanel Margin="0 0 0 0">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <StackPanel.Resources>
-                            <Style TargetType="Button" BasedOn="{StaticResource toolbarButtonStyle}"/>
+                            <Style TargetType="Button" BasedOn="{StaticResource toolbarButtonStyle}" />
                         </StackPanel.Resources>
-                        <Button x:Name="ControlButtonMinumize"  
+                        <Button x:Name="ControlButtonMinumize"
                                 BorderBrush="Transparent"
                                 Background="Transparent"
                                 Width="40"
                                 Click="ControlButtonMinumize_Click"
-                                Content="" IsTabStop="False"/>
+                                Content="" IsTabStop="False" />
                         <Button x:Name="ControlButtonClose"
                                 BorderBrush="Transparent"
                                 Background="Transparent"
@@ -107,10 +108,9 @@
                         </Button>
                     </StackPanel>
                     <ContentControl
-                                Content="{Binding CurrentView}"/>
+                                Content="{Binding CurrentView}" />
                 </StackPanel>
             </Border>
         </Grid>
     </Border>
 </Window>
-    

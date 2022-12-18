@@ -418,6 +418,47 @@ namespace CanteenManagementApp.MVVM.Model
                 return itemOrders;
             }
 
+            public static async Task<float> GetDayRevenueAsync(DateOnly date)
+            {
+                using var context = new CanteenContext();
+
+                float revenue = await context.Receipts
+                                    .Where(r => r.DateTime.Day == date.Day && r.DateTime.Month == date.Month && r.DateTime.Year == date.Year)
+                                    .SumAsync(r => r.Total);
+
+                return revenue;
+            }
+
+            // Returns 2 records with the structure of (Type, SalesAmount, Revenue)
+            public static async Task<Tuple<int, float>> GetItemSalesByDayAsync(DateOnly date, int itemType)
+            {
+                using var context = new CanteenContext();
+
+                var sales = await context.Receipts
+                                        .Where(r => r.DateTime.Day == date.Day && r.DateTime.Month == date.Month && r.DateTime.Year == date.Year)
+                                        .Join(context.Receipt_Items, r => r.Id, ri => ri.ReceiptId, (r, ri) => new { ri.ItemId, ri.Amount })
+                                        .Join(context.Items, ri => ri.ItemId, i => i.Id, (ri, i) => new { i.Type, ri.Amount, i.Price })
+                                        .Where(rii => rii.Type == itemType)
+                                        .GroupBy(i => i.Type)
+                                        .Select(itemGroup => new
+                                        {
+                                            Type = itemGroup.Key,
+                                            SalesAmount = itemGroup.Sum(i => i.Amount),
+                                            Revenue = itemGroup.Sum(i => i.Price * i.Amount)
+                                        })
+                                        .Select(i => new Tuple<int, float>(
+                                                i.SalesAmount,
+                                                i.Revenue
+                                            ))
+                                        .FirstOrDefaultAsync();
+                if (sales is null)
+                {
+                    return new Tuple<int, float>(0, 0);
+                }
+
+                return sales;
+            }
+
             /* Insert */
 
             public static async Task<int> InsertReceiptAsync(string customerId, List<ItemOrder> item_orders, string paymentMethod, float total)

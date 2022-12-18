@@ -13,7 +13,7 @@ namespace CanteenManagementApp.Converters
             decimal dec;
             try
             {
-                 dec = new((float)values[0]);
+                dec = new((float)values[0]);
             }
             catch (InvalidCastException)
             {
@@ -32,6 +32,11 @@ namespace CanteenManagementApp.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if ((parameter as string) == "Tổng hàng tồn kho bán được" || (parameter as string) == "Tổng món ăn hàng ngày bán được")
+            {
+                return value;
+            }
+
             decimal dec;
             string currency;
             try
