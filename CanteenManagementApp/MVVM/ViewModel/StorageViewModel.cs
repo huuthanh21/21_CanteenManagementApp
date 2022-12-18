@@ -78,6 +78,8 @@ namespace CanteenManagementApp.MVVM.ViewModel
                  }
              }*/
 
+            }
+
             FoodItemsCollection = new CollectionViewSource { Source = _foodItems };
             InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
             EditFoodItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => EditFoodItem(parameter));
@@ -258,16 +260,22 @@ namespace CanteenManagementApp.MVVM.ViewModel
             screen.ShowDialog();
             if (screen.DialogResult == true)
             {
+                // Get item's name
                 var name_template = screen.nameTextBox.Template;
                 var control_name = (TextBox)name_template.FindName("TextboxInput", screen.nameTextBox);
                 string name = control_name.Text;
+
+                // Get item's description
                 var description_template = screen.describeTextBox.Template;
                 var control_description = (TextBox)description_template.FindName("TextboxInput", screen.describeTextBox);
                 string description = control_description.Text;
+
+                // Get item's price
                 var price_template = screen.priceTextBox.Template;
                 var control_price = (TextBox)price_template.FindName("TextboxInput", screen.priceTextBox);
                 string price = control_price.Text;
-                Item NewItem = new Item()
+
+                Item newItem = new()
                 {
                     Name = name,
                     Price = float.Parse(price),
@@ -400,7 +408,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         {
             parameter.DialogResult = true;
         }
-
+         
         private void EditInventoryItem(StorageView parameter)
         {
             var itemSelected = parameter.inventoryListView.SelectedItem as Item;
@@ -429,7 +437,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
             if (screen.ShowDialog() == true)
             {
-                Item NewItem = new Item()
+                Item NewItem = new()
                 {
                     Id = itemSelected.Id,
                     Name = screen.nameTextBox.Text,
@@ -485,7 +493,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
             if (screen.ShowDialog() == true)
             {
-                Item NewItem = new Item()
+                Item NewItem = new()
                 {
                     Id = int.Parse(screen.IdTextBox.Text),
                     Name = screen.nameTextBox.Text,

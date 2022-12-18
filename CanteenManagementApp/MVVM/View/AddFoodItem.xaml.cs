@@ -1,11 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using CanteenManagementApp.MVVM.Model;
-using Microsoft.Win32;
+﻿using System.Windows;
 
 namespace CanteenManagementApp.MVVM.View
 {

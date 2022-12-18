@@ -6,17 +6,18 @@
         xmlns:local="clr-namespace:CanteenManagementApp.MVVM.View"
         xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         x:Name="wdAddItemToMenu"
         Title="AddItemToMenu" Height="610" Width="585">
     <Window.DataContext>
-        <viewModel:AddItemToMenuViewModel/>
+        <viewModel:AddItemToMenuViewModel />
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0"/>
-            <RowDefinition Height="80"/>
-            <RowDefinition Height="37"/>
-            <RowDefinition/>
+            <RowDefinition Height="0" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="37" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" RenderOptions.BitmapScalingMode="HighQuality">
@@ -25,50 +26,46 @@
             <TextBlock Text="Chọn mặt hàng"
                    Grid.Row="1"
                    Style="{StaticResource TextblockTitle}"
-                       VerticalAlignment="Center"/>
-
+                       VerticalAlignment="Center" />
         </StackPanel>
-
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
             <TextBox Width="409" Height="31"
                      HorizontalAlignment="Left"
                      Text="Nhập món cần tìm"
                      Style="{StaticResource TextboxSearchBar}"
-                     Margin="15 0 20 0"/>
+                     Margin="15 0 20 0" />
             <Button Grid.Column="2" Grid.Row="2"
                 HorizontalAlignment="Left"
                 Width="95" Height="31"
                 Content="Tìm kiếm"
                 Background="#E1251B"
-                Style="{StaticResource ButtonCustomColorPositive}"/>
-
+                Style="{StaticResource ButtonCustomColorPositive}" />
         </StackPanel>
         <!--Display list of items-->
         <StackPanel Grid.Row="3">
             <StackPanel Orientation="Horizontal">
-                <Image Source="/Images/up.png" Margin="55 0 0 0" Width="15" Height="11"/>
+                <Image Source="/Images/up.png" Margin="55 0 0 0" Width="15" Height="11" />
                 <TextBlock Text="Món ăn hàng ngày"
                                        Margin="15 12 0 10"
                                        Style="{StaticResource TextblockTitleSmall}"
-                                       VerticalAlignment="Center"/>
+                                       VerticalAlignment="Center" />
                 <!--Command="{Binding AddItemCommand}"
                                     CommandParameter="{Binding ElementName=ucStorage}"-->
             </StackPanel>
 
-
             <ListView Width="510" Height="300"
                               Margin="0"
                               Padding="10 0 0 0"
-                              BorderThickness="0" 
-                              ItemsSource="{Binding FoodSourceCollection}" 
+                              BorderThickness="0"
+                              ItemsSource="{Binding FoodSourceCollection}"
                               Name="foodListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.VerticalScrollBarVisibility="Visible"
-                              HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=15}" 
+                              HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=15}"
                               SelectionMode="Multiple">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel/>
+                        <WrapPanel />
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
 
@@ -78,44 +75,44 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:Name="data">
                         <Border x:Name="border"
-                                            BorderBrush="Gray" 
-                                            BorderThickness="2"  
-                                            CornerRadius="5" >
+                                            BorderBrush="Gray"
+                                            BorderThickness="2"
+                                            CornerRadius="5">
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                     <GradientStop Color="Transparent" Offset="1.0" />
                                 </LinearGradientBrush>
                             </Border.Background>
-                            <StackPanel Orientation="Vertical" 
+                            <StackPanel Orientation="Vertical"
                                                  Width="104"
-                                                    Height="120" >
+                                                    Height="120">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Margin ="0 5 3 0 "
                                                MinWidth="80"
                                                Width="50" Height="54"
                                                x:Name="ImageItem"
-                                               Source="{Binding Path=Id, Converter={StaticResource IdToImagePathConverter}}"/>
+                                               Source="{Binding Path=Id, Converter={StaticResource IdToImagePathConverter}}" />
                                     <Image x:Name="check_select"
                                            Width="17" Height="17" Source="/Images/check_select.png" VerticalAlignment="Top"
                                            Margin="0 8 6 0" Visibility="Hidden" />
                                 </StackPanel>
-                                
-                                <StackPanel Orientation="Vertical" 
+
+                                <StackPanel Orientation="Vertical"
                                             VerticalAlignment="Center"
-                                            Margin="0 0 0 0" >
+                                            Margin="0 0 0 0">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock TextAlignment="Left"
                                                    TextWrapping="WrapWithOverflow"
-                                                   Width="48" 
+                                                   Width="48"
                                                    Height="30"
-                                                   Foreground="Black" 
+                                                   Foreground="Black"
                                                    FontSize="10"
                                                    Text="{Binding Name}"
                                                    Style="{StaticResource TextblockTitleSmall}"
                                                    Margin="0 0 0 0"
-                                                   Padding="3 5 0 0"/>
+                                                   Padding="5 5 0 0" />
 
-                                        <TextBlock Foreground="#0033A1" 
+                                        <TextBlock Foreground="#0033A1"
                                                  HorizontalAlignment="Left"
                                                  VerticalAlignment="Top"
                                                  TextWrapping="WrapWithOverflow"
@@ -125,13 +122,27 @@
                                                  Style="{StaticResource TextblockTitleSmall}"
                                                  Text="{Binding Price}"
                                                  Height="30"
-                                                 Width="50"/>
+                                                 Width="50" />
                                     </StackPanel>
                                     <!--TextBox Amount-->
-                                    <TextBox x:Name="textBox" Width="45" Height="18"
-                                             BorderBrush="#0033A1" Text="{Binding Amount}"
-                                             Margin="0 8 0 0"
-                                             Visibility="Hidden"/>
+                                    <StackPanel x:Name="stackPanelAmount"
+                                                Visibility="Hidden"
+                                                Orientation="Horizontal"
+                                                HorizontalAlignment="Center">
+                                        <TextBlock Text="Số lượng: "
+                                                   Style="{StaticResource TextblockTitleSmall}"
+                                                   FontSize="10"
+                                                    Margin="0 3.5 1 0" />
+                                        <TextBox x:Name="textBox" Width="41" Height="16"
+                                             BorderBrush="#0033A1"
+                                             Foreground="#0033A1"
+                                             Text="0"
+                                             Margin="0 2 0 0"
+                                             Style="{StaticResource CustomTextboxAddItem}" />
+                                    </StackPanel>
+
+                                    <!--Visibility="Hidden"
+                                    -->
                                 </StackPanel>
                             </StackPanel>
                         </Border>
@@ -149,36 +160,34 @@
                             <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={
                                                       RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem }}}"
                                                       Value="True">
-                                <Setter Property="Visibility" Value="Visible" TargetName="check_select"/>
-                                <Setter Property="Visibility" Value="Visible" TargetName="textBox"/>
+                                <Setter Property="Visibility" Value="Visible" TargetName="check_select" />
+                                <Setter Property="Visibility" Value="Visible" TargetName="stackPanelAmount" />
                                 <Setter Property="BorderBrush"
                                                     TargetName="border"
                                                     Value="#0033A1" />
-                                <Setter Property="Cursor" Value="Hand"/>
+                                <Setter Property="Cursor" Value="Hand" />
                             </DataTrigger>
                         </DataTemplate.Triggers>
                     </DataTemplate>
                 </ListView.ItemTemplate>
 
                 <ListView.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListViewItem}" >
+                    <Style TargetType="{x:Type ListViewItem}">
                         <!--remove green selected area-->
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                    <ContentPresenter/>
+                                    <ContentPresenter />
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
 
                         <Setter Property="Tag" Value="{Binding ElementName=ucStorage}" />
-                        <Setter Property="Margin" Value="5"/>
+                        <Setter Property="Margin" Value="5" />
                     </Style>
                 </ListView.ItemContainerStyle>
-
             </ListView>
 
-            
             <!--Button add, cancel-->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button  x:Name="CancelButton"
@@ -188,7 +197,7 @@
                          Content="Hủy"
                          Height="32"
                          Margin="0 30 20 5"
-                         Style="{StaticResource ButtonCustomColorCancel}"/>
+                         Style="{StaticResource ButtonCustomColorCancel}" />
 
                 <Button  x:Name="AddOkButton"
                          Background="#0033A1"
@@ -198,12 +207,10 @@
                          Margin="0 30 80 5"
                          Command="{Binding AddItemToMenuOkCommand}"
                          CommandParameter="{Binding ElementName=wdAddItemToMenu}"
-                         Style="{StaticResource ButtonCustomColorPositive}"/>
+                         Style="{StaticResource ButtonCustomColorPositive}" />
             </StackPanel>
 
             <!--AddItemToMenuOk-->
-
         </StackPanel>
-
     </Grid>
 </Window>

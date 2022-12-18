@@ -88,10 +88,19 @@
                             <StackPanel Orientation="Vertical"
                                         Width="95"
                                         Height="120">
-                                <Image Margin ="0 5 0 0 "
-                                       MinWidth="80"
-                                       Width="60" Height="54"
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin ="2 5 2.5 0 "
+                                       MinWidth="65"
+                                       Width="50" Height="54"
                                        Source="{Binding Path=Item.Id, Converter={StaticResource IdToImagePathConverter}}" />
+                                    <TextBlock  Width="32" Height="50"
+                                                TextWrapping="WrapWithOverflow"
+                                                FontSize="12"
+                                                Style="{StaticResource TextblockTitleNormal}"
+                                                TextAlignment="Left">
+                                                <Run Text="{Binding Item.Amount}" />
+                                    </TextBlock>
+                                </StackPanel>
                                 <StackPanel Orientation="Horizontal"
                                             VerticalAlignment="Center"
                                         Margin="0 0 0 0">
@@ -223,10 +232,20 @@
                             <StackPanel Orientation="Vertical"
                                         Width="95"
                                         Height="120">
-                                <Image Margin ="0 5 0 0 "
-                                       MinWidth="80"
-                                       Width="60" Height="54"
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin ="2 5 2.5 0 "
+                                       MinWidth="65"
+                                       Width="50" Height="54"
                                        Source="{Binding Path=Item.Id, Converter={StaticResource IdToImagePathConverter}}" />
+                                    <TextBlock  Width="32" Height="50"
+                                                TextWrapping="WrapWithOverflow"
+                                                FontSize="12"
+                                                Style="{StaticResource TextblockTitleNormal}"
+                                                TextAlignment="Left">
+                                                <Run Text="{Binding Item.Amount}" />
+                                    </TextBlock>
+                                </StackPanel>
+                                
                                 <StackPanel Orientation="Horizontal"
                                             VerticalAlignment="Center"
                                         Margin="0 0 0 0">

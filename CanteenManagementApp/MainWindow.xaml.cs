@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using System.Windows;
-using System;
 using System.Windows.Input;
 using CanteenManagementApp.MVVM.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System;
 using System.IO;
 
 namespace CanteenManagementApp
@@ -31,7 +31,6 @@ namespace CanteenManagementApp
             {
                 await DbQueries.CustomerQueries.InsertCustomerAsync("-1", "Không có tài khoản", "Trống");
             }
-
             SetupFolder();
         }
 
@@ -57,7 +56,6 @@ namespace CanteenManagementApp
             }
 
         }
-
         public static void CreateFolder(string strPath)
         {
             try
@@ -69,7 +67,6 @@ namespace CanteenManagementApp
             }
             catch { }
         }
-
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)

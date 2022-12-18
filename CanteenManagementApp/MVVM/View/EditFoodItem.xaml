@@ -1,60 +1,61 @@
 ﻿<Window x:Class="CanteenManagementApp.MVVM.View.EditFoodItem"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CanteenManagementApp.MVVM.View"
-             xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
-             mc:Ignorable="d" 
-             x:Name="wdEditFoodItem"
-             d:Background="#F8F8F8"
-             Height="535" Width="500"
-             d:DesignHeight="535" d:DesignWidth="500" ResizeMode="NoResize">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:CanteenManagementApp.MVVM.View"
+        xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
+        mc:Ignorable="d"
+        x:Name="wdEditFoodItem"
+        d:Background="#F8F8F8"
+        Height="535" Width="500"
+        d:DesignHeight="535" d:DesignWidth="500"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
     <Window.DataContext>
-        <viewModel:StorageViewModel/>
+        <viewModel:StorageViewModel />
     </Window.DataContext>
     <Canvas>
         <Image Source="/Images/logo.png"
                RenderOptions.BitmapScalingMode="HighQuality"
-                   Width="56" Canvas.Left="23" Canvas.Top="25" Height="53"/>
-
+                   Width="56" Canvas.Left="23" Canvas.Top="25" Height="53" />
 
         <TextBlock Text="Chi tiết mặt hàng"
-                   Style="{StaticResource TextblockTitle}" Canvas.Left="97" Canvas.Top="27"/>
+                   Style="{StaticResource TextblockTitle}" Canvas.Left="97" Canvas.Top="27" />
         <TextBlock Text="Món ăn hàng ngày"
                    FontSize="16.15"
                    x:Name="subTitle"
-                   Style="{StaticResource TextblockTitle}" Canvas.Left="203" Canvas.Top="80"/>
+                   Style="{StaticResource TextblockTitle}" Canvas.Left="203" Canvas.Top="80" />
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Canvas.Left="128" Canvas.Top="129" VerticalAlignment="Center">
-            <TextBlock   Width="26" Height="20" Text="Id:" FontSize="15" Style="{StaticResource TextblockTitleSmall}"/>
-            <TextBlock x:Name="IdTextBox" Padding="2" Text="{Binding Id}" 
+            <TextBlock   Width="26" Height="20" Text="Id:" FontSize="15" Style="{StaticResource TextblockTitleSmall}" />
+            <TextBlock x:Name="IdTextBox" Padding="2" Text="{Binding Id}"
                      FontFamily="{DynamicResource Inter}"
                      FontWeight="Medium"
                      FontSize="14"
-                     Width="133" Height="25" 
-                     HorizontalAlignment="Center" VerticalAlignment="Center" 
-                     Margin="0 0 0 0"/>
+                     Width="133" Height="25"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                     Margin="0 0 0 0" />
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Canvas.Left="114" Canvas.Top="168">
             <TextBlock   Width="32" Height="20" Text="Tên:" FontSize="15" Style="{StaticResource TextblockTitleSmall}" />
-            <TextBox x:Name="nameTextBox" 
+            <TextBox x:Name="nameTextBox"
                      FontFamily="{DynamicResource Inter}"
                      FontWeight="Medium"
                      FontSize="14"
-                     Padding="2"  Width="133" Height="25" 
+                     Padding="2"  Width="133" Height="25"
                      Margin="8 0 0 0"
                      HorizontalAlignment="Center" VerticalAlignment="Center" />
         </StackPanel>
 
         <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Canvas.Left="85" Canvas.Top="206" VerticalAlignment="Top">
             <TextBlock   Width="59" Height="20" Text="Đơn giá:" FontSize="15" Style="{StaticResource TextblockTitleSmall}" />
-            <TextBox x:Name="priceTextBox" 
+            <TextBox x:Name="priceTextBox"
                      FontFamily="{DynamicResource Inter}"
                      FontWeight="Medium"
                      FontSize="14"
-                     Padding="2" Width="133" Height="25" 
+                     Padding="2" Width="133" Height="25"
                      Margin="10 0 0 0"
                      HorizontalAlignment="Center" VerticalAlignment="Center" />
         </StackPanel>
@@ -67,22 +68,21 @@
                      FontSize="14"
                      Padding="2"  Width="267" MinHeight="25"
                      Margin="8 0 0 0" VerticalAlignment="Center"
-                     TextWrapping="WrapWithOverflow" Height="125" 
-                     />
+                     TextWrapping="WrapWithOverflow" Height="125" />
         </StackPanel>
 
         <Grid
             Canvas.Left="300" Canvas.Top="70"
             x:Name="grdSelectImg"
-            Margin="50,50,0,0" 
+            Margin="50,50,0,0"
             VerticalAlignment="Top"
             Width="108"
-            Height="83" 
+            Height="83"
             HorizontalAlignment="Left">
             <Image x:Name="imageEmpty" Source="/Images/empty_image.jpg" Width="108" Height="83" 
                    />
         </Grid>
-        <Button 
+        <Button
                 x:Name="SelectImage"
                 Background="#0033A1"
                 Style="{StaticResource ButtonSelectImage}"
@@ -108,6 +108,6 @@
                 VerticalAlignment="Top"
                 RenderTransformOrigin="0.415,-0.237"
                 Command="{Binding SaveEditFoodItemCommand}"
-                CommandParameter="{Binding ElementName=wdEditFoodItem}"/>
+                CommandParameter="{Binding ElementName=wdEditFoodItem}" />
     </Canvas>
 </Window>
