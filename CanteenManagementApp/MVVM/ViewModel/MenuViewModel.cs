@@ -69,7 +69,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             //
             //InvokeSthing(2000);
             //SetDataTimer(5000);
-            SetupData();
+            //SetupData();
         }
 
         private void CancelUpdate(UpdateAmountMenu parameter)

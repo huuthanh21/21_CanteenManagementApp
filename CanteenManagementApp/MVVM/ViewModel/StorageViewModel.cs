@@ -19,6 +19,7 @@ using System.Windows.Media.Imaging;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
+using PropertyChanged;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
@@ -53,6 +54,51 @@ namespace CanteenManagementApp.MVVM.ViewModel
         // Sửa ảnh
         public ICommand EditImageFoodItemCommand { get; set; } // Sửa ảnh bên Food Item
         public ICommand EditImageInventoryItemCommand { get; set; } // Sửa ảnh bên Inventory Item
+
+        public StorageViewModel()
+        {
+            /*_allItems = new ObservableCollection<Item> { };
+            using var dbContext = new CanteenContext();
+            var items = dbContext.Items;
+            foreach (var item in items)
+            {
+                _allItems.Add(item);
+            }*/
+            _foodItems = new ObservableCollection<Item>(DbQueries.ItemQueries.GetItemsByType(0));
+            _inventoryItems = new ObservableCollection<Item>(DbQueries.ItemQueries.GetItemsByType(1));
+            /* foreach (var item in _allItems)
+             {
+                 if (item.Type == 1)
+                 {
+                     _inventoryItems.Add(item);
+                 }
+                 else
+                 {
+                     _foodItems.Add(item);
+                 }
+             }*/
+
+            FoodItemsCollection = new CollectionViewSource { Source = _foodItems };
+            InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
+            EditFoodItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => EditFoodItem(parameter));
+            DeleteFoodItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => DeleteFoodItem(parameter));
+            EditInventoryItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => EditInventoryItem(parameter));
+            DeleteInventoryItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => DeleteInventoryItem(parameter));
+            AddFoodItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => AddFoodItem(parameter));
+            AddInventoryItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => AddInventoryItem(parameter));
+            SelectImageFoodItemCommand = new RelayCommand<AddFoodItem>((parameter) => true, (parameter) => ChooseImageFoodItem(parameter));
+            SelectImageInventoryItemCommand = new RelayCommand<AddInventoryItem>((parameter) => true, (parameter) => ChooseImageInventoryItem(parameter));
+            //ButtonAddCommand = new RelayCommand<AddItem>((parameter) => true, (parameter) => ButtonAddClick(parameter));
+            OKAddFoodItemCommand = new RelayCommand<AddFoodItem>((parameter) => true, (parameter) => OKAddFoodItem(parameter));
+            OKAddInventoryItemCommand = new RelayCommand<AddInventoryItem>((parameter) => true, (parameter) => OKAddInventoryItem(parameter));
+            SaveEditFoodItemCommand = new RelayCommand<EditFoodItem>((parameter) => true, (parameter) => SaveEditFoodItem(parameter));
+            SaveEditInventoryItemCommand = new RelayCommand<EditInventoryItem>((parameter) => true, (parameter) => SaveEditInventoryItem(parameter));
+            EditImageFoodItemCommand = new RelayCommand<EditFoodItem>((parameter) => true, (parameter) => EditImageFoodItem(parameter));
+            EditImageInventoryItemCommand = new RelayCommand<EditInventoryItem>((parameter) => true, (parameter) => EditImageInventoryItem(parameter));
+            FoodSourceCollection.Filter = ItemFilter;
+            InventorySourceCollection.Filter = ItemFilter;
+            TextSearchBarChanged += RefreshItemViewSource;
+        }
         private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
@@ -81,47 +127,38 @@ namespace CanteenManagementApp.MVVM.ViewModel
             bitmap.EndInit();
             return bitmap;
         }
+        private object _textSearchBar;
 
-        public StorageViewModel()
+        private readonly EventHandler TextSearchBarChanged;
+        public object TextSearchBar
         {
-            /*_allItems = new ObservableCollection<Item> { };
-            using var dbContext = new CanteenContext();
-            var items = dbContext.Items;
-            foreach (var item in items)
+            get { return _textSearchBar; }
+            set
             {
-                _allItems.Add(item);
-            }*/
-            _foodItems = new ObservableCollection<Item> (DbQueries.ItemQueries.GetItemsByType(0));
-            _inventoryItems = new ObservableCollection<Item> (DbQueries.ItemQueries.GetItemsByType(1));
-           /* foreach (var item in _allItems)
+                _textSearchBar = value;
+                OnTextSearchBarChanged(EventArgs.Empty);
+            }
+        }
+        public bool ItemFilter(object item)
+        {
+            if (string.IsNullOrEmpty(TextSearchBar as string))
             {
-                if (item.Type == 1)
-                {
-                    _inventoryItems.Add(item);
-                }
-                else
-                {
-                    _foodItems.Add(item);
-                }
-            }*/
+                return true;
+            }
 
-            FoodItemsCollection = new CollectionViewSource { Source = _foodItems };
-            InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
-            EditFoodItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => EditFoodItem(parameter));
-            DeleteFoodItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => DeleteFoodItem(parameter));
-            EditInventoryItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => EditInventoryItem(parameter));
-            DeleteInventoryItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => DeleteInventoryItem(parameter));
-            AddFoodItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => AddFoodItem(parameter));
-            AddInventoryItemCommand = new RelayCommand<StorageView>((parameter) => true, (parameter) => AddInventoryItem(parameter));
-            SelectImageFoodItemCommand = new RelayCommand<AddFoodItem>((parameter) => true, (parameter) => ChooseImageFoodItem(parameter));
-            SelectImageInventoryItemCommand = new RelayCommand<AddInventoryItem>((parameter) => true, (parameter) => ChooseImageInventoryItem(parameter));
-            //ButtonAddCommand = new RelayCommand<AddItem>((parameter) => true, (parameter) => ButtonAddClick(parameter));
-            OKAddFoodItemCommand = new RelayCommand<AddFoodItem>((parameter) => true, (parameter) => OKAddFoodItem(parameter));
-            OKAddInventoryItemCommand = new RelayCommand<AddInventoryItem>((parameter) => true, (parameter) => OKAddInventoryItem(parameter));
-            SaveEditFoodItemCommand = new RelayCommand<EditFoodItem>((parameter) => true, (parameter) => SaveEditFoodItem(parameter));
-            SaveEditInventoryItemCommand = new RelayCommand<EditInventoryItem>((parameter) => true, (parameter) => SaveEditInventoryItem(parameter));
-            EditImageFoodItemCommand = new RelayCommand<EditFoodItem>((parameter) => true, (parameter) => EditImageFoodItem(parameter));
-            EditImageInventoryItemCommand = new RelayCommand<EditInventoryItem>((parameter) => true, (parameter) => EditImageInventoryItem(parameter));
+            return (item as Item).Name.Contains(TextSearchBar as string, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private void RefreshItemViewSource(object sender, EventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(FoodSourceCollection).Refresh();
+            CollectionViewSource.GetDefaultView(InventorySourceCollection).Refresh();
+        }
+
+        [SuppressPropertyChangedWarnings]
+        public void OnTextSearchBarChanged(EventArgs e)
+        {
+            TextSearchBarChanged?.Invoke(this, e);
         }
 
         private void EditImageInventoryItem(EditInventoryItem parameter)
@@ -134,11 +171,11 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 _imageFileName = op.FileName;
                 ImageBrush imageBrush = new ImageBrush();
                 BitmapImage bitmap = GetBitmap(_imageFileName);
-               /* BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.UriSource = new Uri(_imageFileName);
-                bitmap.EndInit();*/
+                /* BitmapImage bitmap = new BitmapImage();
+                 bitmap.BeginInit();
+                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                 bitmap.UriSource = new Uri(_imageFileName);
+                 bitmap.EndInit();*/
                 imageBrush.ImageSource = bitmap;
                 parameter.grdSelectImg.Background = imageBrush;
                 parameter.imageEmpty.Visibility = Visibility.Hidden;
@@ -178,7 +215,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         public async void AddInventoryItem(StorageView parameter)
         {
-            
+
             var screen = new AddInventoryItem();
             if (screen.ShowDialog() == true)
             {
@@ -193,7 +230,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 string price = control_price.Text;
                 var amount_template = screen.amountTextBox.Template;
                 var control_amount = (TextBox)amount_template.FindName("TextboxInput", screen.amountTextBox);
-                string amount= control_amount.Text;
+                string amount = control_amount.Text;
                 Item NewItem = new Item()
                 {
                     Name = name,
@@ -253,7 +290,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         public static void CopyFileToAppFolder(string id, string sourceFileName)
         {
-            
+
             var appdataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var appFolder = "21CanteenManager";
 
@@ -363,7 +400,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         {
             parameter.DialogResult = true;
         }
-         
+
         private void EditInventoryItem(StorageView parameter)
         {
             var itemSelected = parameter.inventoryListView.SelectedItem as Item;
@@ -407,10 +444,10 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
                 parameter.inventoryListView.ItemsSource = InventorySourceCollection;
             }
-             else
-             {
-             }
-        screen.Close();
+            else
+            {
+            }
+            screen.Close();
         }
 
         private void SaveEditFoodItem(EditFoodItem parameter)
@@ -484,5 +521,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
             DbQueries.ItemQueries.DeleteItemById(_foodItems[i].Id);
             _foodItems.RemoveAt(i);
         }
+
     }
 }
