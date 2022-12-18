@@ -110,7 +110,7 @@
                                                    Text="{Binding Name}"
                                                    Style="{StaticResource TextblockTitleSmall}"
                                                    Margin="0 0 0 0"
-                                                   Padding="3 5 0 0" />
+                                                   Padding="5 5 0 0" />
 
                                         <TextBlock Foreground="#0033A1"
                                                  HorizontalAlignment="Left"
@@ -125,10 +125,24 @@
                                                  Width="50" />
                                     </StackPanel>
                                     <!--TextBox Amount-->
-                                    <TextBox x:Name="textBox" Width="45" Height="18"
-                                             BorderBrush="#0033A1" Text="{Binding Amount}"
-                                             Margin="0 8 0 0"
-                                             Visibility="Hidden" />
+                                    <StackPanel x:Name="stackPanelAmount"
+                                                Visibility="Hidden"
+                                                Orientation="Horizontal"
+                                                HorizontalAlignment="Center">
+                                        <TextBlock Text="Số lượng: "
+                                                   Style="{StaticResource TextblockTitleSmall}"
+                                                   FontSize="10"
+                                                    Margin="0 3.5 1 0" />
+                                        <TextBox x:Name="textBox" Width="41" Height="16"
+                                             BorderBrush="#0033A1"
+                                             Foreground="#0033A1"
+                                             Text="0"
+                                             Margin="0 2 0 0"
+                                             Style="{StaticResource CustomTextboxAddItem}" />
+                                    </StackPanel>
+
+                                    <!--Visibility="Hidden"
+                                    -->
                                 </StackPanel>
                             </StackPanel>
                         </Border>
@@ -147,7 +161,7 @@
                                                       RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem }}}"
                                                       Value="True">
                                 <Setter Property="Visibility" Value="Visible" TargetName="check_select" />
-                                <Setter Property="Visibility" Value="Visible" TargetName="textBox" />
+                                <Setter Property="Visibility" Value="Visible" TargetName="stackPanelAmount" />
                                 <Setter Property="BorderBrush"
                                                     TargetName="border"
                                                     Value="#0033A1" />
