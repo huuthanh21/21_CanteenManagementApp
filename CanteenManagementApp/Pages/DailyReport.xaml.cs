@@ -7,6 +7,7 @@ namespace CanteenManagementApp.MVVM.View
     public partial class DailyReport : Page
     {
         public static DateTime selectedDate;
+
         public DailyReport()
         {
             InitializeComponent();
@@ -17,6 +18,7 @@ namespace CanteenManagementApp.MVVM.View
             selectedDate = DateTime.Today;
             OutputSelectedDate();
         }
+
         private void ButtonLink_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.ReportViewModel.ReportCommand.Execute(sender);
@@ -28,6 +30,7 @@ namespace CanteenManagementApp.MVVM.View
             Month.SelectedIndex = (selectedDate.Month - 1);
             Year.SelectedIndex = (selectedDate.Year - 2020);
         }
+
         private static string[] LoadComboBoxMonth()
         {
             string[] MonthArray = new string[12];

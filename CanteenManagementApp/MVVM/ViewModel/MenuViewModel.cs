@@ -12,59 +12,49 @@ using System.Windows.Media;
 using System.Timers;
 using System.Threading;
 using Timer = System.Timers.Timer;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
     public class MenuViewModel : ObservableObject
     {
-        public static ObservableCollection<Item> FoodItemsYesterday;
-        public ObservableCollection<Item> FoodItemsToday;
+        private readonly ObservableCollection<Item> _foodItemsYesterday;
+        private readonly ObservableCollection<Item> _foodItemsToday;
         private readonly CollectionViewSource FoodItemsYesterdayCollection;
         private readonly CollectionViewSource FoodItemsTodayCollection;
         public ICollectionView FoodYesterdaySourceCollection => FoodItemsYesterdayCollection.View;
         public ICollectionView FoodTodaySourceCollection => FoodItemsTodayCollection.View;
         public string Keyword { get; set; } = "Fuck";
-        public ICommand AddItemToMenuCommand { get; set; }
+        public RelayCommand AddItemToMenuCommand { get; set; }
         public ICommand DeleteItemMenuCommand { get; set; }
 
-        public ICommand CopyMenuCommand { get; set; }
+        public RelayCommand CopyMenuCommand { get; set; }
 
         // Update amount item:
         public ICommand UpdateAmountCommand { get; set; }
+
         public ICommand OkUpdateAmount { get; set; }
         public ICommand CancelUpdateAmount { get; set; }
+
         public MenuViewModel()
         {
-            //FoodItems = new ObservableCollection<Item> { };
-
-            FoodItemsYesterday = new ObservableCollection<Item>
-            {
-                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Món ức gà chiên mắm cay có màu sắc hấp dẫn, vị mặn mặn chua chua của nước sốt giúp thịt gà tăng thêm hương vị và kích thích vị giác người ăn. vị đậm đà của mùi nước mắm quyện vào thịt, và vị bùi bùi của tỏi, cay nồng của ớt sừng. Món này ăn kèm cơm nóng, hoặc bánh mì tùy thích.\r\n\r\n\r\n", Id = 10, Price = 12000},
-                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000},
-                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000},
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 13, Price = 12000 },
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 14, Price = 12000},
-                new Item() { Type = 0, Name = "Lòng xào gà", Amount = 10, Description = "Ngon", Id = 15, Price = 12000},
-                new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Ngon", Id = 10, Price = 12000},
-                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000 }
-            };
-            FoodItemsToday = new ObservableCollection<Item> {  new Item() { Type = 0, Name = "Gà nướng", Amount = 10, Description = "Món ức gà chiên mắm cay có màu sắc hấp dẫn, vị mặn mặn chua chua của nước sốt giúp thịt gà tăng thêm hương vị và kích thích vị giác người ăn. vị đậm đà của mùi nước mắm quyện vào thịt, và vị bùi bùi của tỏi, cay nồng của ớt sừng. Món này ăn kèm cơm nóng, hoặc bánh mì tùy thích.\r\n\r\n\r\n", Id = 10, Price = 12000},
-                new Item() { Type = 0, Name = "Lòng bò xào gà", Amount = 10, Description = "Ngon", Id = 11, Price = 12000},
-                new Item() { Type = 0, Name = "Lòng heo xào gà", Amount = 10, Description = "Ngon", Id = 12, Price = 12000},
-                };
+            _foodItemsYesterday = new ObservableCollection<Item>(DbQueries.MenuQueries.GetYesterdayMenuItems());
+            _foodItemsToday = new ObservableCollection<Item>(DbQueries.MenuQueries.GetTodayMenuItems());
 
             // Source data:
-            FoodItemsYesterdayCollection = new CollectionViewSource { Source = FoodItemsYesterday };
-            FoodItemsTodayCollection = new CollectionViewSource { Source = FoodItemsToday };
-            ResetAmount(FoodItemsYesterday);
+            FoodItemsYesterdayCollection = new CollectionViewSource { Source = _foodItemsYesterday };
+            FoodItemsTodayCollection = new CollectionViewSource { Source = _foodItemsToday };
+            _ = ResetAmount(_foodItemsYesterday.Except(_foodItemsToday, new ItemComparer()));
+
             // Command:
-            AddItemToMenuCommand = new RelayCommand<MenuView>((parameter) => true, (parameter) => AddItemToMenu(parameter));
-            CopyMenuCommand = new RelayCommand<MenuView>((parameter) => true, (parameter) => CopyMenu(parameter));
+            AddItemToMenuCommand = new RelayCommand(async o => await AddItemToMenu());
+            CopyMenuCommand = new RelayCommand(async o => await CopyMenu());
             DeleteItemMenuCommand = new RelayCommand<MenuView>((parameter) => true, (parameter) => DeleteItemMenu(parameter));
-            UpdateAmountCommand = new RelayCommand<MenuView>((parameter) => true, (parameter) => UpdateAmount(parameter));
+            UpdateAmountCommand = new RelayCommand<MenuView>((parameter) => true, async (parameter) => await UpdateAmount(parameter));
             OkUpdateAmount = new RelayCommand<UpdateAmountMenu>((parameter) => true, (parameter) => OkUpdate(parameter));
             CancelUpdateAmount = new RelayCommand<UpdateAmountMenu>((parameter) => true, (parameter) => CancelUpdate(parameter));
-
 
             //
             //InvokeSthing(2000);
@@ -72,60 +62,73 @@ namespace CanteenManagementApp.MVVM.ViewModel
             SetupData();
         }
 
-        private void CancelUpdate(UpdateAmountMenu parameter)
+        private static void CancelUpdate(UpdateAmountMenu parameter)
         {
             parameter.DialogResult = false;
         }
 
-        private void OkUpdate(UpdateAmountMenu parameter)
+        private static void OkUpdate(UpdateAmountMenu parameter)
         {
             parameter.DialogResult = true;
         }
 
-        private void UpdateAmount(MenuView parameter)
+        private async Task UpdateAmount(MenuView parameter)
         {
             int index = parameter.foodListViewToday.SelectedIndex;
             if (index != -1)
             {
                 var screen = new UpdateAmountMenu();
-                screen.textBoxAmount.Text = FoodItemsToday[index].Amount.ToString();
-                screen.nameItem.Text = FoodItemsToday[index].Name.ToString();
-                //screen.ShowDialog();
+                screen.textBoxAmount.Text = _foodItemsToday[index].Amount.ToString();
+                screen.nameItem.Text = _foodItemsToday[index].Name.ToString();
                 if (screen.ShowDialog() == true)
                 {
-                    FoodItemsToday[index].Amount = int.Parse(screen.textBoxAmount.Text);
+                    // template
+                    var amount_template = screen.textBoxAmount.Template;
+                    var control_amount = (TextBox)amount_template.FindName("TextboxInput", screen.textBoxAmount);
+
+                    //int amount = int.Parse(screen.textBoxAmount.Text);
+                    int amount = int.Parse(control_amount.Text);
+                    _foodItemsToday[index].Amount = amount;
+                    await DbQueries.MenuQueries.UpdateAmountMenuItem(_foodItemsToday[index], amount);
                 }
                 else
                 {
                     screen.Close();
                 }
-
             }
         }
 
         private void DeleteItemMenu(MenuView parameter)
         {
-            //MessageBox.Show("DeleteItemMenu");
             int index = parameter.foodListViewToday.SelectedIndex;
             if (index != -1)
             {
-                var result = MessageBox.Show($"Bạn muốn xóa mặt hàng {FoodItemsToday[index].Name} khỏi menu",
-              "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var item = _foodItemsToday[index];
+                var result = MessageBox.Show($"Bạn muốn xóa mặt hàng {item.Name}",
+                                                "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    FoodItemsToday.RemoveAt(index);
-                    //MessageBox.Show("Xoá mặt hàng thành công", "", MessageBoxButton.OK, MessageBoxImage.Information);
+                    _foodItemsToday[index].Amount = 0;
+                    _foodItemsToday.RemoveAt(index);
                 }
+
+                // Update database
+                DbQueries.MenuQueries.DeleteMenuItem(item);
+                _ = DbQueries.ItemQueries.UpdateItem(item);
             }
         }
 
-        private void CopyMenu(MenuView parameter)
+        private async Task CopyMenu()
         {
-            FoodItemsToday.Clear();
-            foreach (Item item in FoodItemsYesterday)
+            // Update UI
+            _foodItemsToday.Clear();
+            foreach (Item item in _foodItemsYesterday)
             {
-                FoodItemsToday.Add(item);
+                _foodItemsToday.Add(item);
             }
+
+            // Update database
+            await DbQueries.MenuQueries.InsertMenuItems(_foodItemsYesterday);
         }
 
         private static childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
@@ -133,21 +136,23 @@ namespace CanteenManagementApp.MVVM.ViewModel
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
             {
                 DependencyObject child = VisualTreeHelper.GetChild(obj, i);
-                if (child != null && child is childItem)
+                if (child is childItem item)
                 {
-                    return (childItem)child;
+                    return item;
                 }
                 else
                 {
                     childItem childOfChild = FindVisualChild<childItem>(child);
                     if (childOfChild != null)
+                    {
                         return childOfChild;
+                    }
                 }
             }
             return null;
         }
 
-        private void AddItemToMenu(MenuView parameter)
+        private async Task AddItemToMenu()
         {
             //FNL
             var screen = new AddItemToMenu();
@@ -163,28 +168,34 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
                     // Finding textBox from the DataTemplate that is set on that ContentPresenter
                     DataTemplate myDataTemplate = myContentPresenter.ContentTemplate;
-                    //TextBlock myTextBlock = (TextBlock)myDataTemplate.FindName("textBlock", myContentPresenter);
                     TextBox textBox = (TextBox)myDataTemplate.FindName("textBox", myContentPresenter);
-                    Item itemTemp = (Item)item;
-                    itemTemp.Amount = int.Parse(textBox.Text);
-                    //Test:
-                    //MessageBox.Show("The selected item: Name: " + itemTemp.Name + " Amount: " + itemTemp.Amount);
-                    FoodItemsToday.Add(itemTemp);
+                    // template
+                    var amount_template = textBox.Template;
+                    var control_amount = (TextBox)amount_template.FindName("TextboxInput", textBox);
+                    string amount = control_amount.Text;
+
+                    //end template
+
+                    //Test time:
+                    /* DateTime today = DateTime.Today;*/
+                    //DateTime today = DateTime.Now;
+                    //MessageBox.Show("Now is " + today);
+                    //DateTime yesterday = GetYesterday();
+                    //DateTime tomorrow = GetTomorrow();
+                    //MessageBox.Show("Yesterday is " + yesterday + "\nToday is " + tomorrow);
+                    //TimeSpan interval = tomorrow.Subtract(today);
+                    //MessageBox.Show("From today to tomorrow is: " + interval.Hours * 60 + interval.Minutes * 60 + interval.Seconds + " s");
+                    //*60 + interval.Minutes * 60 + interval.Seconds + " s"
+
+                    Item newItem = (Item)item;
+                    //newItem.Amount = int.Parse(textBox.Text);
+                    newItem.Amount = int.Parse(amount);
+                    _foodItemsToday.Add(newItem);
+                    await DbQueries.MenuQueries.InsertMenuItem(newItem);
                 }
             }
-
-            //Test time:
-            /* DateTime today = DateTime.Today;*/
-            //DateTime today = DateTime.Now;
-            //MessageBox.Show("Now is " + today);
-            //DateTime yesterday = GetYesterday();
-            //DateTime tomorrow = GetTomorrow();
-            //MessageBox.Show("Yesterday is " + yesterday + "\nToday is " + tomorrow);
-            //TimeSpan interval = tomorrow.Subtract(today);
-            //MessageBox.Show("From today to tomorrow is: " + interval.Hours * 60 + interval.Minutes * 60 + interval.Seconds + " s");
-            //*60 + interval.Minutes * 60 + interval.Seconds + " s"
-
         }
+
         public static DateTime GetYesterday()
         {
             // Ngày hôm nay.
@@ -193,6 +204,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             // Trừ đi một ngày.
             return today.AddDays(-1);
         }
+
         public static DateTime GetTomorrow()
         {
             // Ngày hôm nay.
@@ -201,12 +213,16 @@ namespace CanteenManagementApp.MVVM.ViewModel
             return today.AddDays(1);
         }
 
-        public void ResetAmount(ObservableCollection<Item> items)
+        public static async Task ResetAmount(IEnumerable<Item> items)
         {
+            // Check if items is empty
+            if (!items.Any()) return;
+
             foreach (Item item in items)
             {
                 item.Amount = 0;
             }
+            await DbQueries.MenuQueries.ResetAmountMenuItems(items);
         }
 
         public static void InvokeSthing(int sleepTime)
@@ -220,11 +236,12 @@ namespace CanteenManagementApp.MVVM.ViewModel
         }
 
         private Timer aTimer;
+
         public void SetDataTimer(int milliSeconds)
         {
             aTimer = new System.Timers.Timer();
             aTimer.Interval = milliSeconds;
-            // Hook up the Elapsed event for the timer. 
+            // Hook up the Elapsed event for the timer.
             aTimer.Elapsed += OnTimedEvent;
 
             // Have the timer fire repeated events (true is the default)
@@ -237,11 +254,12 @@ namespace CanteenManagementApp.MVVM.ViewModel
             //Console.WriteLine("Press the Enter key to exit the program at any time... ");
             //Console.ReadLine();
         }
-        static int Count { get; set; } = 0;
+
+        private static int Count { get; set; } = 0;
 
         private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
-            ResetAmount(FoodItemsToday);
+            _ = ResetAmount(_foodItemsToday);
             MessageBox.Show("The Elapsed event was raised at " + e.SignalTime.ToString() + " count: " + Count.ToString());
             Count++;
             //if (Count == 2 || Count > 5)
@@ -256,7 +274,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         public void SetupData()
         {
-            // 
+            //
             //Test time:
             /* DateTime today = DateTime.Today;*/
             //DateTime today = DateTime.Now;
@@ -267,14 +285,11 @@ namespace CanteenManagementApp.MVVM.ViewModel
             //TimeSpan interval = tomorrow.Subtract(today);
             //MessageBox.Show("From today to tomorrow is: " + interval.Hours * 60 + interval.Minutes * 60 + interval.Seconds + " s");
             //*60 + interval.Minutes * 60 + interval.Seconds + " s"
-            //SetDataTimer(interval);  
+            //SetDataTimer(interval);
             if (Count == 0)
             {
                 SetDataTimer(5000);
             }
-
-
         }
-
     }
 }

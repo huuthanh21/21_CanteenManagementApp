@@ -13,7 +13,7 @@ namespace CanteenManagementApp.Converters
             decimal dec;
             try
             {
-                 dec = new((float)values[0]);
+                dec = new((float)values[0]);
             }
             catch (InvalidCastException)
             {

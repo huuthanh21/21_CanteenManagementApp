@@ -6,26 +6,27 @@
         xmlns:local="clr-namespace:CanteenManagementApp.MVVM.View"
         xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
         ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         x:Name="wdAddFoodItem"
-        Title="AddFoodItem"  Height="535" Width="500" >
+        Title="AddFoodItem"  Height="535" Width="500">
     <Window.DataContext>
-        <viewModel:StorageViewModel/>
+        <viewModel:StorageViewModel />
     </Window.DataContext>
     <Canvas>
         <Image Source="/Images/logo.png"
                 RenderOptions.BitmapScalingMode="HighQuality"
-                   Width="56" Canvas.Left="23" Canvas.Top="25" Height="53"/>
+                   Width="56" Canvas.Left="23" Canvas.Top="25" Height="53" />
 
         <TextBlock Text="Thêm mặt hàng"
-                   Style="{StaticResource TextblockTitle}" Canvas.Left="97" Canvas.Top="27"/>
+                   Style="{StaticResource TextblockTitle}" Canvas.Left="97" Canvas.Top="27" />
         <TextBlock Text="Món ăn hàng ngày"
                    x:Name="titleSub"
                    FontSize="16.15"
-                   Style="{StaticResource TextblockTitle}" Canvas.Left="203" Canvas.Top="80"/>
+                   Style="{StaticResource TextblockTitle}" Canvas.Left="203" Canvas.Top="80" />
 
         <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Canvas.Left="128" Canvas.Top="132">
-            <TextBlock   Width="26" Height="20" Text="Id:" FontSize="15" Style="{StaticResource TextblockTitleSmall}"/>
+            <TextBlock   Width="26" Height="20" Text="Id:" FontSize="15" Style="{StaticResource TextblockTitleSmall}" />
             <TextBox x:Name="IdTextBox" Padding="2" Width="133" Height="25"  HorizontalAlignment="Center" VerticalAlignment="Center" TextChanged="IdTextBox_TextChanged" />
         </StackPanel>-->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Canvas.Left="114" Canvas.Top="146" VerticalAlignment="Top">
@@ -33,20 +34,20 @@
             <TextBox FontFamily="{DynamicResource Inter}"
                      FontWeight="Medium"
                      FontSize="14"
-                     x:Name="nameTextBox" Padding="2" Width="149" Height="25" 
+                     x:Name="nameTextBox" Padding="2" Width="149" Height="25"
                      Margin="8 0 0 0" VerticalAlignment="Center"
                      Style="{StaticResource CustomTextbox}"
-                     Text="VD: Mực xào"/>
+                     Text="VD: Mực xào" />
         </StackPanel>
         <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" Canvas.Left="85" Canvas.Top="194" VerticalAlignment="Top">
             <TextBlock   Width="59" Height="20" Text="Đơn giá:" FontSize="15" Style="{StaticResource TextblockTitleSmall}" />
             <TextBox FontFamily="{DynamicResource Inter}"
                      FontWeight="Medium"
                      FontSize="14"
-                     x:Name="priceTextBox" Padding="2" Width="149" Height="25" 
+                     x:Name="priceTextBox" Padding="2" Width="149" Height="25"
                      Margin="10 0 0 0" VerticalAlignment="Center"
                      Style="{StaticResource CustomTextbox}"
-                     Text="VD: 10000"/>
+                     Text="VD: 10000" />
         </StackPanel>
 
         <StackPanel  Orientation="Horizontal" Canvas.Left="97" Canvas.Top="245" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="2 0 0 0">
@@ -60,48 +61,48 @@
                      TextAlignment="Left"
                      TextWrapping="WrapWithOverflow" Height="153"
                      Style="{StaticResource CustomTextbox}"
-                     Text="VD: Mực xào cần tây thơm ngon thanh dịu vị rau củ, ăn bát cơm ngon vô cùng tuyệt vời."/>
+                     Text="VD: Mực xào cần tây thơm ngon thanh dịu vị rau củ, ăn bát cơm ngon vô cùng tuyệt vời." />
         </StackPanel>
 
         <!--<StackPanel Canvas.Left="345" Canvas.Top="120">
             <Image Source="/Images/empty_image.jpg" Width="108" Height="83" />
-            <TextBlock Text="Chọn ảnh"/>
+            <TextBlock Text="Chọn ảnh" />
         </StackPanel>-->
 
         <Grid
             Canvas.Left="310" Canvas.Top="70"
             x:Name="grdSelectImg"
-            Margin="50,50,0,0" 
+            Margin="50,50,0,0"
             VerticalAlignment="Top"
             Width="94"
-            Height="77" 
+            Height="77"
             HorizontalAlignment="Left">
             <Image x:Name="imageEmpty" Source="/Images/empty_image.jpg" Width="108" Height="83" />
         </Grid>
 
-        <Button 
+        <Button
                 x:Name="SelectImage"
                 Background="#0033A1"
-               
+
                 Style="{StaticResource ButtonSelectImage}"
-                Height="35" 
-                Width="106" 
-                Content="Chọn ảnh" 
-                FontWeight="SemiBold" 
-                ToolTip="Chọn ảnh từ thiết bị" 
-                HorizontalAlignment="Left" 
+                Height="35"
+                Width="106"
+                Content="Chọn ảnh"
+                FontWeight="SemiBold"
+                ToolTip="Chọn ảnh từ thiết bị"
+                HorizontalAlignment="Left"
                 Padding="0" Canvas.Left="361" Canvas.Top="194" VerticalAlignment="Top" RenderTransformOrigin="0.553,0.813"
                 Command="{Binding SelectImageFoodItemCommand}"
-                CommandParameter="{Binding ElementName=wdAddFoodItem}"/>
+                CommandParameter="{Binding ElementName=wdAddFoodItem}" />
         <Button HorizontalAlignment="Left"
                 Width="95" Height="31"
                 Content="Thêm"
                 Background="#0033A1"
-                Style="{StaticResource ButtonCustomColorPositive}" Canvas.Left="352" Canvas.Top="440" VerticalAlignment="Top" 
+                Style="{StaticResource ButtonCustomColorPositive}" Canvas.Left="352" Canvas.Top="440" VerticalAlignment="Top"
                 RenderTransformOrigin="0.415,-0.237"
                 Command="{Binding OKAddFoodItemCommand}"
-                CommandParameter="{Binding ElementName=wdAddFoodItem}"/>
-        
+                CommandParameter="{Binding ElementName=wdAddFoodItem}" />
+
         <!--click="addbutton_click"-->
         <!--Command="{Binding ButtonAddCommand}"
                 CommandParameter="{Binding ElementName=wdAddItem}"-->

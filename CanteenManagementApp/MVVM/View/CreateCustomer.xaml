@@ -1,107 +1,108 @@
 ﻿<Window x:Class="CanteenManagementApp.MVVM.View.CreateCustomer"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:CanteenManagementApp.MVVM.View"
         xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel"
-        mc:Ignorable="d" 
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         d:Background="#F8F8F8"
-        Width="600" Height="535" 
-        d:DesignHeight="535" d:DesignWidth="600" 
+        Width="600" Height="535"
+        d:DesignHeight="535" d:DesignWidth="600"
         ResizeMode="NoResize">
     <Window.DataContext>
-        <viewModel:CustomerViewModel/>
+        <viewModel:CustomerViewModel />
     </Window.DataContext>
     <Canvas>
-        <Image Canvas.Left="23" Canvas.Top="25" 
+        <Image Canvas.Left="23" Canvas.Top="25"
                Source="/Images/logo.png"
                Width="56" Height="53"
-               RenderOptions.BitmapScalingMode="HighQuality"/>
+               RenderOptions.BitmapScalingMode="HighQuality" />
 
-        <TextBlock Canvas.Left="97" Canvas.Top="27" 
+        <TextBlock Canvas.Left="97" Canvas.Top="27"
                    Text="Tạo tài khoản khách"
                    Style="{StaticResource TextblockTitle}" />
-        <StackPanel Canvas.Top="120" Canvas.Left="50" 
+        <StackPanel Canvas.Top="120" Canvas.Left="50"
                     Orientation="Vertical">
-            <StackPanel Orientation="Horizontal" 
+            <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
                         Margin="0 10">
-                <TextBlock   Width="120" Height="20" 
-                             Text="Loại khách hàng" 
-                             FontSize="15" 
-                             Style="{StaticResource TextblockTitleSmall}" 
-                             VerticalAlignment="Top"/>
+                <TextBlock   Width="120" Height="20"
+                             Text="Loại khách hàng"
+                             FontSize="15"
+                             Style="{StaticResource TextblockTitleSmall}"
+                             VerticalAlignment="Top" />
                 <StackPanel Width="266.77" MinHeight="25"
                             Margin="8 0 0 0"
                             Orientation="Horizontal"
                             HorizontalAlignment="Center" VerticalAlignment="Center">
                     <StackPanel.Resources>
                         <Style TargetType="RadioButton">
-                            <Setter Property="FontFamily" Value="{DynamicResource Inter}"/>
-                            <Setter Property="FontWeight" Value="SemiBold"/>
-                            <Setter Property="FontSize" Value="13"/>
-                            <Setter Property="Margin" Value="5 0"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="FontFamily" Value="{DynamicResource Inter}" />
+                            <Setter Property="FontWeight" Value="SemiBold" />
+                            <Setter Property="FontSize" Value="13" />
+                            <Setter Property="Margin" Value="5 0" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
                         </Style>
                     </StackPanel.Resources>
-                    <RadioButton x:Name="RadioButtonSV" 
+                    <RadioButton x:Name="RadioButtonSV"
                                  Content="Sinh viên"
-                                 IsChecked="True"/>
-                    <RadioButton x:Name="RadioButtonGV" 
-                                 Content="Giáo viên"/>
-                    <RadioButton x:Name="RadioButtonCBNV" 
-                                 Content="CB/NV"/>
+                                 IsChecked="True" />
+                    <RadioButton x:Name="RadioButtonGV"
+                                 Content="Giáo viên" />
+                    <RadioButton x:Name="RadioButtonCBNV"
+                                 Content="CB/NV" />
                 </StackPanel>
             </StackPanel>
-            <StackPanel  Orientation="Horizontal" 
+            <StackPanel  Orientation="Horizontal"
                          HorizontalAlignment="Right"
                          Margin="0 10">
-                <TextBlock Width="120" Height="20" 
-                           Text="Mã khách hàng" 
-                           FontSize="15" 
-                           Style="{StaticResource TextblockTitleSmall}" 
+                <TextBlock Width="120" Height="20"
+                           Text="Mã khách hàng"
+                           FontSize="15"
+                           Style="{StaticResource TextblockTitleSmall}"
                            VerticalAlignment="Top" />
-                <TextBox x:Name="TextBoxId" 
+                <TextBox x:Name="TextBoxId"
                          d:Text="20120582"
                          Width="266.77" MinHeight="25"
-                         Padding="4 2 2 2" 
+                         Padding="4 2 2 2"
                          Margin="8 0 0 0"
                          FontSize="14"
                          FontWeight="Medium"
                          FontFamily="{DynamicResource Inter}"
-                         HorizontalAlignment="Center" 
+                         HorizontalAlignment="Center"
                          VerticalAlignment="Center"
-                         TextWrapping="WrapWithOverflow"/>
+                         TextWrapping="WrapWithOverflow" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal" 
+            <StackPanel Orientation="Horizontal"
                          HorizontalAlignment="Right"
                          Margin="0 10">
-                <TextBlock Width="120" Height="20" 
-                           Text="Họ và tên" 
-                           FontSize="15" 
-                           Style="{StaticResource TextblockTitleSmall}" 
+                <TextBlock Width="120" Height="20"
+                           Text="Họ và tên"
+                           FontSize="15"
+                           Style="{StaticResource TextblockTitleSmall}"
                            VerticalAlignment="Top" />
-                <TextBox x:Name="TextBoxName" 
-                         Padding="4 2 2 2" 
-                         Width="266.77" 
+                <TextBox x:Name="TextBoxName"
+                         Padding="4 2 2 2"
+                         Width="266.77"
                          MinHeight="25"
                          Margin="8 0 0 0"
                          FontWeight="Medium"
                          FontSize="14"
                          d:Text="Trần Hữu Thành"
                          FontFamily="{DynamicResource Inter}"
-                         HorizontalAlignment="Center" 
+                         HorizontalAlignment="Center"
                          VerticalAlignment="Center"
-                         TextWrapping="WrapWithOverflow"/>
+                         TextWrapping="WrapWithOverflow" />
             </StackPanel>
         </StackPanel>
 
-        <Button Canvas.Left="400" Canvas.Top="440" 
+        <Button Canvas.Left="400" Canvas.Top="440"
                 Width="140" Height="31"
                 Content="Hoàn Tất"
                 Background="#0033A1"
-                Style="{StaticResource ButtonCustomColorPositive}"  
+                Style="{StaticResource ButtonCustomColorPositive}"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Click="SaveButton_Click">

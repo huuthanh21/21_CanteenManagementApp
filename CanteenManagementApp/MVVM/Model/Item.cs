@@ -3,8 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Text;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CanteenManagementApp.MVVM.Model
 {
@@ -38,12 +37,42 @@ namespace CanteenManagementApp.MVVM.Model
         public List<Receipt_Item> Receipt_Items { get; set; }
 
         [NotMapped] // Không thêm cột này vào CSDL
-        public string ImagePath { get; set; } 
-
+        public string ImagePath { get; set; }
 
         public object Clone()
         {
             return MemberwiseClone();
+        }
+    }
+
+    internal class ItemComparer : IEqualityComparer<Item>
+    {
+        public bool Equals(Item x, Item y)
+        {
+            //Check whether the compared objects reference the same data.
+            if (Object.ReferenceEquals(x, y)) return true;
+
+            //Check whether any of the compared objects is null.
+            if (x is null || y is null)
+                return false;
+
+            //Check whether the items' properties are equal.
+            return x.Id == y.Id && x.Name == y.Name;
+        }
+
+        public int GetHashCode([DisallowNull] Item item)
+        {
+            //Check whether the object is null
+            if (item is null) return 0;
+
+            //Get hash code for the Name field if it is not null.
+            int hashProductName = item.Name == null ? 0 : item.Name.GetHashCode();
+
+            //Get hash code for the Code field.
+            int hashProductCode = item.Id.GetHashCode();
+
+            //Calculate the hash code for the product.
+            return hashProductName ^ hashProductCode;
         }
     }
 }

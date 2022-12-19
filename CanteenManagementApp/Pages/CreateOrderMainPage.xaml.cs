@@ -49,8 +49,8 @@ namespace CanteenManagementApp.Pages
             if (indexSelected != -1 && CreateOrderVM.ListFoodItemOrder[indexSelected].Amount > 0)
             {
                 CreateOrderVM.ListFoodItemOrder[indexSelected].Amount--;
+                CreateOrderVM.UpdateTotalOrder();
             }
-            CreateOrderVM.UpdateTotalOrder();
         }
 
         private void Increase_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -61,9 +61,17 @@ namespace CanteenManagementApp.Pages
             int indexSelected = CreateOrderVM.ListFoodItemOrder.IndexOf(foodListView.SelectedItem as ItemOrder);
             if (indexSelected != -1)
             {
-                CreateOrderVM.ListFoodItemOrder[indexSelected].Amount++;
+                ItemOrder selectedItem = CreateOrderVM.ListFoodItemOrder[indexSelected];
+                if (selectedItem.Amount + 1 <= selectedItem.Item.Amount)
+                {
+                    selectedItem.Amount++;
+                    CreateOrderVM.UpdateTotalOrder();
+                }
+                else
+                {
+                    MessageBox.Show("Đã vượt quá số lượng mặt hàng có sẵn", "Vượt số lượng", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
-            CreateOrderVM.UpdateTotalOrder();
         }
 
         private void DecreaseInventory_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -75,22 +83,26 @@ namespace CanteenManagementApp.Pages
             if (indexSelected != -1 && CreateOrderVM.ListInventoryItemOrder[indexSelected].Amount > 0)
             {
                 CreateOrderVM.ListInventoryItemOrder[indexSelected].Amount--;
+                CreateOrderVM.UpdateTotalOrder();
             }
-            CreateOrderVM.UpdateTotalOrder();
         }
 
         private void IncreaseInventory_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             Button btn = (Button)e.OriginalSource;
             inventoryListView.SelectedItem = btn.DataContext;
+            ItemOrder itemOrder = inventoryListView.SelectedItem as ItemOrder;
 
             int indexSelected = CreateOrderVM.ListInventoryItemOrder.IndexOf(inventoryListView.SelectedItem as ItemOrder);
-            if (indexSelected != -1 && CreateOrderVM.ListInventoryItemOrder[indexSelected].Amount < CreateOrderVM.ListInventoryItemOrder[indexSelected].Item.Amount)
-                CreateOrderVM.ListInventoryItemOrder[indexSelected].Amount++;
+            if (indexSelected != -1 && itemOrder.Amount < itemOrder.Item.Amount)
+            {
+                itemOrder.Amount++;
+                CreateOrderVM.UpdateTotalOrder();
+            }
             else
+            {
                 MessageBox.Show("Vượt quá số lượng trong kho.", "Vượt quá số lượng", MessageBoxButton.OK, MessageBoxImage.Information);
-
-            CreateOrderVM.UpdateTotalOrder();
+            }
         }
 
         private void List_PreviewLeftMouseDown(object sender, MouseButtonEventArgs e)
