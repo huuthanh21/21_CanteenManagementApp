@@ -9,9 +9,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Timers;
-using System.Threading;
-using Timer = System.Timers.Timer;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
@@ -55,11 +52,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
             UpdateAmountCommand = new RelayCommand<MenuView>((parameter) => true, async (parameter) => await UpdateAmount(parameter));
             OkUpdateAmount = new RelayCommand<UpdateAmountMenu>((parameter) => true, (parameter) => OkUpdate(parameter));
             CancelUpdateAmount = new RelayCommand<UpdateAmountMenu>((parameter) => true, (parameter) => CancelUpdate(parameter));
-
-            //
-            //InvokeSthing(2000);
-            //SetDataTimer(5000);
-            SetupData();
         }
 
         private static void CancelUpdate(UpdateAmountMenu parameter)
@@ -131,7 +123,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             await DbQueries.MenuQueries.InsertMenuItems(_foodItemsYesterday);
         }
 
-        private static childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
+        private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
             {
@@ -176,22 +168,14 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
                     //end template
 
-                    //Test time:
-                    /* DateTime today = DateTime.Today;*/
-                    //DateTime today = DateTime.Now;
-                    //MessageBox.Show("Now is " + today);
-                    //DateTime yesterday = GetYesterday();
-                    //DateTime tomorrow = GetTomorrow();
-                    //MessageBox.Show("Yesterday is " + yesterday + "\nToday is " + tomorrow);
-                    //TimeSpan interval = tomorrow.Subtract(today);
-                    //MessageBox.Show("From today to tomorrow is: " + interval.Hours * 60 + interval.Minutes * 60 + interval.Seconds + " s");
-                    //*60 + interval.Minutes * 60 + interval.Seconds + " s"
 
                     Item newItem = (Item)item;
                     //newItem.Amount = int.Parse(textBox.Text);
                     newItem.Amount = int.Parse(amount);
                     _foodItemsToday.Add(newItem);
                     await DbQueries.MenuQueries.InsertMenuItem(newItem);
+
+
                 }
             }
         }
@@ -205,14 +189,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
             return today.AddDays(-1);
         }
 
-        public static DateTime GetTomorrow()
-        {
-            // Ngày hôm nay.
-            DateTime today = DateTime.Today;
-
-            return today.AddDays(1);
-        }
-
         public static async Task ResetAmount(IEnumerable<Item> items)
         {
             // Check if items is empty
@@ -223,73 +199,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 item.Amount = 0;
             }
             await DbQueries.MenuQueries.ResetAmountMenuItems(items);
-        }
-
-        public static void InvokeSthing(int sleepTime)
-        {
-            // command block goes here!
-            DateTime today = DateTime.Now;
-            MessageBox.Show("Now is " + today);
-            Thread.Sleep(sleepTime);
-            today = DateTime.Now;
-            MessageBox.Show("Now is " + today);
-        }
-
-        private Timer aTimer;
-
-        public void SetDataTimer(int milliSeconds)
-        {
-            aTimer = new System.Timers.Timer();
-            aTimer.Interval = milliSeconds;
-            // Hook up the Elapsed event for the timer.
-            aTimer.Elapsed += OnTimedEvent;
-
-            // Have the timer fire repeated events (true is the default)
-            aTimer.AutoReset = false;
-
-            // Start the timer
-            aTimer.Enabled = true;
-
-            //MessageBox.Show("Press the Enter key to exit the program at any time... ");
-            //Console.WriteLine("Press the Enter key to exit the program at any time... ");
-            //Console.ReadLine();
-        }
-
-        private static int Count { get; set; } = 0;
-
-        private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
-        {
-            _ = ResetAmount(_foodItemsToday);
-            MessageBox.Show("The Elapsed event was raised at " + e.SignalTime.ToString() + " count: " + Count.ToString());
-            Count++;
-            //if (Count == 2 || Count > 5)
-            //{
-            //    aTimer.Stop();
-            //    aTimer.AutoReset = false;
-            //    aTimer.Enabled=false;
-            //    aTimer.EndInit();
-            //}
-            SetupData();
-        }
-
-        public void SetupData()
-        {
-            //
-            //Test time:
-            /* DateTime today = DateTime.Today;*/
-            //DateTime today = DateTime.Now;
-            //MessageBox.Show("Now is " + today);
-            //DateTime yesterday = GetYesterday();
-            //DateTime tomorrow = GetTomorrow();
-            //MessageBox.Show("Yesterday is " + yesterday + "\nToday is " + tomorrow);
-            //TimeSpan interval = tomorrow.Subtract(today);
-            //MessageBox.Show("From today to tomorrow is: " + interval.Hours * 60 + interval.Minutes * 60 + interval.Seconds + " s");
-            //*60 + interval.Minutes * 60 + interval.Seconds + " s"
-            //SetDataTimer(interval);
-            if (Count == 0)
-            {
-                SetDataTimer(5000);
-            }
         }
     }
 }
