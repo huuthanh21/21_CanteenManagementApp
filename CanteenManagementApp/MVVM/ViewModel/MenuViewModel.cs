@@ -112,6 +112,11 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         private async Task CopyMenu()
         {
+            foreach(Item item in _foodItemsToday)
+            {
+                DbQueries.MenuQueries.DeleteMenuItem(item);
+            }
+
             // Update UI
             _foodItemsToday.Clear();
             foreach (Item item in _foodItemsYesterday)
