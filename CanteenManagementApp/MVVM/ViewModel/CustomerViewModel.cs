@@ -23,6 +23,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         public RelayCommand CreateOrderCommand { get; set; }
         public RelayCommand PasswordStateCommand { get; set; }
         public RelayCommand TopUpCommand { get; set; }
+        public RelayCommand ViewReceiptDetailsCommand { get; set; }
 
         private readonly ObservableCollection<Item> _recentItems;
 
@@ -117,6 +118,17 @@ namespace CanteenManagementApp.MVVM.ViewModel
                         screen.Close();
                         MainViewModel.CreateOrderViewWithTopUp.Execute(new Tuple<Customer, int>(Customer, amount));
                     }
+                }
+            });
+
+            ViewReceiptDetailsCommand = new RelayCommand(receciptId =>
+            {
+                var screen = new ReceiptView((int)receciptId);
+                screen.ShowDialog();
+
+                if (screen.DialogResult == true)
+                {
+                    screen.Close();
                 }
             });
         }

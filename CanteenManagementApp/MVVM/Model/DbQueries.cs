@@ -418,6 +418,18 @@ namespace CanteenManagementApp.MVVM.Model
                 return itemOrders;
             }
 
+            public static List<ItemOrder> GetReceiptDetailsById(int receiptId)
+            {
+                using var context = new CanteenContext();
+
+                var itemOrders = context.Receipt_Items
+                                            .Join(context.Items, ri => ri.ItemId, i => i.Id, (ri, i) => new { ri, i })
+                                            .Where(rii => rii.ri.ReceiptId.Equals(receiptId))
+                                            .Select(rii => new ItemOrder { Item = rii.i, Amount = rii.ri.Amount })
+                                            .ToList();
+                return itemOrders;
+            }
+
             // Get daily revenue (Top-up excluded)
             public static async Task<float> GetDayRevenueAsync(DateOnly date)
             {
