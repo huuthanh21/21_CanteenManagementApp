@@ -8,8 +8,8 @@
       xmlns:local="clr-namespace:CanteenManagementApp.MVVM.View" xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel" xmlns:Model="clr-namespace:CanteenManagementApp.MVVM.Model" d:DataContext="{d:DesignInstance Type=viewModel:DailyReportModel}"
       mc:Ignorable="d"
       d:Background="#F8F8F8"
-      x:Name="dailyReportPage"
-      d:DesignHeight="600" d:DesignWidth="665">
+      d:DesignHeight="600" d:DesignWidth="665"
+      >
     <Page.DataContext>
         <viewModel:DailyReportModel />
     </Page.DataContext>
@@ -26,7 +26,8 @@
             </Style>
         </ResourceDictionary>
     </Page.Resources>
-    <Grid x:Name="grid_dailyreport" Margin="30 0 10 10">
+    <StackPanel Orientation="Vertical" x:Name="dailyReportPage">
+        <Grid  Margin="30 0 10 10">
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="55" />
@@ -149,7 +150,9 @@
                     </ListView>
                 </Grid>
             </Border>
-            <Button Width="100px" Height="40px" Style="{DynamicResource ButtonCustomColorPositive}" Content="In Hoá Đơn" Background="#E1251B" Click="Button_Click"></Button>
         </StackPanel>
     </Grid>
+            <Button Width="100px" Height="40px" Style="{DynamicResource ButtonCustomColorPositive}" Content="In Hoá Đơn" Background="#E1251B" Click="Button_Click"></Button>
+
+    </StackPanel>
 </Page>
