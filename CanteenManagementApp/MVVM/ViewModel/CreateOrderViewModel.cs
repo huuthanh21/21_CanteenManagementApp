@@ -339,7 +339,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         private void FillItemOrderLists()
         {
-            foreach (Item item in new ObservableCollection<Item>(DbQueries.ItemQueries.GetItemsByType(0)))
+            foreach (Item item in new ObservableCollection<Item>(DbQueries.MenuQueries.GetTodayMenuItems()))
             {
                 ListFoodItemOrder.Add(new ItemOrder() { Item = (Item)item.Clone() });
             }
