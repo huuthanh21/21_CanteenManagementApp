@@ -45,5 +45,15 @@ namespace CanteenManagementApp.MVVM.View
             }
             return YearArray;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.IsEnabled = false;
+            PrintDialog printDialog = new PrintDialog();
+            if (printDialog.ShowDialog() == true)
+            {
+                printDialog.PrintVisual(monthlyReportPage, "Monthly Report Printing");
+            }
+        }
     }
 }
