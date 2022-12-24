@@ -57,26 +57,8 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         public StorageViewModel()
         {
-            /*_allItems = new ObservableCollection<Item> { };
-            using var dbContext = new CanteenContext();
-            var items = dbContext.Items;
-            foreach (var item in items)
-            {
-                _allItems.Add(item);
-            }*/
             _foodItems = new ObservableCollection<Item>(DbQueries.ItemQueries.GetItemsByType(0));
             _inventoryItems = new ObservableCollection<Item>(DbQueries.ItemQueries.GetItemsByType(1));
-            /* foreach (var item in _allItems)
-             {
-                 if (item.Type == 1)
-                 {
-                     _inventoryItems.Add(item);
-                 }
-                 else
-                 {
-                     _foodItems.Add(item);
-                 }
-             }*/
 
             FoodItemsCollection = new CollectionViewSource { Source = _foodItems };
             InventoryItemsCollection = new CollectionViewSource { Source = _inventoryItems };
@@ -205,17 +187,125 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         public void OKAddInventoryItem(AddInventoryItem parameter)
         {
-            parameter.DialogResult = true;
-        }
 
+            // 1: Lỗi để trống các textBox
+            // 2: Lỗi nhập giá cả âm hoặc ký tự lạ
+            // 3: Lỗi nhập số lượng âm hoặc ký tự lạ
+
+            int error_type = 0;
+            var price_template = parameter.priceTextBox.Template;
+            var control_price = (TextBox)price_template.FindName("TextboxInput", parameter.priceTextBox);
+            string price = control_price.Text;
+            float price_test = 0;
+
+            var name_template = parameter.nameTextBox.Template;
+            var control_name = (TextBox)name_template.FindName("TextboxInput", parameter.nameTextBox);
+            string name = control_name.Text;
+
+            var description_template = parameter.describeTextBox.Template;
+            var control_description = (TextBox)description_template.FindName("TextboxInput", parameter.describeTextBox);
+            string description = control_description.Text;
+
+            var amount_template = parameter.amountTextBox.Template;
+            var control_amount = (TextBox)amount_template.FindName("TextboxInput", parameter.amountTextBox);
+            string amount = control_amount.Text;
+            int amount_test = 0;
+
+            //1. 
+            if (price == "" || name == "" || description == "" || amount == "")
+            {
+                error_type = 1;
+            }
+            //2.
+            else if (float.TryParse(price, out price_test) == false || float.Parse(price) < 0)
+            {
+                error_type = 2;
+            }
+            else
+            {
+                bool check = int.TryParse(amount, out amount_test);
+                if (check == true)
+                {
+                    amount_test = int.Parse(amount);
+                    if (amount_test < 0)
+                    {
+                        error_type = 3;
+                    }
+                }
+                else error_type = 3;
+            }
+            switch (error_type)
+            {
+                case 1:
+                    MessageBox.Show("Lỗi! Còn một số trường chưa được nhập giá trị");
+                    break;
+                case 2:
+                    MessageBox.Show("Lỗi! Giá cả nhập vào không hợp lệ");
+                    break;
+                case 3:
+                    MessageBox.Show("Lỗi! Số lượng nhập vào không hợp lệ");
+                    break;
+                default:
+                    MessageBox.Show("Thêm hàng tồn thành công");
+                    parameter.DialogResult = true;
+                    break;
+            }
+        }
+        
         public void OKAddFoodItem(AddFoodItem parameter)
         {
-            parameter.DialogResult = true;
+            // 1: Lỗi để trống các textBox
+            // 2: Lỗi nhập giá cả âm hoặc ký tự lạ
+
+            int error_type = 0;
+            var price_template = parameter.priceTextBox.Template;
+            var control_price = (TextBox)price_template.FindName("TextboxInput", parameter.priceTextBox);
+            string price = control_price.Text;
+
+            var name_template = parameter.nameTextBox.Template;
+            var control_name = (TextBox)name_template.FindName("TextboxInput", parameter.nameTextBox);
+            string name = control_name.Text;
+
+            var description_template = parameter.describeTextBox.Template;
+            var control_description = (TextBox)description_template.FindName("TextboxInput", parameter.describeTextBox);
+            string description = control_description.Text;
+
+            //1. 
+            if (price == "" || name == "" || description == "")
+            {
+                error_type = 1;
+            }
+            //2.
+            else
+            {
+                float price_test = 0;
+                bool check = float.TryParse(price, out price_test);
+                if (check == true)
+                {
+                    price_test = float.Parse(price);
+                    if (price_test < 0)
+                    {
+                        error_type = 2;
+                    }
+                }
+                else error_type = 2;
+            }
+            switch (error_type) {
+                case 1:
+                    MessageBox.Show("Lỗi! Còn một số trường chưa được nhập giá trị");
+                    break;
+                case 2: 
+                    MessageBox.Show("Lỗi! Giá cả nhập vào không hợp lệ");
+                    break;
+                default:
+                    MessageBox.Show("Thêm món ăn hàng ngày thành công");
+                    parameter.DialogResult = true;
+                    break;
+            }
         }
 
         public async void AddInventoryItem(StorageView parameter)
         {
-
             var screen = new AddInventoryItem();
             if (screen.ShowDialog() == true)
             {
@@ -231,7 +321,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 var amount_template = screen.amountTextBox.Template;
                 var control_amount = (TextBox)amount_template.FindName("TextboxInput", screen.amountTextBox);
                 string amount = control_amount.Text;
-                Item NewItem = new Item()
+                Item NewItem = new()
                 {
                     Name = name,
                     Price = float.Parse(price),
@@ -240,7 +330,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     Type = 1
                 };
 
-                await DbQueries.ItemQueries.InsertItemAsync(NewItem);
+                await DbQueries.ItemQueries.InsertItem_Async(NewItem);
                 _inventoryItems.Add(NewItem);
                 CopyFileToAppFolder(NewItem.Id.ToString(), _imageFileName);
             }
@@ -281,17 +371,15 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     Amount = 0,
                     Type = 0
                 };
-
-                await DbQueries.ItemQueries.InsertItemAsync(NewItem);
+                await DbQueries.ItemQueries.InsertItem_Async(NewItem);
                 _foodItems.Add(NewItem);
                 CopyFileToAppFolder(NewItem.Id.ToString(), _imageFileName);
+
             }
             else
             {
-
-
+                
             }
-            screen.Close();
         }
 
         public static void CopyFileToAppFolder(string id, string sourceFileName)
@@ -309,21 +397,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
             File.Copy(sourceFileName, filePath, true);
         }
-        /*public static void CopyFileToAppFolder_EditImage(string id, string sourceFileName)
-        {
-            var appdataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var appFolder = "21CanteenManager";
-
-            var appPath = Path.Combine(appdataPath, appFolder);
-            StringBuilder stringBuilder = new();
-            stringBuilder.Append(id);
-            stringBuilder.Append(".jpg");
-
-            var filePath = Path.Combine(appPath, stringBuilder.ToString());
-
-            System.IO.File.Delete(filePath);
-            File.Copy(sourceFileName, filePath);
-        }*/
 
         public string GetFilePath(string id)
         {
@@ -338,6 +411,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             var filePath = Path.Combine(appPath, stringBuilder.ToString());
             return filePath;
         }
+
         public static void ChooseImageInventoryItem(AddInventoryItem parameter)
         {
             OpenFileDialog op = new OpenFileDialog();
@@ -348,11 +422,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 _imageFileName = op.FileName;
                 ImageBrush imageBrush = new ImageBrush();
                 BitmapImage bitmap = GetBitmap(_imageFileName);
-                /*  BitmapImage bitmap = new BitmapImage();
-                  bitmap.BeginInit();
-                  bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                  bitmap.UriSource = new Uri(_imageFileName);
-                  bitmap.EndInit();*/
                 imageBrush.ImageSource = bitmap;
                 parameter.grdSelectImg.Background = imageBrush;
                 parameter.imageEmpty.Visibility = Visibility.Hidden;
@@ -369,44 +438,67 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 _imageFileName = op.FileName;
                 ImageBrush imageBrush = new ImageBrush();
                 BitmapImage bitmap = GetBitmap(_imageFileName);
-                /* BitmapImage bitmap = new BitmapImage();
-                 bitmap.BeginInit();
-                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                 bitmap.UriSource = new Uri(_imageFileName);
-                 bitmap.EndInit();*/
                 imageBrush.ImageSource = bitmap;
                 parameter.grdSelectImg.Background = imageBrush;
                 parameter.imageEmpty.Visibility = Visibility.Hidden;
             }
         }
 
-
-
-        //private void SelectImage_Click(object sender, RoutedEventArgs e)
-        //{
-        //    OpenFileDialog op = new OpenFileDialog();
-        //    op.Title = "Chọn ảnh";
-        //    op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" + "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" + "Portable Network Graphic (*.png)|*.png";
-        //    if (op.ShowDialog() == true)
-        //    {
-        //        _imageFileName = op.FileName;
-        //        ImageBrush imageBrush = new ImageBrush();
-        //        BitmapImage bitmap = new BitmapImage();
-        //        bitmap.BeginInit();
-        //        bitmap.CacheOption = BitmapCacheOption.OnLoad;
-        //        bitmap.UriSource = new Uri(_imageFileName);
-        //        bitmap.EndInit();
-        //        imageBrush.ImageSource = bitmap;
-        //        parameter.grdSelectImg.Background = imageBrush;
-        //        parameter.imageEmpty.Visibility = Visibility.Hidden;
-        //    }
-        //}
-
         private void SaveEditInventoryItem(EditInventoryItem parameter)
         {
-            parameter.DialogResult = true;
+            // 1: Lỗi để trống các textBox
+            // 2: Lỗi nhập giá cả âm hoặc ký tự lạ
+            // 3: Lỗi nhập số lượng âm hoặc ký tự lạ
+
+            int error_type = 0;
+            string price = parameter.priceTextBox.Text;
+            float price_test = 0;
+            string name = parameter.nameTextBox.Text;  
+            string description = parameter.describeTextBox.Text;
+            string amount = parameter.amountTextBox.Text;
+            int amount_test = 0;
+
+            //1. 
+            if (price == "" || name == "" || description == "" || amount == "")
+            {
+                error_type = 1;
+            }
+            //2.
+            else if (float.TryParse(price, out price_test) == false || float.Parse(price) < 0)
+            {
+                error_type = 2;
+            }
+            else
+            {
+                bool check = int.TryParse(amount, out amount_test);
+                if (check == true)
+                {
+                    amount_test = int.Parse(amount);
+                    if (amount_test < 0)
+                    {
+                        error_type = 3;
+                    }
+                }
+                else error_type = 3;
+            }
+            switch (error_type)
+            {
+                case 1:
+                    MessageBox.Show("Lỗi! Còn một số trường chưa được nhập giá trị");
+                    break;
+                case 2:
+                    MessageBox.Show("Lỗi! Giá cả nhập vào không hợp lệ");
+                    break;
+                case 3:
+                    MessageBox.Show("Lỗi! Số lượng nhập vào không hợp lệ");
+                    break;
+                default:
+                    MessageBox.Show("Chỉnh sửa hàng tồn thành công");
+                    parameter.DialogResult = true;
+                    break;
+            }
         }
-         
+
         private void EditInventoryItem(StorageView parameter)
         {
             var itemSelected = parameter.inventoryListView.SelectedItem as Item;
@@ -432,10 +524,10 @@ namespace CanteenManagementApp.MVVM.ViewModel
             DataTemplate myDataTemplate = myContentPresenter.ContentTemplate;
             Image image = (Image)myDataTemplate.FindName("ImageItem", myContentPresenter);
             image.Source = bitmap;
-
-            if (screen.ShowDialog() == true)
+            screen.ShowDialog();
+            if (screen.DialogResult == true)
             {
-                Item NewItem = new()
+                Item NewItem = new Item()
                 {
                     Id = itemSelected.Id,
                     Name = screen.nameTextBox.Text,
@@ -458,7 +550,47 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         private void SaveEditFoodItem(EditFoodItem parameter)
         {
-            parameter.DialogResult = true;
+            // 1: Lỗi để trống các textBox
+            // 2: Lỗi nhập giá cả âm hoặc ký tự lạ
+
+            int error_type = 0;
+            string price = parameter.priceTextBox.Text;
+            string name = parameter.nameTextBox.Text;
+            string description = parameter.describeTextBox.Text;
+
+            //1. 
+            if (price == "" || name == "" || description == "")
+            {
+                error_type = 1;
+            }
+            //2.
+            else
+            {
+                float price_test = 0;
+                bool check = float.TryParse(price, out price_test);
+                if (check == true)
+                {
+                    price_test = float.Parse(price);
+                    if (price_test < 0)
+                    {
+                        error_type = 2;
+                    }
+                }
+                else error_type = 2;
+            }
+            switch (error_type)
+            {
+                case 1:
+                    MessageBox.Show("Lỗi! Còn một số trường chưa được nhập giá trị");
+                    break;
+                case 2:
+                    MessageBox.Show("Lỗi! Giá cả nhập vào không hợp lệ");
+                    break;
+                default:
+                    MessageBox.Show("Chỉnh sửa món ăn hàng ngày thành công");
+                    parameter.DialogResult = true;
+                    break;
+            }
         }
 
         private void EditFoodItem(StorageView parameter)

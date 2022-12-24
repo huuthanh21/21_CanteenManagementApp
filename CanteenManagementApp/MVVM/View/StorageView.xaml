@@ -264,8 +264,6 @@
                         <Border x:Name="border"
                                 BorderBrush="Gray" 
                                 BorderThickness="2"  
-<<<<<<<<< Temporary merge branch 1
-<<<<<<<<< Temporary merge branch 1
                                 CornerRadius="5">
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
