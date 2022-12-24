@@ -112,6 +112,11 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         private async Task CopyMenu()
         {
+            foreach(Item item in _foodItemsToday)
+            {
+                DbQueries.MenuQueries.DeleteMenuItem(item);
+            }
+
             // Update UI
             _foodItemsToday.Clear();
             foreach (Item item in _foodItemsYesterday)
@@ -165,7 +170,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     var amount_template = textBox.Template;
                     var control_amount = (TextBox)amount_template.FindName("TextboxInput", textBox);
                     string amount = control_amount.Text;
-                    
+
                     //end template
 
 
@@ -175,7 +180,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     _foodItemsToday.Add(newItem);
                     await DbQueries.MenuQueries.InsertMenuItem(newItem);
 
-                    
+
                 }
             }
         }

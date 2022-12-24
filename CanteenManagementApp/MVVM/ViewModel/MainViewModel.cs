@@ -74,7 +74,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
             ReportViewCommand = new RelayCommand(o =>
             {
-                CurrentView = ReportVM;
+                CurrentView = new ReportViewModel();
             });
         }
     }

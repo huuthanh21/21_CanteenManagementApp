@@ -5,6 +5,7 @@
       xmlns:converters="clr-namespace:CanteenManagementApp.Converters"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      x:Name="monthlyReportPage"
       xmlns:local="clr-namespace:CanteenManagementApp.MVVM.View" xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel" xmlns:Model="clr-namespace:CanteenManagementApp.MVVM.Model" d:DataContext="{d:DesignInstance Type=viewModel:MonthlyReportModel}"
       mc:Ignorable="d"
              d:Background="#F8F8F8"
@@ -133,6 +134,7 @@
                     </ListView>
                 </Grid>
             </Border>
+            <Button Width="100px" Height="40px" Style="{DynamicResource ButtonCustomColorPositive}" Content="In Hoá Đơn" Background="#E1251B" Click="Button_Click"></Button>
         </StackPanel>
     </Grid>
 </Page>

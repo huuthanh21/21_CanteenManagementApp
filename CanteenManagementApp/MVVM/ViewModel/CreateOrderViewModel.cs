@@ -141,8 +141,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
                         await HandlePaymentThroughAccount();
                     }
 
-                    CurrentPage = CreateOrderReceiptPage;
-
                     // Update storage database
                     await DbQueries.ItemQueries.UpdateItemAmountOnPurchase(TotalItemOrder);
                 }
@@ -288,6 +286,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             {
                 ReceiptId = await DbQueries.ReceiptQueries.InsertReceiptAsync(HasCustomer ? Customer.Id : "-1", TotalItemOrder.ToList(), PayInCash ? "Tiền mặt" : "Trả trước", TotalOrderCost);
                 await DbQueries.CustomerQueries.UpdateCustomerBalanceOnPurchase(Customer, TotalOrderCost);
+                CurrentPage = CreateOrderReceiptPage;
             }
         }
 
@@ -339,7 +338,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         private void FillItemOrderLists()
         {
-            foreach (Item item in new ObservableCollection<Item>(DbQueries.ItemQueries.GetItemsByType(0)))
+            foreach (Item item in new ObservableCollection<Item>(DbQueries.MenuQueries.GetTodayMenuItems()))
             {
                 ListFoodItemOrder.Add(new ItemOrder() { Item = (Item)item.Clone() });
             }

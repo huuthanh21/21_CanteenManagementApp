@@ -86,6 +86,10 @@
                                 </LinearGradientBrush>
                             </Border.Background>
                             <StackPanel Orientation="Vertical"
+                            <StackPanel Orientation="Vertical" 
+=========
+                            <StackPanel Orientation="Vertical"
+>>>>>>>>> Temporary merge branch 2
                                                  Width="104"
                                                     Height="120">
                                 <StackPanel Orientation="Horizontal">
