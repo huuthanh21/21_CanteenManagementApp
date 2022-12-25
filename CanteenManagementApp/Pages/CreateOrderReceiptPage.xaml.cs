@@ -1,4 +1,5 @@
 ﻿using CanteenManagementApp.MVVM.ViewModel;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace CanteenManagementApp.Pages
@@ -32,6 +33,17 @@ namespace CanteenManagementApp.Pages
             {
                 CustomerId.Visibility = System.Windows.Visibility.Collapsed;
                 PanelCustomerId.Visibility = System.Windows.Visibility.Collapsed;
+            }
+        }
+
+        private void Print_Click(object sender, RoutedEventArgs e)
+        {
+            this.IsEnabled = false;
+            PrintDialog printDialog = new PrintDialog();
+            if (printDialog.ShowDialog() == true)
+            {
+                printDialog.PrintVisual(createOrderPage, "Receipt Printing");
+                this.IsEnabled = true;
             }
         }
     }
