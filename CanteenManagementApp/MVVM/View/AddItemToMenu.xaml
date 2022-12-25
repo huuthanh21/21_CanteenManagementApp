@@ -199,6 +199,8 @@
                          Content="Hủy"
                          Height="32"
                          Margin="0 30 20 5"
+                         Command="{Binding CancelAddItemToMenuCommand}"
+                         CommandParameter="{Binding ElementName=wdAddItemToMenu}"
                          Style="{StaticResource ButtonCustomColorCancel}" />
 
                 <Button  x:Name="AddOkButton"

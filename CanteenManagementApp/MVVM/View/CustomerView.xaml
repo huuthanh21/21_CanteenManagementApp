@@ -298,11 +298,6 @@
                                                FontSize="10"
                                                Style="{StaticResource TextblockTitleSmall}"
                                                TextAlignment="Right" />
-                                    <Button Content="Tạo lại đơn"
-                                            Style="{StaticResource linkButton}"
-                                            FontSize="12"
-                                            Margin="0 10 0 0"
-                                            Foreground="#0033A1"></Button>
                                 </StackPanel>
                             </StackPanel>
                         </Border>

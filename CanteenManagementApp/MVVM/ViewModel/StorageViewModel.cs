@@ -253,7 +253,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     break;
             }
         }
-        
+
         public void OKAddFoodItem(AddFoodItem parameter)
         {
             // 1: Lỗi để trống các textBox
@@ -292,11 +292,12 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 }
                 else error_type = 2;
             }
-            switch (error_type) {
+            switch (error_type)
+            {
                 case 1:
                     MessageBox.Show("Lỗi! Còn một số trường chưa được nhập giá trị");
                     break;
-                case 2: 
+                case 2:
                     MessageBox.Show("Lỗi! Giá cả nhập vào không hợp lệ");
                     break;
                 default:
@@ -308,6 +309,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         public async void AddInventoryItem(StorageView parameter)
         {
+            _imageFileName = "";
             var screen = new AddInventoryItem();
             if (screen.ShowDialog() == true)
             {
@@ -346,6 +348,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         public async void AddFoodItem(StorageView parameter)
         {
+            _imageFileName = "";
             var screen = new AddFoodItem();
             screen.ShowDialog();
             if (screen.DialogResult == true)
@@ -380,7 +383,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             }
             else
             {
-                
+
             }
         }
 
@@ -457,7 +460,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             int error_type = 0;
             string price = parameter.priceTextBox.Text;
             float price_test = 0;
-            string name = parameter.nameTextBox.Text;  
+            string name = parameter.nameTextBox.Text;
             string description = parameter.describeTextBox.Text;
             string amount = parameter.amountTextBox.Text;
             int amount_test = 0;
