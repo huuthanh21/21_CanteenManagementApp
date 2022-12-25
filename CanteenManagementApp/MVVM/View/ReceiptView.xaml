@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CanteenManagementApp.MVVM.View"
         xmlns:converters="clr-namespace:CanteenManagementApp.Converters"
         mc:Ignorable="d"
-        x:Name="ReceiptWindow"
+        x:Name="receipt_print"
         ResizeMode="NoResize"
         d:Background="#F8F8F8"
         Height="540" Width="680"
@@ -21,7 +21,7 @@
     </Window.Resources>
     <StackPanel Orientation="Vertical">
 
-        <Grid Margin="20,10,0,11" x:Name="receipt_print">
+        <Grid Margin="20,10,0,11">
             <Grid.RowDefinitions>
                 <RowDefinition Height="81" />
                 <RowDefinition Height="10" />
@@ -198,15 +198,6 @@
             </Canvas>
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="4" Margin="0,123,20,0">
-
-            <Button x:Name="ButtonPrint"
-                Content="In hoá đơn"
-                Background="Transparent"
-                Foreground="#0033A1"
-                Width="120"
-                Style="{StaticResource ButtonCustomColorCancel}"
-                HorizontalAlignment="Left" Height="31" VerticalAlignment="Top"
-                Margin="0 0 10 0" />
             <Button x:Name="ButtonClose"
                 Content="Đóng"
                 Background="#0033A1"
