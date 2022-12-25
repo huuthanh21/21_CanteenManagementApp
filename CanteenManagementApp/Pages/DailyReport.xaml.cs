@@ -67,6 +67,7 @@ namespace CanteenManagementApp.MVVM.View
             PrintDialog printDialog = new PrintDialog();
             if (printDialog.ShowDialog() == true) {
                 printDialog.PrintVisual(dailyReportPage, "Daily Report Printing");
+                this.IsEnabled = true;
             }
         }
     }

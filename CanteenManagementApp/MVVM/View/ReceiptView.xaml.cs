@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace CanteenManagementApp.MVVM.View
@@ -45,6 +46,17 @@ namespace CanteenManagementApp.MVVM.View
         private void ButtonClose_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = true;
+        }
+
+        private void ButtonPrint_Click(object sender, RoutedEventArgs e)
+        {
+            this.IsEnabled = false;
+            PrintDialog printDialog = new PrintDialog();
+            if (printDialog.ShowDialog() == true)
+            {
+                printDialog.PrintVisual(receipt_print, "Daily Report Printing");
+                this.IsEnabled = true;
+            }
         }
     };
 }

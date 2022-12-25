@@ -5,7 +5,8 @@
       xmlns:converters="clr-namespace:CanteenManagementApp.Converters"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      x:Name="monthlyReportPage"
+
+
       xmlns:local="clr-namespace:CanteenManagementApp.MVVM.View" xmlns:viewModel="clr-namespace:CanteenManagementApp.MVVM.ViewModel" xmlns:Model="clr-namespace:CanteenManagementApp.MVVM.Model" d:DataContext="{d:DesignInstance Type=viewModel:MonthlyReportModel}"
       mc:Ignorable="d"
              d:Background="#F8F8F8"
@@ -26,82 +27,85 @@
             </Style>
         </ResourceDictionary>
     </Page.Resources>
-    <Grid x:Name="grid_MonthlyReport" Margin="30 0 10 10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="55" />
-            <RowDefinition Height="5" />
-            <RowDefinition Height="60" />
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+    <StackPanel Orientation="Vertical" x:Name="monthlyReportPage">
+        <Grid Margin="30 0 10 10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="55" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="60" />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
-        <Button Width="100" HorizontalAlignment="Left" VerticalAlignment="Center"
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Button Width="100" HorizontalAlignment="Left" VerticalAlignment="Center"
                 Margin=" 0 20 0 0"
                 Background="Transparent"
                 Click="ButtonLink_Click"
                 Style="{StaticResource ReportNavigationButtonTheme}"
                 Tag="/Images/backicon.png"
                 Content="Trở về">
-        </Button>
-        <TextBlock Text="Báo cáo tháng"
+            </Button>
+            <TextBlock Text="Báo cáo tháng"
                    Grid.Row="1"
                    Style="{StaticResource TextblockTitle}" />
 
-        <StackPanel Grid.Row="3"
+            <StackPanel Grid.Row="3"
                     HorizontalAlignment="Left"
                     Orientation="Horizontal"
-                    Margin="0 15 0 10">
-            <StackPanel.Resources>
-                <Style TargetType="TextBlock" BasedOn="{StaticResource ResourceKey=TextBlockReportPage}"></Style>
-            </StackPanel.Resources>
-            <TextBlock Text="Tháng"></TextBlock>
-            <ComboBox x:Name="Month"
+                    Margin="0 15 0 10"
+					>
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource ResourceKey=TextBlockReportPage}"></Style>
+                </StackPanel.Resources>
+                <TextBlock Text="Tháng"></TextBlock>
+                <ComboBox x:Name="Month"
                       Height="28" Width="85"
                       FontSize="14.5"
                       SelectedItem="{Binding Month, Converter={StaticResource StringToIntConverter},
                                   Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="SelectionChanged">
-                        <b:InvokeCommandAction Command="{Binding DateChangedCommand}" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </ComboBox>
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="SelectionChanged">
+                            <b:InvokeCommandAction Command="{Binding DateChangedCommand}" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </ComboBox>
 
-            <TextBlock Text="Năm"></TextBlock>
-            <ComboBox x:Name="Year"
+                <TextBlock Text="Năm"></TextBlock>
+                <ComboBox x:Name="Year"
                       Height="28" Width="85"
                       FontSize="14.5"
                       SelectedItem="{Binding Year, Converter={StaticResource StringToIntConverter},
                                   Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="SelectionChanged">
-                        <b:InvokeCommandAction Command="{Binding DateChangedCommand}" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </ComboBox>
-        </StackPanel>
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="SelectionChanged">
+                            <b:InvokeCommandAction Command="{Binding DateChangedCommand}" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
 
-        <StackPanel Grid.Row="4" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}" HorizontalAlignment="Left" Margin="0 15 0 10">
-            <Border Background="White"
+            <StackPanel Grid.Row="4" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}" HorizontalAlignment="Left" Margin="0 15 0 10">
+                <Border Background="White"
                     Margin="0 10" Padding="10"
                     BorderThickness="1"
                     CornerRadius="8"
-                    BorderBrush="LightGray">
-                <Grid>
-                    <StackPanel Orientation="Vertical">
+                    BorderBrush="LightGray"
+                      >
+                    <Grid>
+                        <StackPanel Orientation="Vertical">
 
-                        <TextBlock Text="Báo cáo" Style="{StaticResource ResourceKey=TextBlockReportPage}"
+                            <TextBlock Text="Báo cáo" Style="{StaticResource ResourceKey=TextBlockReportPage}"
                                    FontSize="20" Foreground="#E1251B"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Top"
                                    Margin="0 10 0 0"
                                    Padding="0" />
-                    </StackPanel>
-                    <ListView Margin="0 60 0 0"
+                        </StackPanel>
+                        <ListView Margin="0 60 0 0"
                               Background="Transparent"
                               BorderThickness="0"
                               ItemsSource="{Binding ReportItemsCollection}"
@@ -109,32 +113,33 @@
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.VerticalScrollBarVisibility="Visible"
                               HorizontalAlignment="Center" d:ItemsSource="{d:SampleData ItemCount=5}">
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
 
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListViewItem}"
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}"
                                    BasedOn="{StaticResource ResourceKey=myReportItem}">
-                            </Style>
-                        </ListView.ItemContainerStyle>
+                                </Style>
+                            </ListView.ItemContainerStyle>
 
-                        <ListView.View>
-                            <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
-                                <GridView.Columns>
-                                    <GridViewColumn Width="400"
+                            <ListView.View>
+                                <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+                                    <GridView.Columns>
+                                        <GridViewColumn Width="400"
                                                     DisplayMemberBinding="{Binding Name}" />
-                                    <GridViewColumn Width="100"
+                                        <GridViewColumn Width="100"
                                                     DisplayMemberBinding="{Binding Value}" />
-                                </GridView.Columns>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </Grid>
-            </Border>
-            <Button Width="100px" Height="40px" Style="{DynamicResource ButtonCustomColorPositive}" Content="In Hoá Đơn" Background="#E1251B" Click="Button_Click"></Button>
-        </StackPanel>
-    </Grid>
+                                    </GridView.Columns>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </Grid>
+                <Button Width="100px" Height="40px" Style="{DynamicResource ButtonCustomColorPositive}" Content="In Hoá Đơn" Background="#E1251B" Click="Button_Click"></Button>
+    </StackPanel>
 </Page>

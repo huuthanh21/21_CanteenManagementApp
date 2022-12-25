@@ -53,7 +53,13 @@ namespace CanteenManagementApp.MVVM.View
             if (printDialog.ShowDialog() == true)
             {
                 printDialog.PrintVisual(monthlyReportPage, "Monthly Report Printing");
+                this.IsEnabled = true;
             }
+        }
+
+        private void monthlyReportPage_LostFocus(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -21,7 +21,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
         private object _textSearchBar;
 
         private readonly EventHandler TextSearchBarChanged;
-
         public object TextSearchBar
         {
             get { return _textSearchBar; }
