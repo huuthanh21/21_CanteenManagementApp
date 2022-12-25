@@ -198,16 +198,6 @@
             </Canvas>
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="4" Margin="0,123,20,0">
-
-            <Button x:Name="ButtonPrint"
-                Content="In hoá đơn"
-                Background="Transparent"
-                Foreground="#0033A1"
-                Width="120"
-                Click="ButtonPrint_Click"
-                Style="{StaticResource ButtonCustomColorCancel}"
-                HorizontalAlignment="Left" Height="31" VerticalAlignment="Top"
-                Margin="0 0 10 0" />
             <Button x:Name="ButtonClose"
                 Content="Đóng"
                 Background="#0033A1"
