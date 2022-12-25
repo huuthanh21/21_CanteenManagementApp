@@ -33,7 +33,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         private CollectionViewSource InventoryItemsCollection;
         private CollectionViewSource FoodItemsCollection;
         //public ICollectionView StorageSourceCollection => StorageItemsCollection.View;
-        public static string _imageFileName = "C:\\Users\\ADMIN\\Desktop\\Học tập\\Năm 3\\Học kì 1\\T4 (6-9) Nhập môn công nghệ phần mềm\\Test\\CanteenManagementApp\\Images\\empty_image.jpg";
+        public static string _imageFileName = "";
 
         public ICollectionView FoodSourceCollection => FoodItemsCollection.View;
         public ICollectionView InventorySourceCollection => InventoryItemsCollection.View;
@@ -102,6 +102,18 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         private static BitmapImage GetBitmap(string filePath)
         {
+            if (!File.Exists(filePath))
+            {
+                var appdataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                var appFolder = "21CanteenManager";
+
+                var appPath = Path.Combine(appdataPath, appFolder);
+
+                var defaultImageName = "default.jpg";
+                var defaultImagePath = Path.Combine(appPath, defaultImageName);
+                filePath = defaultImagePath;
+            }
+
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
             bitmap.CacheOption = BitmapCacheOption.OnLoad;
@@ -153,11 +165,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 _imageFileName = op.FileName;
                 ImageBrush imageBrush = new ImageBrush();
                 BitmapImage bitmap = GetBitmap(_imageFileName);
-                /* BitmapImage bitmap = new BitmapImage();
-                 bitmap.BeginInit();
-                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                 bitmap.UriSource = new Uri(_imageFileName);
-                 bitmap.EndInit();*/
                 imageBrush.ImageSource = bitmap;
                 parameter.grdSelectImg.Background = imageBrush;
                 parameter.imageEmpty.Visibility = Visibility.Hidden;
@@ -174,11 +181,6 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 _imageFileName = op.FileName;
                 ImageBrush imageBrush = new ImageBrush();
                 BitmapImage bitmap = GetBitmap(_imageFileName);
-                /*BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.UriSource = new Uri(_imageFileName);
-                bitmap.EndInit();*/
                 imageBrush.ImageSource = bitmap;
                 parameter.grdSelectImg.Background = imageBrush;
                 parameter.imageEmpty.Visibility = Visibility.Hidden;
@@ -384,18 +386,20 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         public static void CopyFileToAppFolder(string id, string sourceFileName)
         {
+            if (!sourceFileName.Equals(""))
+            {
+                var appdataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                var appFolder = "21CanteenManager";
 
-            var appdataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var appFolder = "21CanteenManager";
+                var appPath = Path.Combine(appdataPath, appFolder);
+                StringBuilder stringBuilder = new();
+                stringBuilder.Append(id);
+                stringBuilder.Append(".jpg");
 
-            var appPath = Path.Combine(appdataPath, appFolder);
-            StringBuilder stringBuilder = new();
-            stringBuilder.Append(id);
-            stringBuilder.Append(".jpg");
+                var filePath = Path.Combine(appPath, stringBuilder.ToString());
 
-            var filePath = Path.Combine(appPath, stringBuilder.ToString());
-
-            File.Copy(sourceFileName, filePath, true);
+                File.Copy(sourceFileName, filePath, true);
+            }
         }
 
         public string GetFilePath(string id)
@@ -501,6 +505,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         private void EditInventoryItem(StorageView parameter)
         {
+            _imageFileName = "";
             var itemSelected = parameter.inventoryListView.SelectedItem as Item;
             var screen = new EditInventoryItem(itemSelected);
             screen.IdTextBox.Text = itemSelected.Id.ToString();
@@ -527,7 +532,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             screen.ShowDialog();
             if (screen.DialogResult == true)
             {
-                Item NewItem = new Item()
+                Item NewItem = new()
                 {
                     Id = itemSelected.Id,
                     Name = screen.nameTextBox.Text,
@@ -595,6 +600,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         private void EditFoodItem(StorageView parameter)
         {
+            _imageFileName = "";
             var itemSelectedidx = parameter.foodListView.SelectedIndex;
             var itemSelected = parameter.foodListView.SelectedItem as Item;
             var screen = new EditFoodItem(itemSelected);
