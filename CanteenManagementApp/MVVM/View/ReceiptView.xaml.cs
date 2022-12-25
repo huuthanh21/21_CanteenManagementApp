@@ -47,16 +47,5 @@ namespace CanteenManagementApp.MVVM.View
         {
             DialogResult = true;
         }
-
-        private void ButtonPrint_Click(object sender, RoutedEventArgs e)
-        {
-            this.IsEnabled = false;
-            PrintDialog printDialog = new PrintDialog();
-            if (printDialog.ShowDialog() == true)
-            {
-                printDialog.PrintVisual(receipt_print, "Daily Report Printing");
-                this.IsEnabled = true;
-            }
-        }
     };
 }
