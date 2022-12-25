@@ -31,6 +31,22 @@ namespace CanteenManagementApp
             {
                 await DbQueries.CustomerQueries.InsertCustomerAsync("-1", "Không có tài khoản", "Trống");
             }
+
+            // Add Top-up item
+            if (DbQueries.ItemQueries.GetItemById(100) is null)
+            {
+                var topUpItem = new Item()
+                {
+                    Id = 100,
+                    Amount = 0,
+                    Name = "Nạp tiền",
+                    Description = "Nạp tiền vào tài khoản khách hàng",
+                    Price = 10000,
+                    Type = 1
+                };
+                await DbQueries.ItemQueries.InsertItemAsync(topUpItem, true);
+            }
+
             SetupFolder();
         }
 
@@ -54,8 +70,8 @@ namespace CanteenManagementApp
             {
                 File.Copy(pathEmptyImages, defaultImagePath);
             }
-
         }
+
         public static void CreateFolder(string strPath)
         {
             try
@@ -67,6 +83,7 @@ namespace CanteenManagementApp
             }
             catch { }
         }
+
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
