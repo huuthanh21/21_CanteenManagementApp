@@ -33,6 +33,7 @@ namespace CanteenManagementApp.MVVM.Model
                                     .Where(c => c.Id == customerId)
                                     .Join(context.Receipts, c => c.Id, r => r.CustomerId, (c, r) => new { r.Id })
                                     .Join(context.Receipt_Items, cr => cr.Id, ri => ri.ReceiptId, (cr, ri) => new { ri.Item, ri.Amount })
+                                    .Where(crri => crri.Item.Id != 100)
                                     .GroupBy(crri => crri.Item)
                                     .Select(itemGroup => new
                                     {
