@@ -18,7 +18,11 @@ namespace CanteenManagementApp.MVVM.ViewModel
         {
             try
             {
-                return _canExecute == null || _canExecute((T)parameter);
+                if (parameter is null)
+                {
+                    return _canExecute is null;
+                }
+                return _canExecute is null || _canExecute((T)parameter);
             }
             catch
             {

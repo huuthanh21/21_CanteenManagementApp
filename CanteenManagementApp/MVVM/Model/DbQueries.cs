@@ -412,6 +412,7 @@ namespace CanteenManagementApp.MVVM.Model
 
                 var receipts = context.Receipts
                                         .Where(r => r.Customer.Id == customerId)
+                                        .OrderByDescending(r => r.Id)
                                         .ToList();
 
                 return receipts;

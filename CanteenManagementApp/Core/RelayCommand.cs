@@ -22,7 +22,11 @@ namespace CanteenManagementApp.Core
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute == null || _canExecute(parameter);
+            if (parameter is null)
+            {
+                return _canExecute is null;
+            }
+            return _canExecute is null || _canExecute(parameter);
         }
 
         public void Execute(object parameter)
