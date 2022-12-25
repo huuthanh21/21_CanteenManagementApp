@@ -79,21 +79,25 @@
             Width="108"
             Height="83"
             HorizontalAlignment="Left">
-            <Image x:Name="imageEmpty" Source="/Images/empty_image.jpg" Width="108" Height="83" />
+            <Image x:Name="imageEmpty" Source="/Images/empty_image.jpg" Width="108" Height="83" 
+                   />
         </Grid>
         <Button
                 x:Name="SelectImage"
                 Background="#0033A1"
                 Style="{StaticResource ButtonSelectImage}"
-                Height="35"
-                Width="106"
-                Content="Đổi ảnh"
-                FontWeight="SemiBold"
-                ToolTip="Chọn ảnh từ thiết bị"
-                HorizontalAlignment="Left"
-                Padding="0" Canvas.Left="360" Canvas.Top="200" VerticalAlignment="Top" RenderTransformOrigin="0.553,0.813" />
+                Height="35" 
+                Width="106" 
+                Content="Đổi ảnh" 
+                FontWeight="SemiBold" 
+                ToolTip="Chọn ảnh từ thiết bị" 
+                HorizontalAlignment="Left" 
+                Padding="0" Canvas.Left="360" Canvas.Top="200" VerticalAlignment="Top" RenderTransformOrigin="0.553,0.813"
+                Command="{Binding EditImageFoodItemCommand}"
+                CommandParameter="{Binding ElementName=wdEditFoodItem}"/>
         <!--<StackPanel Canvas.Left="345" Canvas.Top="120">
-            <Image Source="{Binding ImagePath}" Width="108" Height="83" />
+            <Image Source="{Binding ImagePath}" Width="108" Height="83"/>
+           
         </StackPanel>-->
 
         <Button HorizontalAlignment="Left"

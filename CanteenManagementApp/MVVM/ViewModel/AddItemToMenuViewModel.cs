@@ -1,6 +1,8 @@
 ﻿using CanteenManagementApp.Core;
 using CanteenManagementApp.MVVM.Model;
 using CanteenManagementApp.MVVM.View;
+using PropertyChanged;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Data;
@@ -55,14 +57,50 @@ namespace CanteenManagementApp.MVVM.ViewModel
             }
 
             FoodItemsCollection = new CollectionViewSource { Source = FoodItems };
+            FoodSourceCollection.Filter = ItemFilter;
             AddItemToMenuOkCommand = new RelayCommand<AddItemToMenu>((parameter) => true, (parameter) => AddItemToMenuOk(parameter));
-            
+            TextSearchBarChanged += RefreshItemViewSource;
         }
-      
+
+        private object _textSearchBar;
+
+        private readonly EventHandler TextSearchBarChanged;
+        public object TextSearchBar
+        {
+            get { return _textSearchBar; }
+            set
+            {
+                _textSearchBar = value;
+                OnTextSearchBarChanged(EventArgs.Empty);
+            }
+        }
+        public bool ItemFilter(object item)
+        {
+            if (string.IsNullOrEmpty(TextSearchBar as string))
+            {
+                return true;
+            }
+
+            return (item as Item).Name.Contains(TextSearchBar as string, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private void RefreshItemViewSource(object sender, EventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(FoodSourceCollection).Refresh();
+        }
+
+        [SuppressPropertyChangedWarnings]
+        public void OnTextSearchBarChanged(EventArgs e)
+        {
+            TextSearchBarChanged?.Invoke(this, e);
+        }
+
         public static void AddItemToMenuOk(AddItemToMenu parameter)
         {
             parameter.DialogResult = true;
         }
       
     }
+
+
 }

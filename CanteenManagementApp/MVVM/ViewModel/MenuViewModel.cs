@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
@@ -61,7 +62,43 @@ namespace CanteenManagementApp.MVVM.ViewModel
 
         private static void OkUpdate(UpdateAmountMenu parameter)
         {
-            parameter.DialogResult = true;
+            int error_type = 0;
+            var amount_template = parameter.textBoxAmount.Template;
+            var control_amount = (TextBox)amount_template.FindName("TextboxInput", parameter.textBoxAmount);
+            
+            string amount = control_amount.Text;
+            //1. 
+            if (amount  == "")
+            {
+                error_type = 1;
+            }
+            //2.
+            else
+            {
+                int amount_test = 0;
+                bool check = int.TryParse(amount, out amount_test);
+                if (check == true)
+                {
+                    amount_test = int.Parse(amount);
+                    if (amount_test < 0)
+                    {
+                        error_type = 2;
+                    }
+                }
+                else error_type = 2;
+            }
+            switch (error_type)
+            {
+                case 1:
+                    MessageBox.Show("Lỗi! Trường số lượng chưa được nhập giá trị");
+                    break;
+                case 2:
+                    MessageBox.Show("Lỗi! Số lượng nhập vào không hợp lệ");
+                    break;
+                default:
+                    parameter.DialogResult = true;
+                    break;
+            }
         }
 
         private async Task UpdateAmount(MenuView parameter)
@@ -72,7 +109,8 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 var screen = new UpdateAmountMenu();
                 screen.textBoxAmount.Text = _foodItemsToday[index].Amount.ToString();
                 screen.nameItem.Text = _foodItemsToday[index].Name.ToString();
-                if (screen.ShowDialog() == true)
+                screen.ShowDialog();
+                if (screen.DialogResult == true)
                 {
                     // template
                     var amount_template = screen.textBoxAmount.Template;
@@ -85,7 +123,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
                 }
                 else
                 {
-                    screen.Close();
+                    
                 }
             }
         }
@@ -157,6 +195,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
             if (screen.DialogResult == true)
             {
                 var selectedItems = screen.foodListView.SelectedItems;
+                bool check = true;
                 foreach (var item in selectedItems)
                 {
                     ListViewItem myListViewItem = (ListViewItem)(screen.foodListView.ItemContainerGenerator.ContainerFromItem(item));
@@ -172,14 +211,17 @@ namespace CanteenManagementApp.MVVM.ViewModel
                     string amount = control_amount.Text;
 
                     //end template
-
-
-                    Item newItem = (Item)item;
-                    //newItem.Amount = int.Parse(textBox.Text);
-                    newItem.Amount = int.Parse(amount);
-                    _foodItemsToday.Add(newItem);
-                    await DbQueries.MenuQueries.InsertMenuItem(newItem);
-
+                    int amount_test = 0;
+                    check = int.TryParse(amount, out amount_test);
+                    if (check && int.Parse(amount) >= 0)
+                    {
+                        Item newItem = (Item)item;
+                        //newItem.Amount = int.Parse(textBox.Text);
+                        newItem.Amount = int.Parse(amount);
+                        _foodItemsToday.Add(newItem);
+                        await DbQueries.MenuQueries.InsertMenuItem(newItem);
+                    }
+                    else MessageBox.Show("Lỗi! Số lượng món ăn hàng ngày được nhập không hợp lệ");
 
                 }
             }
