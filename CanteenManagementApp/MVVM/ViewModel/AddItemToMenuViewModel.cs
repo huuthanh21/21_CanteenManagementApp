@@ -5,8 +5,12 @@ using PropertyChanged;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace CanteenManagementApp.MVVM.ViewModel
 {
@@ -16,7 +20,7 @@ namespace CanteenManagementApp.MVVM.ViewModel
         private readonly CollectionViewSource FoodItemsCollection;
         public ICollectionView FoodSourceCollection => FoodItemsCollection.View;
         public ICommand AddItemToMenuOkCommand { get; set; } // nút thêm hàng vào menu
-                                                             //
+        public ICommand CancelAddItemToMenuCommand { get; set; }                      //
         public ObservableCollection<Item> FoodItemsOld { get; set; }
         public AddItemToMenuViewModel()
         {
@@ -59,7 +63,13 @@ namespace CanteenManagementApp.MVVM.ViewModel
             FoodItemsCollection = new CollectionViewSource { Source = FoodItems };
             FoodSourceCollection.Filter = ItemFilter;
             AddItemToMenuOkCommand = new RelayCommand<AddItemToMenu>((parameter) => true, (parameter) => AddItemToMenuOk(parameter));
+            CancelAddItemToMenuCommand = new RelayCommand<AddItemToMenu>((parameter) => true, (parameter) => CancelAddItemToMenu(parameter));
             TextSearchBarChanged += RefreshItemViewSource;
+        }
+
+        private void CancelAddItemToMenu(AddItemToMenu parameter)
+        {
+            parameter.DialogResult = false;
         }
 
         private object _textSearchBar;
@@ -95,8 +105,59 @@ namespace CanteenManagementApp.MVVM.ViewModel
             TextSearchBarChanged?.Invoke(this, e);
         }
 
-        public static void AddItemToMenuOk(AddItemToMenu parameter)
+        private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
         {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                if (child is childItem item)
+                {
+                    return item;
+                }
+                else
+                {
+                    childItem childOfChild = FindVisualChild<childItem>(child);
+                    if (childOfChild != null)
+                    {
+                        return childOfChild;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public void AddItemToMenuOk(AddItemToMenu parameter)
+        {
+            var selectedItems = parameter.foodListView.SelectedItems;
+            bool check = true;
+            foreach (var item in selectedItems)
+            {
+                ListViewItem myListViewItem = (ListViewItem)(parameter.foodListView.ItemContainerGenerator.ContainerFromItem(item));
+                // Getting the ContentPresenter of myListViewItem
+                ContentPresenter myContentPresenter = FindVisualChild<ContentPresenter>(myListViewItem);
+
+                // Finding textBox from the DataTemplate that is set on that ContentPresenter
+                DataTemplate myDataTemplate = myContentPresenter.ContentTemplate;
+                TextBox textBox = (TextBox)myDataTemplate.FindName("textBox", myContentPresenter);
+                // template
+                var amount_template = textBox.Template;
+                var control_amount = (TextBox)amount_template.FindName("TextboxInput", textBox);
+                string amount = control_amount.Text;
+                //end template
+
+                int amount_test = 0;
+                check = int.TryParse(amount, out amount_test);
+                if (check && int.Parse(amount) >= 0)
+                {
+                }
+                else
+                {
+                    MessageBox.Show("Lỗi! Số lượng món ăn hàng ngày được nhập không hợp lệ");
+                    return;
+                }
+
+            }
+
             parameter.DialogResult = true;
         }
       
