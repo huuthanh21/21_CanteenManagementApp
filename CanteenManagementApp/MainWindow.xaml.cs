@@ -26,6 +26,13 @@ namespace CanteenManagementApp
 
         private static async Task ImplementFirstRun()
         {
+            // Create database if necessary
+            using var context = new CanteenContext();
+            if (!context.Database.CanConnect())
+            {
+                await CreateDatabase();
+            }
+
             // Add default customer
             if (DbQueries.CustomerQueries.GetCustomerById("-1") == null)
             {
@@ -76,12 +83,12 @@ namespace CanteenManagementApp
         {
             try
             {
-                if (Directory.Exists(strPath) == false)
+                if (!Directory.Exists(strPath))
                 {
                     Directory.CreateDirectory(strPath);
                 }
             }
-            catch { }
+            catch { /* Do nothing */ }
         }
 
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

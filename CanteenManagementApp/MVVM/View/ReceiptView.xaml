@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CanteenManagementApp.MVVM.View"
         xmlns:converters="clr-namespace:CanteenManagementApp.Converters"
         mc:Ignorable="d"
-        x:Name="ReceiptWindow"
+        x:Name="receipt_print"
         ResizeMode="NoResize"
         d:Background="#F8F8F8"
         Height="540" Width="680"
@@ -21,51 +21,51 @@
     </Window.Resources>
     <StackPanel Orientation="Vertical">
 
-        <Grid Margin="20,10,0,11" x:Name="receipt_print">
+        <Grid Margin="20,10,0,11">
             <Grid.RowDefinitions>
-            <RowDefinition Height="81" />
-            <RowDefinition Height="10" />
-            <RowDefinition Height="199" />
-            <RowDefinition Height="23" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+                <RowDefinition Height="81" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="199" />
+                <RowDefinition Height="23" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="318.7" />
-            <ColumnDefinition Width="81.3" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="318.7" />
+                <ColumnDefinition Width="81.3" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Hóa đơn"
+            <TextBlock Text="Hóa đơn"
                    Style="{StaticResource TextblockTitle}" Margin="0,14,0,10" Grid.ColumnSpan="2" />
 
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="3"
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="3"
                     Orientation="Vertical">
-            <StackPanel Orientation="Horizontal"
+                <StackPanel Orientation="Horizontal"
                         Margin="0 0 0 10"
                         VerticalAlignment="Center">
-                <StackPanel.Resources>
-                    <Style x:Key="LabelTextblock" TargetType="TextBlock">
-                        <Setter Property="FontFamily" Value="{DynamicResource Inter}" />
-                        <Setter Property="FontSize" Value="14.77" />
-                        <Setter Property="FontWeight" Value="Bold" />
-                    </Style>
-                </StackPanel.Resources>
-                <TextBlock Text="Tên hàng"
+                    <StackPanel.Resources>
+                        <Style x:Key="LabelTextblock" TargetType="TextBlock">
+                            <Setter Property="FontFamily" Value="{DynamicResource Inter}" />
+                            <Setter Property="FontSize" Value="14.77" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBlock Text="Tên hàng"
                            Style="{StaticResource LabelTextblock}"
                            Margin="23 0 0 0" />
-                <TextBlock Text="Đơn giá"
+                    <TextBlock Text="Đơn giá"
                            Style="{StaticResource LabelTextblock}"
                            Margin="157 0 0 0" />
-                <TextBlock Text="Số lượng"
+                    <TextBlock Text="Số lượng"
                            Style="{StaticResource LabelTextblock}"
                            Margin="70 0 0 0" />
-                <TextBlock Text="Thành tiền"
+                    <TextBlock Text="Thành tiền"
                            Style="{StaticResource LabelTextblock}"
                            Margin="86 0 0 0" />
-            </StackPanel>
+                </StackPanel>
 
-            <ListView x:Name="ListviewItemOrder"
+                <ListView x:Name="ListviewItemOrder"
                       Margin="0,0,10,0"
                       BorderThickness="0"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -74,119 +74,119 @@
                       ItemsSource="{Binding ElementName=ReceiptWindow, Path=TotalOrderSourceCollection}"
                       Background="Transparent">
 
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListViewItem}">
-                        <!--remove green selected area-->
-                        <Setter Property="VerticalContentAlignment" Value="Center" />
-                        <Setter Property="VerticalAlignment" Value="Center" />
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                    <ContentPresenter />
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <!--remove green selected area-->
+                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                        <ContentPresenter />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
 
-                <ListView.Resources>
-                    <Style x:Key="ListviewTextblock"
+                    <ListView.Resources>
+                        <Style x:Key="ListviewTextblock"
                            TargetType="{x:Type TextBlock}">
-                        <Setter Property="FontFamily" Value="{DynamicResource Inter}" />
-                        <Setter Property="FontSize" Value="14.77" />
-                        <Setter Property="VerticalAlignment" Value="Center" />
-                        <Setter Property="FontWeight" Value="Medium" />
-                    </Style>
-                </ListView.Resources>
+                            <Setter Property="FontFamily" Value="{DynamicResource Inter}" />
+                            <Setter Property="FontSize" Value="14.77" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="FontWeight" Value="Medium" />
+                        </Style>
+                    </ListView.Resources>
 
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel VerticalAlignment="Center" />
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel VerticalAlignment="Center" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
 
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal"
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal"
                                     Height="25">
-                            <TextBlock Text="{Binding Item.Name}"
+                                <TextBlock Text="{Binding Item.Name}"
                                        d:Text="Ức gà chiên tỏi"
                                        Margin="22 0 22 0"
                                        VerticalAlignment="Center"
                                        Style="{StaticResource ListviewTextblock}"
                                        Width="176.77" />
-                            <TextBlock Text="{Binding Path=Item.Price, Converter={StaticResource FloatToCurrencyConverter},
+                                <TextBlock Text="{Binding Path=Item.Price, Converter={StaticResource FloatToCurrencyConverter},
                                         ConverterCulture=vi-VN}"
                                        d:Text="28.000đ"
                                        TextAlignment="Right"
                                        Margin="0 0 108.08 0"
                                        Style="{StaticResource ListviewTextblock}"
                                        Width="79.7" />
-                            <TextBlock Width="25.12"
+                                <TextBlock Width="25.12"
                                        Margin="0 0 82.69 0"
                                        Style="{StaticResource ListviewTextblock}"
                                        TextAlignment="Right">
                                 <Run Text="x" /><!--
                              --><Run Text="{Binding Amount}"
                                      d:Text="2" />
-                            </TextBlock>
-                            <TextBlock d:Text="56.000đ"
+                                </TextBlock>
+                                <TextBlock d:Text="56.000đ"
                                        Width="79.7"
                                        Style="{StaticResource ListviewTextblock}"
                                        TextAlignment="Right">
-                                <TextBlock.Text>
-                                    <MultiBinding Converter="{StaticResource PriceAndAmountToTotal}"
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource PriceAndAmountToTotal}"
                                                   ConverterCulture="vi-VN">
-                                        <Binding Path="Item.Price" />
-                                        <Binding Path="Amount" />
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
+                                            <Binding Path="Item.Price" />
+                                            <Binding Path="Amount" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
 
-        <Line Grid.Row="3"
+            <Line Grid.Row="3"
               Grid.ColumnSpan="3"
               Stroke="Black"
               X1="600"
               VerticalAlignment="Center"
               StrokeThickness="1.38" Height="2" />
 
-        <Canvas Grid.Row="2" Grid.ColumnSpan="3" Margin="0,188,0,34" Grid.RowSpan="3">
-            <TextBlock Text="Phương thức thanh toán"
+            <Canvas Grid.Row="2" Grid.ColumnSpan="3" Margin="0,188,0,34" Grid.RowSpan="3">
+                <TextBlock Text="Phương thức thanh toán"
                        Style="{StaticResource TextblockTitleSmall}"
                        Canvas.Left="22" Canvas.Top="53" HorizontalAlignment="Center" VerticalAlignment="Top" />
-            <TextBlock d:Text="Tiền mặt"
+                <TextBlock d:Text="Tiền mặt"
                        Text="{Binding ElementName=ReceiptWindow, Path=Receipt.PaymentMethod}"
                        Style="{StaticResource TextblockTitleNormal}"
                        Canvas.Left="228" Canvas.Top="53" HorizontalAlignment="Center" VerticalAlignment="Top" />
 
-            <TextBlock Text="Mã đơn hàng"
+                <TextBlock Text="Mã đơn hàng"
                        Style="{StaticResource TextblockTitleSmall}"
                        Canvas.Left="22" Canvas.Top="83" HorizontalAlignment="Center" VerticalAlignment="Top" />
-            <TextBlock Text="{Binding ElementName=ReceiptWindow, Path=Receipt.Id, StringFormat='DH-{0}'}"
+                <TextBlock Text="{Binding ElementName=ReceiptWindow, Path=Receipt.Id, StringFormat='DH-{0}'}"
                        d:Text="DH-136"
                        Style="{StaticResource TextblockTitleNormal}"
                        Canvas.Left="228" Canvas.Top="83" HorizontalAlignment="Center" VerticalAlignment="Top" />
 
-            <StackPanel Canvas.Left="22" Canvas.Top="113"
+                <StackPanel Canvas.Left="22" Canvas.Top="113"
                         x:Name="PanelCustomerId"
                         Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <TextBlock Text="Mã khách hàng"
+                    <TextBlock Text="Mã khách hàng"
                            Style="{StaticResource TextblockTitleSmall}" />
-                <TextBlock d:Text="20120582"
+                    <TextBlock d:Text="20120582"
                            Text="{Binding ElementName=ReceiptWindow, Path=Receipt.CustomerId}"
                            Margin="95 0 0 0"
                            Style="{StaticResource TextblockTitleNormal}" />
-            </StackPanel>
+                </StackPanel>
 
-            <TextBlock Text="Tổng cộng"
+                <TextBlock Text="Tổng cộng"
                        Style="{StaticResource TextblockTitleSmall}"
                        Canvas.Left="378" Canvas.Top="83" HorizontalAlignment="Left" VerticalAlignment="Top" />
-            <TextBlock Text="{Binding ElementName=ReceiptWindow, Path=Receipt.Total,
+                <TextBlock Text="{Binding ElementName=ReceiptWindow, Path=Receipt.Total,
                                 Converter={StaticResource FloatToCurrencyConverter},
                                 ConverterCulture=vi-VN, Mode=OneWay}"
                            d:Text="40.000đ"
@@ -195,19 +195,19 @@
                            FontFamily="{DynamicResource Inter}"
                            FontSize="21"
                            FontWeight="Bold" Canvas.Left="493" Canvas.Top="79" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        </Canvas>
-    </Grid>
+            </Canvas>
+        </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="4" Margin="0,123,20,0">
-            
-        <Button x:Name="ButtonPrint"
+
+            <Button x:Name="ButtonPrint"
                 Content="In hoá đơn"
                 Background="Transparent"
                 Foreground="#0033A1"
                 Width="120"
                 Click="ButtonPrint_Click"
                 Style="{StaticResource ButtonCustomColorCancel}"
-                HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" 
-                Margin="0 0 10 0"/>
+                HorizontalAlignment="Left" Height="31" VerticalAlignment="Top"
+                Margin="0 0 10 0" />
             <Button x:Name="ButtonClose"
                 Content="Đóng"
                 Background="#0033A1"
