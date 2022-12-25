@@ -166,6 +166,15 @@ namespace CanteenManagementApp.MVVM.Model
                 Debug.WriteLine($"Saved {rows} items");
             }
 
+            public static async Task InsertItem_Async(Item item)
+            {
+                using var context = new CanteenContext();
+                await context.Items.AddAsync(item);
+
+                int rows = await context.SaveChangesAsync();
+                Debug.WriteLine($"Saved {rows} items");
+            }
+
             /* Update */
 
             public static async Task UpdateItem(Item item)
