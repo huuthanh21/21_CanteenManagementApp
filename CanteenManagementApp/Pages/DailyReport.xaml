@@ -152,7 +152,7 @@
             </Border>
         </StackPanel>
     </Grid>
-            <Button Width="100px" Height="40px" Style="{DynamicResource ButtonCustomColorPositive}" Content="In Hoá Đơn" Background="#E1251B" Click="Button_Click"></Button>
+            <Button Width="100px" Height="40px" Style="{DynamicResource ButtonCustomColorPositive}" Content="In báo cáo" Background="#E1251B" Click="Button_Click"></Button>
 
     </StackPanel>
 </Page>
